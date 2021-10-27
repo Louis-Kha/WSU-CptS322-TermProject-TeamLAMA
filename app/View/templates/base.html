@@ -1,9 +1,9 @@
 <html>
     <head>
        {% if title %}
-          <title>{{ title }} - Smile </title>
+          <title>{{ title }} - SearchApp </title>
        {% else %}
-          <title> Welcome to Smile Portal! </title>
+          <title> Welcome to SearchApp Portal! </title>
        {% endif %}
        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
        <!--TODO: (milestone 3)  Include `moment` library -->
@@ -13,9 +13,9 @@
         <div class ="nav-container">
         <table>
             <tr>
-                <td><a href="{{ url_for('routes.index') }}" class = "button">Smiles</a></td>
+                <td><a href="{{ url_for('routes.index') }}" class = "button">Main Page</a></td>
                 <!-- TODO: (milestone 1) add the URL for the "Post Smile". --> 
-                <td><a href="" class = "button"> Post Smile </a></td>
+                <td><a href="{{ url_for('routes.postposition') }}" class = "button">Post Position </a></td>
                 <!-- TODO: (milestone 3) add the "Login" or "Logout" link. If the user is logged in, Login link should be displayed, otherwise Logout link should be displayed. --> 
                 <td><a href="" class = "button"> Login </a></td>
                 <td><a href="" class = "button"> Logout </a></td>
