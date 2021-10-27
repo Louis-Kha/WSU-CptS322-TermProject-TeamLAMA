@@ -56,3 +56,16 @@ def like(post_id):
         db.session.add(thepost)
         db.session.commit()
         return redirect(url_for('routes.index'))
+    return render_template('index.html', title="Smile Portal", posts=posts.all())
+
+
+@bp_routes.route('/postposition', methods=['GET','POST'])
+def postposition():
+    newPost = PostForm()
+    if newPost.validate_on_submit():
+      newPosted = Post(title = newPost.title.data, happiness_level = newPost.happiness_level.data, timecommitment = newPost.timecommitment.data, body = newPost.body.data)
+      db.session.add(newPosted)
+      db.session.commit()
+      flash("New Research Position Has Been Created!")
+      return redirect (url_for('routes.index'))
+    return render_template('create.html', title="New Research Position", form = newPost)

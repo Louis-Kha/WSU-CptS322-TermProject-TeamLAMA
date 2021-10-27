@@ -2,12 +2,15 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
 from wtforms.fields.core import BooleanField
 from wtforms.fields.simple import TextAreaField
+from wtforms import StringField, SubmitField, SelectField, TextAreaField
 from wtforms.validators import  DataRequired, Length
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms import validators, PasswordField
 
 from app.Model.models import Post, Tag, User
+
+from app.Model.models import Post
 
 def getAlltags():
     return Tag.query.all()
@@ -20,11 +23,13 @@ def getTagsbyName(tag):
     #     return t.name
     
 class PostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
+    title = StringField('Research Position Title', validators=[DataRequired()])
     happiness_level = SelectField('Happiness Level',choices = [(3, 'I can\'t stop smiling'), (2, 'Really happy'), (1,'Happy')])
     body = TextAreaField('Body', validators=[DataRequired()])
     tag = QuerySelectMultipleField('Tag', query_factory = getAlltags, get_label=getTagsbyName, allow_blank=False, widget=ListWidget(prefix_label=False), 
        option_widget=CheckboxInput())
+    body = TextAreaField('Position Description', validators=[Length(min = 1, max = 1500, message = "Invalid Length for Post!")])
+    timecommitment = SelectField('Time Commitment',choices = [(40, '40 Hours'), (30, '30 Hours'), (20, '20 Hours'), (10, '10 Hours')])
     submit = SubmitField('Post')
     # tag = QuerySelectMultipleField('Tag', query_factory="", get_label="", widget=ListWidget(prefix_label=False), 
     #   option_widget=CheckboxInput())

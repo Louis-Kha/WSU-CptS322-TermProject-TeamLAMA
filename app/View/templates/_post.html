@@ -14,6 +14,34 @@
             <!--<img src = "app/View/static/img/happiness-level-1.png">-->
             <!--<img src="{{ url_for('static', filename = 'app/View/static/img/happiness-level-1.png' )}}"> -->
         </td>
+        <tr> 
+            <td colspan="3"><div class="posttitle"> {{post.title}} </div>
+            </td>
+        </tr>
+        <tr>
+            <td width="10%" >
+                <!--  (milestone1) TODO: include happiness-level image according to the `cost`s happiness_level .
+                For example : <img src="{{ url_for('static', filename = 'img//happiness-level-1.png' )}}"-->  
+
+            </td>
+
+            <td width="80%" >
+                <div>
+                  <!-- (milestone1) TODO: include post body --> 
+                    {{post.body}}
+               </div>
+
+
+                <div>
+                  <!-- (milestone1) TODO: include post body --> 
+                    {{post.timecommitment}} Hours a Week
+               </div>
+
+               <div> 
+                  <!-- (milestone3) TODO: format the timestamp; display as local date/time-->
+                  Posted at: {{ post.timestamp }}
+               </div> 
+            </td> 
 
         <td width="80%" >
             <div>
