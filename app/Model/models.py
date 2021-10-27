@@ -6,32 +6,42 @@ from flask_login import UserMixin
 from app import login
 from sqlalchemy import Date
 
-
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(150))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    happiness_level = db.Column(db.Integer, default = 3)
-
 class Student(UserMixin, db.Model):
     permissions = db.Column(db.Boolean, default = 0)
     username = db.Column(db.String(64)) # I may want to add unique=True, I'm not sure if I want to assume they're going to use their WSU email
     passwordHash = db.Column(db.String(64), unique = True, index = True)
-    # --- Contact information ---
+    # ------------------------------------- Contact information -------------------------------------
     firstName = db.Column(db.String(128), default = "Butchy") 
     lastName = db.Column(db.String(128), default = "Boi")
+    wsuId = db.Column(db.Integer)
     address = db.Column(db.String(256))
     email = db.Column(db.String(120), unique = True, index = True) # The requirements document didn't specify if this had to be their WSU email
     phoneNumber = db.Column(db.String(32)) # Made it len of 32 because theres no way someone has a phone number that long
-    #----------------------------
-    major = db.Column( db.String(64)) # One to many relationship?
+    #------------------------------------------------------------------------------------------------
+    major = db.Column( db.String(64))                                       # One to many relationship
     cumGPA = db.Column(db.Integer)
     expectedGraduationDate = db.Column(db.String(64)) # May want to change this to an actual date type
-    technicalCourses = db.Column( db.String(64))
-    technicalCourseGPA = db.Column(db.Float) # Should round this
-    researchFields = db.Column( db.String(64))  # One to many relationship?
-    programLang = db.Coumn(db.String(64)) # One to many relationship?
+
+    # -----------------------Technical Courses-------------------------------------------
+    #                    (One to many relationship)
+    technicalCourses = db.Column( db.String(64))                            
+    technicalCourseGPA = db.Column(db.Float)                                
+    # -----------------------------------------------------------------------------------
+    researchFields = db.Column( db.String(64))                              # One to many relationship
+    programLang = db.Coumn(db.String(64))                                   # One to many relationship
     experienceDescription = db.Column(db.String(500)) # Research Experience Description
+
+    def __repr__(self):
+        return 'Student Name: {} {} - WSU ID: {} - Email: {} - permissions: {} '.format(self.firstName, self.lastName, self.wsuId,self.email, self.permissions)
+
+    #To Do: Create password Functions
+    
+class Major(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(20))
+    
+    def __repr__(self):
+        return '{}'.format(self.name)
 
 class Faculty(UserMixin, db.Model):
     permissions = db.Column(db.Boolean, default = 1) 
@@ -43,7 +53,9 @@ class Faculty(UserMixin, db.Model):
     email = db.Column(db.String(120), unique = True, index = True) # The requirements document didn't specify if this had to be their WSU email
     phoneNumber = db.Column(db.String(32)) # Made it len of 32 because theres no way someone has a phone number that long
     #----------------------------
-
+    def __repr__(self):
+        return 'Faculty Name: {} {} - Email: {} - permissions: {} '.format(self.firstName, self.lastName, self.email, self.permissions)
+    
 
 class researchPos(db.Model):
     title  = db.Column(db.String(64))
