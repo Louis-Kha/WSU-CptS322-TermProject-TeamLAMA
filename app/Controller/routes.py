@@ -6,8 +6,8 @@ from flask_login import current_user, login_required
 from config import Config
 
 from app import db
-from app.Model.models import Post, Tag, postTags
-from app.Controller.forms import PostForm, EmptyForm, SortForm
+from app.Model.models import Post, Tag, postTags, researchPos
+from app.Controller.forms import PostForm, EmptyForm, SortForm, ResearchForm
 
 bp_routes = Blueprint('routes', __name__)
 bp_routes.template_folder = Config.TEMPLATE_FOLDER 
@@ -18,8 +18,8 @@ bp_routes.template_folder = Config.TEMPLATE_FOLDER
 def index():
     eform = EmptyForm()
     sortform = SortForm()
-    posts = Post.query.order_by(Post.timestamp.desc())
-    return render_template('index.html', title="Smile Portal", posts=posts.all(), eform=eform, sortform = sortform)
+    posts = researchPos.query.order_by(researchPos.timestamp.desc())
+    return render_template('index.html', title="Search App Portal", posts=posts.all(), eform=eform, sortform = sortform)
 
 # @bp_routes.route('/', methods=['GET'])
 #@bp_routes.route('/studentview', methods=['GET'])
@@ -61,9 +61,9 @@ def like(post_id):
 
 @bp_routes.route('/postposition', methods=['GET','POST'])
 def postposition():
-    newPost = PostForm()
+    newPost = ResearchForm()
     if newPost.validate_on_submit():
-      newPosted = Post(title = newPost.title.data, happiness_level = newPost.happiness_level.data, timecommitment = newPost.timecommitment.data, body = newPost.body.data)
+      newPosted = researchPos(title = newPost.title.data, researchDesc = newPost.researchDesc.data, requiredHours = newPost.requiredHours.data, startEndDate = newPost.startEndDate.data, requiredQualifications = newPost.requiredQualifications.data, researchFields = newPost.researchFields.data)
       db.session.add(newPosted)
       db.session.commit()
       flash("New Research Position Has Been Created!")

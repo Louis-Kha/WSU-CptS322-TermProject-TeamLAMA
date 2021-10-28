@@ -22,6 +22,18 @@ def getTagsbyName(tag):
     # for t in Tag.query.all():
     #     return t.name
     
+
+
+class ResearchForm(FlaskForm):
+    title = StringField('Research Position Title', validators=[DataRequired()])
+    startEndDate = StringField('Start/End Dates (Eg. 11/11/21 - 01/11/22)', validators=[DataRequired()])
+    researchDesc = TextAreaField('Position Description', validators=[Length(min = 1, max = 1500, message = "Invalid Length for Post!")])
+    researchFields = TextAreaField('Research fields', validators=[Length(min = 1, max = 1500, message = "Invalid Length for Post!")])
+    requiredHours = SelectField('Required Hours Per Week',choices = [(40, '40 Hours'), (30, '30 Hours'), (20, '20 Hours'), (10, '10 Hours')])
+    requiredQualifications = TextAreaField('Required Qualifications', validators=[Length(min = 1, max = 1500, message = "Invalid Length for Post!")])
+    submit = SubmitField('Post')
+
+
 class PostForm(FlaskForm):
     title = StringField('Research Position Title', validators=[DataRequired()])
     happiness_level = SelectField('Happiness Level',choices = [(3, 'I can\'t stop smiling'), (2, 'Really happy'), (1,'Happy')])

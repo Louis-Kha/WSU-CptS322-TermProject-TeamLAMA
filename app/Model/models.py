@@ -68,3 +68,15 @@ class Tag(db.Model):
     name = db.Column(db.String(20))
     def __repr__(self):
         return '<Id: {} Name: {}>'.format(self.id,self.name)
+
+
+
+class researchPos(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title  = db.Column(db.String(150))
+    researchDesc = db.Column(db.String(1500))
+    startEndDate = db.Column(db.String(150))
+    requiredHours = db.Column(db.Integer, default = 0)
+    researchFields = db.Column(db.String(150))
+    requiredQualifications = db.Column(db.String(500))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)

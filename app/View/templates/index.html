@@ -7,16 +7,18 @@
     <!--<h2>Number of smiles: {{posts|count}} </h2>--->
     <h1>Welcome to Faculty SearchApp Portal!</h1>
     <!-- TODO: (milestone1) Display smile count.   -->
-    <h2>Number of Available Positions:  </h2>
+    <h2>Number of Available Positions:</h2>
 
     <!-- TODO: (milestone 2) Add the template to render an instance of a `sortForm`. The form should display the sort attribute select box and the "Refresh" submit button.
     Style the `sortorder` form element using the `formselect` CSS element we defined in milestone1 -->
     
     <form action = "{{url_for('routes.index')}}" method = "POST">
     <div class = "formselect">
+
     </div>
     </form>
     <br>
+
 
     <!--     TODO: (milestone 2) Format posts -->
     <div class="postlist">
@@ -26,10 +28,6 @@
             </div>
        {% endfor %}
     </div>
-    {% for post in posts %}
-        <div class="post-box">
-            {% include '_post.html' %}
-        </div> 
-    {% endfor %}
+
     
 {% endblock %}

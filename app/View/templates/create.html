@@ -1,57 +1,69 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Post New Smile</h1>
+    <h1>Post New Research Position</h1>
     {% if form %}
         <form action="" method="post">
             {{ form.hidden_tag() }}
             <div>
                 <!--All complete-->
                 <!-- TODO: (milestone1) Include the form item for `happiness_level` selection. Apply appropriate styling for the `happiness_level` form item.  -->
-                {{ form.happiness_level.label }}<br>
-                {{ form.happiness_level(class="formhappiness_level") }}<br>
-                <!--Displays the form item for the post's `title`.--> 
+                <!--Displays the form item for the post's `title`.-->
                 {{ form.title.label }}<br>
-                {{ form.title(class="textinput") }}<br>
-                <!-- TODO: (milestone 1) Display the error messages of the `title` field validator (if there are any validation errors).   -->  
+                {{ form.title(class="formtitle") }}<br>
+                <!-- TODO: (milestone 1) Display the error messages of the `title` field validator (if there are any validation errors).   -->
                 {% for error in form.title.errors %}
                 <span style="color: red">[{{ error }}]</span>
                 {% endfor %}
-                <!-- TODO: (milestone 1) Include the form item for the post's `body`. Apply appropriate styling for the `body`form  item.  -->  
-                {{ form.body.label }}<br>
-                {{ form.body(class="textinput") }}<br>
-                <!-- TODO: (milestone 1) Display the error messages of the `body` field validator (if there are any validation errors).   -->  
-                {% for error in form.body.errors %}
+                <!-- TODO: (milestone 1) Include the form item for the post's `body`. Apply appropriate styling for the `body`form  item.  -->
+                {{ form.researchDesc.label }}<br>
+                {{ form.researchDesc(class="formbody") }}<br>
+                <!-- TODO: (milestone 1) Display the error messages of the `body` field validator (if there are any validation errors).   -->
+                {% for error in form.researchDesc.errors %}
                 <span style="color: red">[{{ error }}]</span>
                 {% endfor %}
+
+
+
+
+                {{ form.researchFields.label }}<br>
+                {{ form.researchFields(class="formbody") }}<br>
+                <!-- TODO: (milestone 1) Display the error messages of the `body` field validator (if there are any validation errors).   -->
+                {% for error in form.researchFields.errors %}
+                <span style="color: red">[{{ error }}]</span>
+                {% endfor %}
+
+
+
+                {{ form.requiredQualifications.label }}<br>
+                {{ form.requiredQualifications(class="formbody") }}<br>
+                <!-- TODO: (milestone 1) Display the error messages of the `body` field validator (if there are any validation errors).   -->
+                {% for error in form.requiredQualifications.errors %}
+                <span style="color: red">[{{ error }}]</span>
+                {% endfor %}
+
+
+                {{ form.startEndDate.label }}<br>
+                {{ form.startEndDate(class="formtitle") }}<br>
+                <!-- TODO: (milestone 1) Display the error messages of the `body` field validator (if there are any validation errors).   -->
+                {% for error in form.startEndDate.errors %}
+                <span style="color: red">[{{ error }}]</span>
+                {% endfor %}
+
+
+
             </div>
             
-            {{ form.tag }}
-                <span style=: ="color: red;">[{{ error }}]</span>
-                {% endfor %}
                 <!-- TODO: (milestone1) Include the form item for the post's `body`. Apply appropriate styling for the `body`form  item.  -->  
-                {{ form.body.label }}<br>
-                {{ form.body(class="formbody") }}<br>
-
-                <!-- TODO: (milestone 1) Display the error messages of the `body` field validator (if there are any validation errors).   --> 
-                {% for error in form.body.errors %}
-                <span style=: ="color: red;">[{{ error }}]</span>
-                {% endfor %}
-                
-            </div>
             
             <!-- TODO: (milestone1) Include the form item for `happiness_level` selection. Apply appropriate styling for the `happiness_level` form item.  -->  
-                {{ form.timecommitment.label }}<br>
-                {{ form.timecommitment(class="formselect") }}<br>
+                {{ form.requiredHours.label }}<br>
+                {{ form.requiredHours(class="formselect") }}<br>
             
                 
             
-                {{ form.happiness_level.label }}<br>
-                {{ form.happiness_level(class="formselect") }}<br>
             <!-- TODO: (milestone2) Include the form item for `tag` selection.   -->  
             <!--
-            {{ form.PostForm }}
-            {{ form }}
             -->
             {{ form.submit(class="button") }}
         </form>
