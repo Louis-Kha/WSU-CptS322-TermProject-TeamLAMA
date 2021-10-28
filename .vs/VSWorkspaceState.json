@@ -9,6 +9,6 @@
     "\\app\\View\\static\\css",
     "\\app\\View\\templates"
   ],
-  "SelectedNode": "\\app\\Controller\\routes.py",
+  "SelectedNode": "\\app\\View\\templates\\_post.html",
   "PreviewInSolutionExplorer": false
 }
