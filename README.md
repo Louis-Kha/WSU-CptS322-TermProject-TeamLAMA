@@ -1,3 +1,3 @@
-TEAM LAMA
-Names: Louis K. , Mitchell K. , Albert L. , Alexander C.
-Major: Computer Science
+# Term Project Milestone Feedback
+
+This branch will contain submitted project documents with comment feedback as well as rubrics for each milestone submission.
