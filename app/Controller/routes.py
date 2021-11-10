@@ -69,3 +69,10 @@ def postposition():
       flash("New Research Position Has Been Created!")
       return redirect (url_for('routes.index'))
     return render_template('create.html', title="New Research Position", form = newPost)
+
+
+
+@bp_routes.route('/studentindex', methods=['GET'])
+def studentindex():
+    posts = researchPos.query.order_by(researchPos.timestamp.desc())
+    return render_template('studentindex.html', title="Search App Portal", posts=posts.all())
