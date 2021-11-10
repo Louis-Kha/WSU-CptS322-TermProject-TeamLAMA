@@ -6,7 +6,7 @@ from flask_login import current_user, login_required
 from config import Config
 
 from app import db
-from app.Model.models import Post, Tag, postTags, researchPos
+from app.Model.models import Post, Tag, postTags, researchPos, User
 from app.Controller.forms import PostForm, EmptyForm, SortForm, ResearchForm
 
 bp_routes = Blueprint('routes', __name__)
@@ -69,3 +69,20 @@ def postposition():
       flash("New Research Position Has Been Created!")
       return redirect (url_for('routes.index'))
     return render_template('create.html', title="New Research Position", form = newPost)
+
+
+#---------------------------------Added By Alex-----------------------------------------------------
+@bp_routes.route('/display_profile', methods=['GET'])
+#@login_required
+def display_profile():
+    return render_template('display_profile.html', title="User Profile", user = current_user)
+
+# This is for the faculty, when they click on a student ID it will redirect them to the student's profile page
+@bp_routes.route('/display_student/<user_id>', methods=['GET', 'POST'])
+#@login_required
+def display_student(user_id):
+    viewStudent = User.query.get(int(user_id)) # Gets all of the user's information and sets it to viewStudent class
+    return render_template('display_student.html', title="{}'s Profile".format(user_id), user = viewStudent)
+
+
+#--------------------------------------------------------------------------------------
