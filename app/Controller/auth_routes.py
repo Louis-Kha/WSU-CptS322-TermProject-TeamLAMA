@@ -18,28 +18,28 @@ bp_auth.template_folder = Config.TEMPLATE_FOLDER
 def login():
     lform = LoginForm()
     if current_user.is_authenticated: 
-        return redirect(url_for('routes.index'))
+        return redirect(url_for('routes.studentindex')) # changed here
     if lform.validate_on_submit():
         user = User.query.filter_by(username = lform.username.data).first()
         if (user is None) or (user.get_password(lform.password.data) == False) or (user.get_status(lform.isfaculty.data) == False):
             flash('Invalid Username or Password')
             return redirect(url_for('auth.login'))
         login_user(user, remember = lform.remember.data)
-        return redirect(url_for('routes.index'))
+        return redirect(url_for('routes.studentindex')) # changed here
     return render_template('login.html', title = 'Student Sign in', form = lform)
 
 @bp_auth.route('/FacultyLogin', methods=['GET', 'POST'])
 def FacultyLogin():
     lform = LoginForm()
     if current_user.is_authenticated: 
-        return redirect(url_for('routes.index'))
+        return redirect(url_for('routes.facultyindex')) # changed here
     if lform.validate_on_submit():
         user = User.query.filter_by(username = lform.username.data).first()
         if (user is None) or (user.get_password(lform.password.data) == False) or (user.get_status(lform.isfaculty.data) == True):
             flash('Invalid Username or Password')
             return redirect(url_for('auth.FacultyLogin'))
         login_user(user, remember = lform.remember.data)
-        return redirect(url_for('routes.index'))
+        return redirect(url_for('routes.facultyindex')) # changed here
     return render_template('Facultylogin.html', title = 'Faculty Sign in', form = lform)
 
 @bp_auth.route('/logout', methods = ['GET'])

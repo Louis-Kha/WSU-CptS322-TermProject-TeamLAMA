@@ -15,23 +15,11 @@ bp_routes.template_folder = Config.TEMPLATE_FOLDER
 @bp_routes.route('/', methods=['GET'])
 @bp_routes.route('/index', methods=['GET'])
 @login_required
-def index():
+def index(): # problem here
     eform = EmptyForm()
     sortform = SortForm()
     posts = researchPos.query.order_by(researchPos.timestamp.desc())
     return render_template('index.html', title="Search App Portal", posts=posts.all(), eform=eform, sortform = sortform)
-
-# @bp_routes.route('/', methods=['GET'])
-#@bp_routes.route('/studentview', methods=['GET'])
-#@login_required
-#def studentview():
-#    return render_template('studentview.html')
-
-# @bp_routes.route('/', methods=['GET'])
-#@bp_routes.route('/facultyview', methods=['GET'])
-#@login_required
-#def studentview():
-#    return render_template('facultyview.html')
 
 @bp_routes.route('/createpost/', methods=['GET','POST'])
 @login_required
@@ -70,20 +58,22 @@ def postposition():
       return redirect (url_for('routes.index'))
     return render_template('create.html', title="New Research Position", form = newPost)
 
-
-
 @bp_routes.route('/studentindex', methods=['GET'])
+@login_required
 def studentindex():
     posts = researchPos.query.order_by(researchPos.timestamp.desc())
-    return render_template('studentindex.html', title="Search App Portal", posts=posts.all())
+    return render_template('studentindex.html', title="Student Main Page", posts=posts.all())
 
-
+@bp_routes.route('/facultyindex', methods=['GET'])
+@login_required
+def facultyindex():
+    posts = researchPos.query.order_by(researchPos.timestamp.desc())
+    return render_template('facultyindex.html', title="Faculty Main Page", posts=posts.all())
 
 @bp_routes.route('/studentapply2/<researchPos_id>', methods=['GET', 'POST'])
 def studentapply2(researchPos_id):
     position = researchPos.query.get(researchPos_id)
     return render_template('studentapp.html', title="Search App Portal", positions=position)
-
 
 @bp_routes.route('/studentapply/<researchPos_id>', methods=['GET', 'POST'])
 def studentapply(researchPos_id):
