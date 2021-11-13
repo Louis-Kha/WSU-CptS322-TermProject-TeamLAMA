@@ -6,7 +6,7 @@ from flask_login import current_user, login_required
 from config import Config
 
 from app import db
-from app.Model.models import Post, Tag, postTags, researchPos
+from app.Model.models import Post, Tag, postTags, researchPos, User
 from app.Controller.forms import PostForm, EmptyForm, SortForm, ResearchForm
 
 bp_routes = Blueprint('routes', __name__)
@@ -79,7 +79,23 @@ def studentindex():
 
 
 
+@bp_routes.route('/studentapply2/<researchPos_id>', methods=['GET', 'POST'])
+def studentapply2(researchPos_id):
+    position = researchPos.query.get(researchPos_id)
+    return render_template('studentapp.html', title="Search App Portal", positions=position)
+
+
 @bp_routes.route('/studentapply/<researchPos_id>', methods=['GET', 'POST'])
 def studentapply(researchPos_id):
     position = researchPos.query.get(researchPos_id)
-    return render_template('studentapplication.html', title="Search App Portal", positions=position)
+    test = True
+    #if current user is logged in as faculty they only see their own posts
+    if User.get_status(User, test) == False:
+        #something
+        flash("Faculty member")
+    else:
+        flash("Student")
+        #something
+    posts = researchPos.query.order_by(researchPos.timestamp.desc())
+    return render_template('studentapplication.html', title="Search App Portal", posts=posts.all())
+
