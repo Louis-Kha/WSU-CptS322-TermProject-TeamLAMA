@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Student Sign In</h1>
+    <h1>Faculty Sign In</h1>
     <!-- TODO: (milestone 3) Include the template for "login form" here...  -->
     {% if form %}
         <form action="" method = "POST">
@@ -25,5 +25,5 @@
         </form>
     {%endif%}
     <!-- TODO: (milestone 3) Add the URL for user register route. --> 
-    <p>New Student? <a href="{{url_for('auth.register')}}">Click to Register!</a></p>
+    <p>New Faculty Member? <a href="{{url_for('auth.Facultyregister')}}"> Click to Register!</a></p>
 {% endblock %}

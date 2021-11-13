@@ -6,10 +6,11 @@ from wtforms.fields.simple import PasswordField
 from app.Model.models import User
 
 class RegistrationForm(FlaskForm):
-    username = StringField('username', validators=[DataRequired(),Length(min=0, max=64)])
-    email = StringField('email', validators=[DataRequired(),Email()])
+    username = StringField('username', validators=[DataRequired(),Length(min=0, max=64)]) # should be rewritten for email
+    email = StringField('email', validators=[DataRequired(),Email()]) # will be wsu email
     password1 = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Password Repeat', validators=[DataRequired(), EqualTo('password1')])
+    # wsuID - StringField('Enter your WSU ID', validators=[DataRequired(), type(int)])
     isfaculty = BooleanField('Check if faculty member')
     submit = SubmitField('Register')
 
@@ -19,3 +20,9 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember')
     isfaculty = BooleanField('Check if faculty member')
     submit = SubmitField('Sign in')
+
+class StudentInfoForm(FlaskForm):
+    check = BooleanField()
+
+class FacultyInfoForm(FlaskForm):
+    check = BooleanField()
