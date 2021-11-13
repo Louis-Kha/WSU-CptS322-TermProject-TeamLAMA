@@ -85,4 +85,4 @@ def display_student(user_id):
     return render_template('display_student.html', title="{}'s Profile".format(user_id), user = viewStudent)
 
 
-#--------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------
