@@ -81,5 +81,5 @@ def studentindex():
 
 @bp_routes.route('/studentapply/<researchPos_id>', methods=['GET', 'POST'])
 def studentapply(researchPos_id):
-    position = researchPos.query.filter_by(id = researchPos_id).first()
-    return render_template('studentapplication.html', title="Search App Portal", position=position)
+    position = researchPos.query.get(researchPos_id)
+    return render_template('studentapplication.html', title="Search App Portal", positions=position)
