@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Faculty Register</h1>
+    <!-- TODO: (milestone 3) Include the template for "user registration" form here..  -->
+    {% if form %}
+    <form action = "" method="POST">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.username.label }}<br>
+            {{ form.username(class="forminput") }}<br>
+            {% for error in form.username.errors %}
+            <span style="color: red;">{{ "No more than 64 letter allowed" }}</span><br>
+            {% endfor %}
+            <br>
+            {{ form.email.label }}<br>
+            {{ form.email(class="forminput") }}<br>
+            {% for error in form.email.errors %}
+            <span style="color: red;">{{ "Provide a valid email" }}</span><br>
+            {% endfor %}
+            <br>
+            {{ form.password1.label }}<br>
+            {{ form.password1(class="forminput") }}<br>
+            {% for error in form.password1.errors %}
+            <span style="color: red;">{{ "Passwords mismatch" }}</span><br>
+            {% endfor %}
+            <br>
+            {{ form.password2.label }}<br>
+            {{ form.password2(class="forminput") }}<br>
+            {% for error in form.password2.errors %}
+            <span style="color: red;">{{"Try Again"}}</span><br>
+            {% endfor %}
+
+            <!--{{ form.isfaculty.label }}<br>-->
+            <!--{{ form.isfaculty(class="container") }}<br>-->
+            <!--form.registerasfaculty.label-->
+
+        </div>
+        <br>
+        {{form.submit(class="button") }}
+        </form>
+        {% endif %}
+{% endblock %}
