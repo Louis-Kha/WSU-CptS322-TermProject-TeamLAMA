@@ -99,18 +99,3 @@ def studentapply(researchPos_id):
     posts = researchPos.query.order_by(researchPos.timestamp.desc())
     return render_template('studentapplication.html', title="Search App Portal", posts=posts.all())
 
-#---------------------------------Added By Alex-----------------------------------------------------
-@bp_routes.route('/display_profile', methods=['GET'])
-#@login_required
-def display_profile():
-    return render_template('display_profile.html', title="User Profile", user = current_user)
-
-# This is for the faculty, when they click on a student ID it will redirect them to the student's profile page
-@bp_routes.route('/display_student/<user_id>', methods=['GET', 'POST'])
-#@login_required
-def display_student(user_id):
-    viewStudent = User.query.get(int(user_id)) # Gets all of the user's information and sets it to viewStudent class
-    return render_template('display_student.html', title="{}'s Profile".format(user_id), user = viewStudent)
-
-
-#---------------------------------------------------------------------------------------------------
