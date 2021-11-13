@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Faculty Sign In</h1>
+    <!-- TODO: (milestone 3) Include the template for "login form" here...  -->
+    {% if form %}
+        <form action="" method = "POST">
+            {{ form.hidden_tag() }}
+
+            {{ form.username.label }}<br>
+            {{ form.username(class="forminput") }}<br>
+            <br>
+            {{ form.password.label }}<br>
+            {{ form.password(class="forminput") }}<br>
+
+            <!--form.loginasfaculty.label-->
+            <!--{{ form.isfaculty.label }}<br>-->
+            <!--{{ form.isfaculty(class="container") }}<br><br>-->
+
+            {{ form.remember.label }}<br>
+            {{ form.remember(class="container") }}<br><br>
+
+            {{form.submit(class="button") }}
+            <br>               
+        </form>
+    {%endif%}
+    <!-- TODO: (milestone 3) Add the URL for user register route. --> 
+    <p>New Faculty Member? <a href="{{url_for('auth.Facultyregister')}}"> Click to Register!</a></p>
+{% endblock %}
