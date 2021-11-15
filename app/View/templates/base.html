@@ -21,11 +21,11 @@
                     <!--<td> Current user is: <span class="useritem">_______ </span> </td> -->
                 {% elif current_user.isfaculty %}
                     <td><a href="{{ url_for('routes.postposition') }}" class = "button">Post Position </a></td>
-                    <td><a href="{{ url_for('routes.index') }}" class = "button">Main Page</a></td>
+                    <td><a href="{{ url_for('routes.facultyindex') }}" class = "button">Main Page</a></td>
                     <td><a href="{{ url_for('auth.logout') }}" class = "button"> Logout </a></td>
                     <td> Current user is: <span class="useritem">{{current_user.username}} </span> </td>  
                 {% else %}
-                    <td><a href="{{ url_for('routes.index') }}" class = "button">Main Page</a></td>
+                    <td><a href="{{ url_for('routes.studentindex') }}" class = "button">Main Page</a></td>
                     <td><a href="{{ url_for('auth.logout') }}" class = "button"> Logout </a></td>
                     <td> Current user is: <span class="useritem">{{current_user.username}} </span> </td>
                 {% endif %} 

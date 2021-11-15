@@ -12,14 +12,18 @@ from app.Controller.forms import PostForm, EmptyForm, SortForm, ResearchForm
 bp_routes = Blueprint('routes', __name__)
 bp_routes.template_folder = Config.TEMPLATE_FOLDER 
 
-@bp_routes.route('/', methods=['GET'])
+@bp_routes.route('/', methods=['GET']) # loads to the index page
 @bp_routes.route('/index', methods=['GET'])
 @login_required
 def index(): # problem here
     eform = EmptyForm()
     sortform = SortForm()
     posts = researchPos.query.order_by(researchPos.timestamp.desc())
-    return render_template('index.html', title="Search App Portal", posts=posts.all(), eform=eform, sortform = sortform)
+    if current_user.isfaculty:
+        return redirect(url_for('routes.facultyindex'))
+    else:
+        return redirect(url_for('routes.studentindex'))
+    # return render_template('index.html', title="Search App Portal", posts=posts.all(), eform=eform, sortform = sortform)
 
 @bp_routes.route('/createpost/', methods=['GET','POST'])
 @login_required
@@ -58,12 +62,14 @@ def postposition():
       return redirect (url_for('routes.index'))
     return render_template('create.html', title="New Research Position", form = newPost)
 
+# created by Al
 @bp_routes.route('/studentindex', methods=['GET'])
 @login_required
 def studentindex():
     posts = researchPos.query.order_by(researchPos.timestamp.desc())
     return render_template('studentindex.html', title="Student Main Page", posts=posts.all())
 
+# created by Al
 @bp_routes.route('/facultyindex', methods=['GET'])
 @login_required
 def facultyindex():
