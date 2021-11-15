@@ -7,7 +7,7 @@ from config import Config
 
 from app import db
 from app.Model.models import Post, Tag, postTags, researchPos, User
-from app.Controller.forms import PostForm, EmptyForm, SortForm, ResearchForm
+from app.Controller.forms import PostForm, EmptyForm, SortForm, ResearchForm, EditForm
 
 bp_routes = Blueprint('routes', __name__)
 bp_routes.template_folder = Config.TEMPLATE_FOLDER 
@@ -95,12 +95,36 @@ def studentapply(researchPos_id):
 def display_profile():
     return render_template('display_profile.html', title="User Profile", user = current_user)
 
-# This is for the faculty, when they click on a student ID it will redirect them to the student's profile page
-@bp_routes.route('/display_student/<user_id>', methods=['GET', 'POST'])
+# When the user clicks on a specific user link it will redirect them to the selected profile page
+@bp_routes.route('/display_selected/<user_id>', methods=['GET', 'POST'])
 #@login_required
-def display_student(user_id):
+def display_selected(user_id):
     viewStudent = User.query.get(int(user_id)) # Gets all of the user's information and sets it to viewStudent class
-    return render_template('display_student.html', title="{}'s Profile".format(user_id), user = viewStudent)
+    return render_template('display_selected.html', title="{}'s Profile".format(user_id), user = viewStudent)
 
+@bp_routes.route('/edit_profile', methods=['GET','POST'])
+# STILL WIP Waiting on the UserDB
+def edit_profile(): # Loads the EditForm Class and lets the user edit/update their information
+    eform = EditForm()
+    if request.method == 'POST':
+        # current_user.firstname = eform.firstname.data
+        # current_user.lastname =eform.lastname.data
+        # current_user.address = eform.address.data
+        current_user.email = eform.email.data  
+        current_user.set_password(eform.password.data)
+        db.session.add(current_user)
+        db.session.commit()
+        flash("Changes have been saved.")
+        return redirect(url_for('display_profile'))
+
+    elif request.method == 'GET': #Populate boxes with user data
+        eform.username.data = current_user.username
+        # eform.firstname.data = current_user.firstname
+        # eform.lastname.data = current_user.lastname
+        # eform.address.data = current_user.address
+        eform.email.data = current_user.email
+    else:
+        pass
+    return render_template('edit_profile.html', title='Edit Profile', form=eform)
 
 #---------------------------------------------------------------------------------------------------

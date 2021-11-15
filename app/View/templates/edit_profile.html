@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Edit Profile</h1>
+    WIP waiting on UserDB Model
+    <br><br>
+    {% if form %}
+    <form action = "" method="POST">
+        {{ form.hidden_tag() }}
+        <div>
+            <!--WAITING ON THE USERDB Models In order to fill out the rest--> 
+            {{ form.username.label }}<br>
+            {{ form.username(class="forminput") }}<br>
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ "Please limit Username to 64 Chars" }}]</span><br>
+            {% endfor %}
+            <br>
+            {{ form.email.label }}<br>
+            {{ form.email(class="forminput") }}<br>
+            {% for error in form.email.errors %}
+            <span style="color: red;">[{{ "Please enter a valid Email" }}]</span><br>
+            {% endfor %}
+            <br>
+            {{ form.password.label }}<br>
+            {{ form.password(class="forminput") }}<br>
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ "Passwords don't match!" }}]</span><br>
+            {% endfor %}
+            <br>
+            {{ form.password2.label }}<br>
+            {{ form.password2(class="forminput") }}<br>
+            {% for error in form.password2.errors %}
+            <span style="color: red;">[{{"Please Try Again."}}]</span><br>
+            {% endfor %}
+        </div>
+    <br>
+    {{form.submit(class="button") }}
+    </form>
+    <!-- TODO: (milestone 3) Include the template for "user registration" form here..  -->
+    {% endif %}
+{% endblock %}

@@ -19,5 +19,8 @@
     <p><b>Experience Desc: </b> WIP</p>
     <p><b>Faculty: </b>{{user.isfaculty}}</p>
 
+    {%if user == current_user%}
+        <p><a href="{{url_for('routes.edit_profile')}}">Edit your profile</a></p>
+    {%endif%}
 
 {% endblock %}
