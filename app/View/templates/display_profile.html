@@ -2,23 +2,37 @@
 
 {% block content %}
     
-    <h1>Display User Profile</h1>
-    <h2>Username: {{user.username}} - {{user.id}}</h2>
+    {%if user.isfaculty == False%}
+        <h1>Display Student Profile</h1>
+        <h2>Username: {{user.username}} - {{user.id}}</h2>
 
-    <p><b>Name: </b> WIP.firstname WIP.lastname</p>
-    <p><b>Phone #: </b> WIP.phoneNumber</p>
-    <p><b>Email: </b> {{user.email}}</p>
-    <p><b>Address: </b> WIP.address</p>
-    
-    <p><b>Tehnical Courses: </b> WIP</p>
-    <p><b>Cumulative GPA: </b> WIP</p>
-    <p><b>TC GPA: </b> WIP</p>
-    
-    <p><b>Research Fields: </b> WIP</p>
-    <p><b>Programming Languages: </b> WIP</p>
-    <p><b>Experience Desc: </b> WIP</p>
-    <p><b>Faculty: </b>{{user.isfaculty}}</p>
+        <p><b>Name: </b> WIP.firstname WIP.lastname</p>
+        <p><b>Phone #: </b> WIP.phoneNumber</p>
+        <p><b>Email: </b> {{user.email}}</p>
+        <p><b>Address: </b> WIP.address</p>
+        
+        <p><b>Tehnical Courses: </b> WIP</p>
+        <p><b>Cumulative GPA: </b> WIP</p>
+        <p><b>TC GPA: </b> WIP</p>
+        
+        <p><b>Research Fields: </b> WIP</p>
+        <p><b>Programming Languages: </b> WIP</p>
+        <p><b>Experience Desc: </b> WIP</p>
+        <p><b>Faculty: </b>{{user.isfaculty}}</p>
 
+    {%else%}
+        <h1>Display Faculty Profile</h1>
+        <h2>Username: {{user.username}} - {{user.id}}</h2>
+
+        <p><b>Name: </b> WIP.firstname WIP.lastname</p>
+        <p><b>Phone #: </b> WIP.phoneNumber</p>
+        <p><b>Email: </b> {{user.email}}</p>
+        <p><b>Address: </b> WIP.address</p>
+        
+        <p><b>Research Fields: </b> WIP</p>
+        <p><b>Programming Languages: </b> WIP</p>
+        <p><b>Faculty: </b>{{user.isfaculty}}</p>
+    {%endif%}
     {%if user == current_user%}
         <p><a href="{{url_for('routes.edit_profile')}}">Edit your profile</a></p>
     {%endif%}
