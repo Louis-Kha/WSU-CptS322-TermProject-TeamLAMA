@@ -85,3 +85,12 @@ class researchPos(db.Model):
     researchFields = db.Column(db.String(150))
     requiredQualifications = db.Column(db.String(500))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    #------------ Added by Alex -------------------
+class progLang(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(69))
+
+    def __repr__(self): # Prints the Programming Languages in the database
+        return '<id: {} Language: {}>'.format(self.id, self.name)
+    #----------------------------------------------
