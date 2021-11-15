@@ -9,6 +9,6 @@
     "\\app\\View\\static\\css",
     "\\app\\View\\templates"
   ],
-  "SelectedNode": "\\app\\View\\templates\\dummystudentapp.html",
+  "SelectedNode": "\\app\\Model\\models.py",
   "PreviewInSolutionExplorer": false
 }

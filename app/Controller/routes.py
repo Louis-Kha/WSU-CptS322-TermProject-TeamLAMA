@@ -6,8 +6,8 @@ from flask_login import current_user, login_required
 from config import Config
 
 from app import db
-from app.Model.models import Post, Tag, postTags, researchPos, User
-from app.Controller.forms import PostForm, EmptyForm, SortForm, ResearchForm
+from app.Model.models import Post, Tag, postTags, researchPos, User, application
+from app.Controller.forms import PostForm, EmptyForm, SortForm, ResearchForm, ApplicationForm
 
 bp_routes = Blueprint('routes', __name__)
 bp_routes.template_folder = Config.TEMPLATE_FOLDER 
@@ -104,3 +104,16 @@ def display_student(user_id):
 
 
 #---------------------------------------------------------------------------------------------------
+
+@bp_routes.route('/researchApply/<student_id>', methods=['GET', 'POST'])
+def researchApply(student_id):
+    #used in studentapp.html with (current_user) to maintain student id in their research application
+    user_id = User.query.get(student_id)
+    newApply = ApplicationForm()
+    if newApply.validate_on_submit():
+      newApplied = application(name = newApply.name.data, description = newApply.description.data, reference = newApply.reference.data)
+      db.session.add(newApplied)
+      db.session.commit()
+      flash("You Have Successfully Applied To A New Position!")
+      return redirect (url_for('routes.studentindex'))
+    return render_template('researchapply.html', title="Search App Portal", student=user_id, form = newApply)

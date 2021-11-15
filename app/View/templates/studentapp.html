@@ -13,9 +13,24 @@
 <div class="postmessage">
 
     <p> Title: <b> {{positions.title}} </b></p>
+    <p> Research Description: <b> {{positions.researchDesc}} </b></p>
+    <p> Required Hours: <b> {{positions.requiredHours}} </b></p>
+    <p> Research Fields: <b> {{positions.researchFields}} </b></p>
+    <p> Posted at: <b> {{ moment(positions.timestamp).format('LLL') }} </b></p>
+    <p> The Position is created by: <b> <span class="useritem">{{current_user.username}} </b></p>
+
+
+    <p> Testing Student ID View: <b> {{positions.student}} </b></p>
+
 
 </div>
 
+<!-- New Form action to link to redirect route towards application page form while sending student_id information -->
+<div>
+    <form action="{{ url_for('routes.researchApply', student_id = current_user.id )}}" method="get">
+        <input type="submit" value="Apply!" />
+    </form>
+</div>
 
 
 

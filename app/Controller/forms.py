@@ -53,3 +53,10 @@ class SortForm(SelectField):
     sortform = SelectField('Sort options',choices = [(4, 'Date'),(3, 'Title'), (2, '# of likes'), (1,'Happiness level')])
     refresh = SubmitField('Refresh')
     myposts = BooleanField('myposts')
+
+
+class ApplicationForm(FlaskForm):
+    name = StringField('Student Name', validators=[DataRequired()])
+    description = TextAreaField('Brief Description', validators=[Length(min = 1, max = 2000, message = "Invalid Length for Post!")])
+    reference = TextAreaField('Faculty References', validators=[Length(min = 1, max = 200, message = "Invalid Length for Post!")])
+    submit = SubmitField('Post')
