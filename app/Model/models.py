@@ -11,10 +11,6 @@ postTags = db.Table('PostTag',
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
 )
 
-
-
-
-
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(64), unique = True)
