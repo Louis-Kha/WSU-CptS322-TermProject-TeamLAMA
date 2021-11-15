@@ -53,7 +53,7 @@ def logout():
 def register():
     rform = RegistrationForm()
     if rform.validate_on_submit():
-        user = User(username = rform.username.data, email = rform.email.data, isfaculty = False)
+        user = User(username = rform.username.data, email = rform.email.data, isfaculty = False, isnotfaculty = True)
         user.set_password(rform.password1.data)
         db.session.add(user)
         db.session.commit()
@@ -66,7 +66,7 @@ def register():
 def Facultyregister():
     rform = RegistrationForm()
     if rform.validate_on_submit():
-        user = User(username = rform.username.data, email = rform.email.data, isfaculty = True)
+        user = User(username = rform.username.data, email = rform.email.data, isfaculty = True, isnotfaculty = False)
         user.set_password(rform.password1.data)
         db.session.add(user)
         db.session.commit()

@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     post = db.relationship('Post', backref = 'writer', lazy = 'dynamic')
     isfaculty = db.Column(db.Boolean)
+    isnotfaculty = db.Column(db.Boolean)
 
     def __repr__(self):
         return ' {} - {} '.format(self.username, self.id)
