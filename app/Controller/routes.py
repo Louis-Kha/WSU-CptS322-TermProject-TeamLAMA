@@ -73,7 +73,8 @@ def facultyindex():
 @bp_routes.route('/studentapply2/<researchPos_id>', methods=['GET', 'POST'])
 def studentapply2(researchPos_id):
     position = researchPos.query.get(researchPos_id)
-    return render_template('studentapp.html', title="Search App Portal", positions=position)
+    applications = application.query.filter_by(id = researchPos_id).all()
+    return render_template('studentapp.html', title="Search App Portal", positions=position, applicants = applications)
 
 @bp_routes.route('/studentapply/<researchPos_id>', methods=['GET', 'POST'])
 def studentapply(researchPos_id):
@@ -105,15 +106,15 @@ def display_student(user_id):
 
 #---------------------------------------------------------------------------------------------------
 
-@bp_routes.route('/researchApply/<student_id>', methods=['GET', 'POST'])
-def researchApply(student_id):
+@bp_routes.route('/researchApply/<currentResearch_id>', methods=['GET', 'POST'])
+def researchApply(currentResearch_id):
     #used in studentapp.html with (current_user) to maintain student id in their research application
-    user_id = User.query.get(student_id)
+    research_id = researchPos.query.get(currentResearch_id)
     newApply = ApplicationForm()
     if newApply.validate_on_submit():
-      newApplied = application(name = newApply.name.data, description = newApply.description.data, reference = newApply.reference.data)
+      newApplied = application(name = newApply.name.data, description = newApply.description.data, reference = newApply.reference.data, student_id = current_user.id, researchPos_id = research_id.id)
       db.session.add(newApplied)
       db.session.commit()
       flash("You Have Successfully Applied To A New Position!")
       return redirect (url_for('routes.studentindex'))
-    return render_template('researchapply.html', title="Search App Portal", student=user_id, form = newApply)
+    return render_template('researchapply.html', title="Search App Portal", form = newApply)

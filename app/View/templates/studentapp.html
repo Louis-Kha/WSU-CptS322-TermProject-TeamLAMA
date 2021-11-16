@@ -19,15 +19,18 @@
     <p> Posted at: <b> {{ moment(positions.timestamp).format('LLL') }} </b></p>
     <p> The Position is created by: <b> <span class="useritem">{{current_user.username}} </b></p>
 
+    <!--{% for apps in applicants %}-->
 
-    <p> Testing Student ID View: <b> {{positions.student}} </b></p>
+    <p> Testing Student ID View: <b> {{applicants.reference}} </b></p>
+
+    <!--{% endfor %}-->
 
 
 </div>
 
 <!-- New Form action to link to redirect route towards application page form while sending student_id information -->
 <div>
-    <form action="{{ url_for('routes.researchApply', student_id = current_user.id )}}" method="get">
+    <form action="{{ url_for('routes.researchApply', currentResearch_id = positions.id )}}" method="get">
         <input type="submit" value="Apply!" />
     </form>
 </div>

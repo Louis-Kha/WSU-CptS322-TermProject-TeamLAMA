@@ -88,9 +88,6 @@ class researchPos(db.Model):
     researchFields = db.Column(db.String(150))
     requiredQualifications = db.Column(db.String(500))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    #This creates object relationship researchPos.application
-    applicant_id = db.Column(db.Integer, db.ForeignKey('applicants.id'))
-    student = db.relationship("application")
 
 
 class application(db.Model):
@@ -100,3 +97,5 @@ class application(db.Model):
     name = db.Column(db.String(100))
     description = db.Column(db.String(2000))
     reference = db.Column(db.String(200))
+    researchPos_id = db.Column(db.Integer, db.ForeignKey('researchPosition.id'))
+    researchPosition = db.relationship("researchPos")
