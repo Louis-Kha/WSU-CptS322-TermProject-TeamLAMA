@@ -8,7 +8,7 @@ from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms import validators, PasswordField
 
-from app.Model.models import Post, Tag, User
+from app.Model.models import *
 
 from app.Model.models import Post
 
@@ -63,20 +63,27 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
     email = StringField('Email', validators=[DataRequired(), Email()])
 
 # Things that need to be added still
-    # firstname = StringField('First Name', validators=[DataRequired()])
-    # lastname = StringField('Last Name', validators=[DataRequired()])
     # address = TextAreaField('Address', [Length(min=0, max=200)])
-    # phoneNumber = StringField('Phone Number', [Length(min=0, max=20)])
     # major = StringField('Major', validators=[DataRequired()])
     # cumGPA = StringField('Cumulative GPA', validators=[DataRequired()]) #May want to change this to a float/Double?
     # expectedGradDate = StringField('Expected Graduation Date', validators=[DataRequired()])
     # techCourses = StringField('Technical Courses', validators=[DataRequired()])
     # techGPA = StringField('Technical Courses GPA', validators=[DataRequired()])
     # researchFields = StringField('Interested Research Fields')
-    # programmingLanguage = StringField('Programming Languages', validators=[DataRequired()])
     # priorResearchExp = TextAreaField('Prior Research Experience', validators=[DataRequired()])
+    wsuID = StringField('Enter your WSU ID', validators=[DataRequired()])
+    firstName = StringField('First Name', validators = [DataRequired()])
+    lastName = StringField('Last Name', validators = [DataRequired()])
+    email = StringField('email', validators=[DataRequired(),Email()]) # will be wsu email
+    address = StringField('Address', validators=[DataRequired(), Length(min=10, max=256)])
+    phoneNumber = StringField('Phone Number', validators=[DataRequired()])
 
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Password Repeated', validators=[DataRequired(), EqualTo('password')])
+    knownLang = QuerySelectMultipleField('Programming Languages', 
+                                query_factory = User().get_lang, 
+                                get_label = progLang.__repr__, 
+                                widget = ListWidget(prefix_label = False), 
+                                option_widget = CheckboxInput())
     submit = SubmitField('Submit')
 #-------------------------------------------------------
