@@ -17,9 +17,7 @@ def initDB(*args, **kwargs):
 # -------- Added By Alex -----------
     if progLang.query.count() == 0:
         print("----------------------------------Inside ProgLang")
-        languages = ['C', 'C#', 'C++', 'Java', 'JavaScript', 
-                    'R', 'Swift', 'Python', 'PHP', 'Swift', 'Dart',
-                    'Kotlin','MATLAB','Perl','Ruby','Rust', 'Scala']
+        languages = ['C', 'C#', 'C++', 'Java', 'JavaScript', 'R', 'Swift', 'Python', 'PHP', 'Swift', 'Dart','Kotlin','MATLAB','Perl','Ruby','Rust', 'Scala']
         for language in languages:
             db.session.add(progLang(name = language))
         db.session.commit()

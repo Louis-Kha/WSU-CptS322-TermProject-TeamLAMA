@@ -101,16 +101,19 @@ def edit_profile(): # Loads the EditForm Class and lets the user edit/update the
         # current_user.address = eform.address.data
         current_user.email = eform.email.data  
         current_user.set_password(eform.password.data)
+        for eachLang in eform.knownLang.data:
+            current_user.knownLanguages.append(eachLang)
         db.session.add(current_user)
         db.session.commit()
         flash("Changes have been saved.")
-        return redirect(url_for('display_profile'))
+        return redirect(url_for('routes.display_profile'))
 
     elif request.method == 'GET': #Populate boxes with user data
         eform.username.data = current_user.username
         # eform.firstname.data = current_user.firstname
         # eform.lastname.data = current_user.lastname
         # eform.address.data = current_user.address
+        eform.knownLang.data = current_user.knownLanguages
         eform.email.data = current_user.email
     else:
         pass

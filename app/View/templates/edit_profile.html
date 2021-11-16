@@ -33,6 +33,10 @@
             <span style="color: red;">[{{"Please Try Again."}}]</span><br>
             {% endfor %}
         </div>
+        <br>
+        {{form.knownLang.label}}
+        {{ form.knownLang(class="CheckBoxInput") }}
+        <br>
     <br>
     {{form.submit(class="button") }}
     </form>

@@ -8,7 +8,7 @@ from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms import validators, PasswordField
 
-from app.Model.models import Post, Tag, User
+from app.Model.models import *
 
 from app.Model.models import Post
 
@@ -73,10 +73,14 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
     # techCourses = StringField('Technical Courses', validators=[DataRequired()])
     # techGPA = StringField('Technical Courses GPA', validators=[DataRequired()])
     # researchFields = StringField('Interested Research Fields')
-    # programmingLanguage = StringField('Programming Languages', validators=[DataRequired()])
     # priorResearchExp = TextAreaField('Prior Research Experience', validators=[DataRequired()])
 
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Password Repeated', validators=[DataRequired(), EqualTo('password')])
+    knownLang = QuerySelectMultipleField('Programming Languages', 
+                                query_factory = User().get_lang, 
+                                get_label = progLang.__repr__, 
+                                widget = ListWidget(prefix_label = False), 
+                                option_widget = CheckboxInput())
     submit = SubmitField('Submit')
 #-------------------------------------------------------
