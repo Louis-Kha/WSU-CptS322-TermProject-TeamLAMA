@@ -14,11 +14,6 @@ def initDB(*args, **kwargs):
     # app.permanent_session_lifetime = timedelta(minutes=20)
     # session.modified = True
     db.create_all()
-    if Tag.query.count() == 0:
-         tags = ['faculty','student']
-         for t in tags:
-             db.session.add(Tag(name=t))
-         db.session.commit()
 
 if __name__ == "__main__":
     app.run(debug=True)
