@@ -32,7 +32,7 @@
 
                 <div>
                     The post is created by:  <span class="useritem"> {{current_user.username}} <!-- causes an error, assigns the post created by currently logged in user -->
-                    <form action="{{url_for('routes.display_student', user_id = 3)}}" method="post"></form>
+                    <form action="{{url_for('routes.display_selected', user_id = 3)}}" method="post"></form>
                 </div> 
             </td> 
 </table>
