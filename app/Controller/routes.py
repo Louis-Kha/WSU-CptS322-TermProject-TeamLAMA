@@ -84,7 +84,6 @@ def studentapply(researchPos_id):
     posts = researchPos.query.order_by(researchPos.timestamp.desc())
     return render_template('studentapplication.html', title="Search App Portal", posts=posts.all())
 
-<<<<<<< HEAD
 #---------------------------------Added By Alex-----------------------------------------------------
 @bp_routes.route('/display_profile', methods=['GET'])
 #@login_required
@@ -142,5 +141,3 @@ def edit_profile(): # Loads the EditForm Class and lets the user edit/update the
     return render_template('edit_profile.html', title='Edit Profile', form=eform)
 
 #---------------------------------------------------------------------------------------------------
-=======
->>>>>>> mk-it2-part2
