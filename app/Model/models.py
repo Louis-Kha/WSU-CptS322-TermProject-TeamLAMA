@@ -1,7 +1,9 @@
 from datetime import datetime
 from app import db, login
-from flask_login import UserMixin
+from flask_login import UserMixin, LoginManager
 from werkzeug.security import generate_password_hash, generate_password_hash, check_password_hash
+
+# import app
  
 # Al commits
 ## changing login.html, register.html, models.py, auth_routes.py, auth_forms.py
@@ -32,8 +34,9 @@ class User(UserMixin, db.Model):
 
     password_hash = db.Column(db.String(128))
     post = db.relationship('Post', backref = 'writer', lazy = 'dynamic')
-
+    # remember = db.Column(db.Boolean)
     isfaculty = db.Column(db.Boolean)
+    isnotfaculty = db.Column(db.Boolean)
 
     #------------- Added by Alex 
     knownLanguages = db.relationship('progLang', # Class Name
@@ -65,6 +68,9 @@ class User(UserMixin, db.Model):
     def get_user_posts(self):
         allUserPosts = User.query.all()
         return allUserPosts
+    
+    # def get_remember(self):
+    #     return self.remember 
 
 @login.user_loader
 def load_user(id):

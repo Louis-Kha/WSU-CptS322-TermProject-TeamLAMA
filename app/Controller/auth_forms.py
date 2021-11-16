@@ -18,7 +18,10 @@ class RegistrationForm(FlaskForm):
     password1 = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Password Repeat', validators=[DataRequired(), EqualTo('password1')])
     
+    remember = BooleanField('Remember')
+    # wsuID - StringField('Enter your WSU ID', validators=[DataRequired(), type(int)])
     isfaculty = BooleanField('Check if faculty member')
+    isnotfaculty = BooleanField('opposite of isfaculty')
     submit = SubmitField('Register')
 
 class LoginForm(FlaskForm):
@@ -26,6 +29,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember')
     isfaculty = BooleanField('Check if faculty member')
+    isnotfaculty = BooleanField('opposite of isfaculty')
     submit = SubmitField('Sign in')
 
 class StudentInfoForm(FlaskForm):

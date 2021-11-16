@@ -36,9 +36,13 @@
             </div>
 
             <div>
-                 <form action="{{ url_for('routes.studentapply', researchPos_id = post.id )}}" method="get">
-                    <input type="submit"  value="Apply!" />
-                 </form>
+                {% if current_user.isnotfaculty %}
+                    <form action="{{ url_for('routes.studentapply', researchPos_id = post.id )}}" method="get">
+                        <input type="submit"  value="Apply!" />
+                    </form>
+                {% else %}
+                    <!-- Do nothing -->
+                {% endif %}
             </div>
 
         </td>
