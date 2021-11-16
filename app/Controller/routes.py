@@ -95,21 +95,28 @@ def display_selected(user_id):
 # STILL WIP Waiting on the UserDB
 def edit_profile(): # Loads the EditForm Class and lets the user edit/update their information
     eform = EditForm()
+    cUser = User()
     if request.method == 'POST':
-        # current_user.firstname = eform.firstname.data
-        # current_user.lastname =eform.lastname.data
-        # current_user.address = eform.address.data
-        cUser =current_user(username = eform.username.data, 
-                            firstName = eform.firstName.data,
-                            lastName = eform.lastName.data,
-                            email = eform.email.data,
-                            address = eform.address.data,
-                            phoneNumber = eform.phoneNumber.data,
-                            knownLanguages = eform.knownLang.data)# knownLang is the name of knownLanguages in edi()
-        # current_user.email = eform.email.data  
-        # current_user.set_password(eform.password.data)
-        # current_user.knownLanguages = eform.knownLang.data 
-        db.session.add(cUser)
+        current_user.username = eform.username.data
+        current_user.wsuID = eform.wsuID.data
+        current_user.firstName = eform.firstName.data
+        current_user.lastName =eform.lastName.data
+        current_user.knownLanguages = eform.knownLang.data 
+        current_user.email = eform.email.data  
+        current_user.address = eform.address.data
+        current_user.phoneNumber = eform.phoneNumber.data
+
+        current_user.set_password(eform.password.data)
+
+        # cUser = cUser(username = eform.username.data, 
+        #                     firstName = eform.firstName.data,
+        #                     lastName = eform.lastName.data,
+        #                     email = eform.email.data,
+        #                     address = eform.address.data,
+        #                     phoneNumber = eform.phoneNumber.data)
+                            # knownLang is the name of knownLanguages in edi()
+        db.session.add(current_user)
+        #db.session.add(cUser)
         db.session.commit()
         flash("Changes have been saved.")
         return redirect(url_for('routes.display_profile'))
@@ -122,7 +129,6 @@ def edit_profile(): # Loads the EditForm Class and lets the user edit/update the
         eform.address.data = current_user.address
         eform.knownLang.data = current_user.knownLanguages
         eform.email.data = current_user.email
-        eform.address.data = current_user.address
         eform.phoneNumber.data = current_user.phoneNumber
     else:
         pass

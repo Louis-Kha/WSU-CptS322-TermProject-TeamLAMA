@@ -69,11 +69,19 @@ def register():
         return redirect(url_for('auth.login'))
     return render_template('register.html', form = rform)
 
+# Faculty Register
 @bp_auth.route('/Facultyregister', methods=['GET', 'POST'])
 def Facultyregister():
     rform = RegistrationForm()
     if rform.validate_on_submit():
-        user = User(username = rform.username.data, email = rform.email.data, isfaculty = True)
+        user = User(username = rform.username.data, 
+                    wsuID = rform.wsuID.data,
+                    firstName = rform.firstName.data, 
+                    lastName = rform.lastName.data,
+                    email = rform.email.data, 
+                    address = rform.address.data,
+                    phoneNumber = rform.phoneNumber.data,
+                    isfaculty = True)
         user.set_password(rform.password1.data)
         db.session.add(user)
         db.session.commit()

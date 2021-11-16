@@ -6,7 +6,7 @@ from wtforms.fields.simple import PasswordField
 from app.Model.models import User
 
 class RegistrationForm(FlaskForm):
-    username = StringField('username', validators=[DataRequired(), Email(), Length(min=0, max=64)]) # should be rewritten for email
+    username = StringField('username', validators=[DataRequired(), Length(min=0, max=64)]) # should be rewritten for email
 
     wsuID = StringField('Enter your WSU ID', validators=[DataRequired()])
     firstName = StringField('First Name', validators = [DataRequired()])

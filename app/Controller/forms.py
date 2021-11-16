@@ -63,7 +63,6 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
     email = StringField('Email', validators=[DataRequired(), Email()])
 
 # Things that need to be added still
-    # address = TextAreaField('Address', [Length(min=0, max=200)])
     # major = StringField('Major', validators=[DataRequired()])
     # cumGPA = StringField('Cumulative GPA', validators=[DataRequired()]) #May want to change this to a float/Double?
     # expectedGradDate = StringField('Expected Graduation Date', validators=[DataRequired()])
