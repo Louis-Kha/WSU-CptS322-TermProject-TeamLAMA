@@ -31,14 +31,8 @@
                 </div> 
 
                 <div>
-                    The post is created by:  <span class="useritem">{{current_user.username}}
-                    {% if current_user.isnotfaculty %}
-                        <!--<form action="{{url_for('routes.display_student', user_id = 3)}}" method="post"></form>-->
-                        <!--<form action="{{url_for('routes.display_student', user_id = 3)}}" method="post">-->
-                    {% else %}
-                        <!--<form action="{{url_for('routes.display_student', user_id = 3)}}" method="post"></form>-->
-                        <!-- <input type="submit" class = "" value = ""> this used to be under the form action above the </div> element -->
-                    {% endif %} 
+                    The post is created by:  <span class="useritem"> {{current_user.username}} <!-- causes an error, assigns the post created by currently logged in user -->
+                    <form action="{{url_for('routes.display_student', user_id = 3)}}" method="post"></form>
                 </div> 
             </td> 
 </table>

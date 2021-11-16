@@ -10,6 +10,7 @@ class RegistrationForm(FlaskForm):
     email = StringField('email', validators=[DataRequired(),Email()]) # will be wsu email
     password1 = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Password Repeat', validators=[DataRequired(), EqualTo('password1')])
+    remember = BooleanField('Remember')
     # wsuID - StringField('Enter your WSU ID', validators=[DataRequired(), type(int)])
     isfaculty = BooleanField('Check if faculty member')
     isnotfaculty = BooleanField('opposite of isfaculty')

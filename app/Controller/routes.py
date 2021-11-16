@@ -2,7 +2,7 @@ from __future__ import print_function
 import sys
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required, login_manager
 from config import Config
 
 from app import db
