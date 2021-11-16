@@ -6,7 +6,7 @@ from flask_login import current_user, login_required
 from config import Config
 
 from app import db
-from app.Model.models import Post, Tag, postTags, researchPos, User
+from app.Model.models import * #Post, Tag, postTags, researchPos, User
 from app.Controller.forms import PostForm, EmptyForm, SortForm, ResearchForm, EditForm
 
 bp_routes = Blueprint('routes', __name__)
@@ -34,17 +34,6 @@ def createpost():
         flash('Post is created')
         return redirect(url_for('routes.index'))
     return render_template('create.html', form = cform)
-
-@bp_routes.route('/like/<post_id>', methods=['POST'])
-@login_required
-def like(post_id):
-    if request.method == 'POST':
-        thepost = Post.query.filter_by(id = post_id).first()
-        thepost.likes = 1 + thepost.likes 
-        db.session.add(thepost)
-        db.session.commit()
-        return redirect(url_for('routes.index'))
-    return render_template('index.html', title="Smile Portal", posts=posts.all())
 
 
 @bp_routes.route('/postposition', methods=['GET','POST'])

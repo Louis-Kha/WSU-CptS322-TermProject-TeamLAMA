@@ -6,12 +6,15 @@ from werkzeug.security import generate_password_hash, generate_password_hash, ch
 # Al commits
 ## changing login.html, register.html, models.py, auth_routes.py, auth_forms.py
 
-postTags = db.Table('PostTag',
+postTags = db.Table('postTags',
     db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
 )
 
-
+userLanguages = db.Table('userLanguages',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('progLang_id', db.Integer, db.ForeignKey('prog_lang.id'))
+)
 
 
 
@@ -21,6 +24,15 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique = True)
     password_hash = db.Column(db.String(128))
     post = db.relationship('Post', backref = 'writer', lazy = 'dynamic')
+
+    #------------- Added by Alex 
+    knownLanguages = db.relationship('progLang', # Class Name
+                                    secondary = userLanguages, # Table 
+                                    primaryjoin = (userLanguages.c.user_id == id),
+                                    backref = db.backref('userLanguages', lazy = 'dynamic'),
+                                    lazy = 'dynamic')
+                                    
+    #----------------------------------
     isfaculty = db.Column(db.Boolean)
 
     def __repr__(self):
@@ -64,6 +76,8 @@ class Post(db.Model):
                             primaryjoin=(postTags.c.post_id == id),
                             backref=db.backref('postTags', lazy='dynamic'),
                             lazy='dynamic')
+
+    
     def get_tags(self):
         return self.tags
 
@@ -86,11 +100,11 @@ class researchPos(db.Model):
     requiredQualifications = db.Column(db.String(500))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
-    #------------ Added by Alex -------------------
+#------------ Added by Alex -------------------
 class progLang(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(69))
 
     def __repr__(self): # Prints the Programming Languages in the database
         return '<id: {} Language: {}>'.format(self.id, self.name)
-    #----------------------------------------------
+#----------------------------------------------
