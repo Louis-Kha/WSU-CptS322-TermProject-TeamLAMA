@@ -6,10 +6,11 @@
         <h1>Display Student Profile</h1>
         <h2>Username: {{user.username}} - {{user.id}}</h2>
 
-        <p><b>Name: </b> WIP.firstname WIP.lastname</p>
-        <p><b>Phone #: </b> WIP.phoneNumber</p>
+        <p><b>WSU ID: </b> {{user.wsuID}}</p>
+        <p><b>Name: </b> {{user.firstName}} {{user.lastName}}</p>
+        <p><b>Phone #: </b> {{user.phoneNumber}}</p>
         <p><b>Email: </b> {{user.email}}</p>
-        <p><b>Address: </b> WIP.address</p>
+        <p><b>Address: </b> {{user.address}}</p>
         
         <p><b>Tehnical Courses: </b> WIP</p>
         <p><b>Cumulative GPA: </b> WIP</p>
@@ -19,7 +20,7 @@
 
         <p><b>Programming Languages: </b> 
         {%for lang in user.knownLanguages%}
-        {{lang}},
+        {{lang}}
         {%endfor%}</p>
 
         <p><b>Experience Desc: </b> WIP</p>

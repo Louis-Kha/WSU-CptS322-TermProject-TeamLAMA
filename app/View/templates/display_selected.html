@@ -15,7 +15,12 @@
         <p><b>TC GPA: </b> WIP</p>
         
         <p><b>Research Fields: </b> WIP</p>
-        <p><b>Programming Languages: </b> WIP</p>
+
+        <p><b>Programming Languages: </b> 
+        {%for lang in user.knownLanguages%}
+        {{lang}}
+        {%endfor%}</p>
+
         <p><b>Experience Desc: </b> WIP</p>
         <p><b>Faculty: </b>{{user.isfaculty}}</p>
     {%else%}

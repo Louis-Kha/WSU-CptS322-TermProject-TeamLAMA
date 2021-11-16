@@ -53,7 +53,14 @@ def logout():
 def register():
     rform = RegistrationForm()
     if rform.validate_on_submit():
-        user = User(username = rform.username.data, email = rform.email.data, isfaculty = False)
+        user = User(username = rform.username.data, 
+                    wsuID = rform.wsuID.data,
+                    firstName = rform.firstName.data, 
+                    lastName = rform.lastName.data,
+                    email = rform.email.data, 
+                    address = rform.address.data,
+                    phoneNumber = rform.phoneNumber.data,
+                    isfaculty = False)
         user.set_password(rform.password1.data)
         db.session.add(user)
         db.session.commit()

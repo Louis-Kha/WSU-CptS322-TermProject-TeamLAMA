@@ -99,22 +99,31 @@ def edit_profile(): # Loads the EditForm Class and lets the user edit/update the
         # current_user.firstname = eform.firstname.data
         # current_user.lastname =eform.lastname.data
         # current_user.address = eform.address.data
-        current_user.email = eform.email.data  
-        current_user.set_password(eform.password.data)
-        for eachLang in eform.knownLang.data:
-            current_user.knownLanguages.append(eachLang)
-        db.session.add(current_user)
+        cUser =current_user(username = eform.username.data, 
+                            firstName = eform.firstName.data,
+                            lastName = eform.lastName.data,
+                            email = eform.email.data,
+                            address = eform.address.data,
+                            phoneNumber = eform.phoneNumber.data,
+                            knownLanguages = eform.knownLang.data)# knownLang is the name of knownLanguages in edi()
+        # current_user.email = eform.email.data  
+        # current_user.set_password(eform.password.data)
+        # current_user.knownLanguages = eform.knownLang.data 
+        db.session.add(cUser)
         db.session.commit()
         flash("Changes have been saved.")
         return redirect(url_for('routes.display_profile'))
 
     elif request.method == 'GET': #Populate boxes with user data
         eform.username.data = current_user.username
-        # eform.firstname.data = current_user.firstname
-        # eform.lastname.data = current_user.lastname
-        # eform.address.data = current_user.address
+        eform.wsuID.data = current_user.wsuID
+        eform.firstName.data = current_user.firstName
+        eform.lastName.data = current_user.lastName
+        eform.address.data = current_user.address
         eform.knownLang.data = current_user.knownLanguages
         eform.email.data = current_user.email
+        eform.address.data = current_user.address
+        eform.phoneNumber.data = current_user.phoneNumber
     else:
         pass
     return render_template('edit_profile.html', title='Edit Profile', form=eform)

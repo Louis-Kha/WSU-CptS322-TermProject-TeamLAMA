@@ -21,9 +21,18 @@ userLanguages = db.Table('userLanguages',
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(64), unique = True)
+    wsuID = db.Column(db.Integer)
+
+    # Contact Information
+    firstName = db.Column(db.String(128)) 
+    lastName = db.Column(db.String(128))    
     email = db.Column(db.String(120), unique = True)
+    address = db.Column(db.String(256))
+    phoneNumber = db.Column(db.String(32))
+
     password_hash = db.Column(db.String(128))
     post = db.relationship('Post', backref = 'writer', lazy = 'dynamic')
+
     isfaculty = db.Column(db.Boolean)
 
     #------------- Added by Alex 
@@ -108,5 +117,5 @@ class progLang(db.Model):
     name = db.Column(db.String(69))
 
     def __repr__(self): # Prints the Programming Languages in the database
-        return '{} '.format(self.name)
+        return '{}, '.format(self.name)
 #----------------------------------------------

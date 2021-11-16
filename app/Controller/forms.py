@@ -63,10 +63,7 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
     email = StringField('Email', validators=[DataRequired(), Email()])
 
 # Things that need to be added still
-    # firstname = StringField('First Name', validators=[DataRequired()])
-    # lastname = StringField('Last Name', validators=[DataRequired()])
     # address = TextAreaField('Address', [Length(min=0, max=200)])
-    # phoneNumber = StringField('Phone Number', [Length(min=0, max=20)])
     # major = StringField('Major', validators=[DataRequired()])
     # cumGPA = StringField('Cumulative GPA', validators=[DataRequired()]) #May want to change this to a float/Double?
     # expectedGradDate = StringField('Expected Graduation Date', validators=[DataRequired()])
@@ -74,6 +71,12 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
     # techGPA = StringField('Technical Courses GPA', validators=[DataRequired()])
     # researchFields = StringField('Interested Research Fields')
     # priorResearchExp = TextAreaField('Prior Research Experience', validators=[DataRequired()])
+    wsuID = StringField('Enter your WSU ID', validators=[DataRequired()])
+    firstName = StringField('First Name', validators = [DataRequired()])
+    lastName = StringField('Last Name', validators = [DataRequired()])
+    email = StringField('email', validators=[DataRequired(),Email()]) # will be wsu email
+    address = StringField('Address', validators=[DataRequired(), Length(min=10, max=256)])
+    phoneNumber = StringField('Phone Number', validators=[DataRequired()])
 
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Password Repeated', validators=[DataRequired(), EqualTo('password')])
