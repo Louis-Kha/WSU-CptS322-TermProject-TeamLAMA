@@ -6,6 +6,8 @@ from flask_login import current_user, login_required, login_manager
 from config import Config
 
 from app import db
+from app.Model.models import Post, Tag, postTags, researchPos, User, application
+from app.Controller.forms import PostForm, EmptyForm, SortForm, ResearchForm, ApplicationForm
 from app.Model.models import * #Post, Tag, postTags, researchPos, User
 from app.Controller.forms import PostForm, EmptyForm, SortForm, ResearchForm, EditForm
 
@@ -68,7 +70,8 @@ def facultyindex():
 @bp_routes.route('/studentapply2/<researchPos_id>', methods=['GET', 'POST'])
 def studentapply2(researchPos_id):
     position = researchPos.query.get(researchPos_id)
-    return render_template('studentapp.html', title="Search App Portal", positions=position)
+    applications = application.query.filter_by(id = researchPos_id).all()
+    return render_template('studentapp.html', title="Search App Portal", positions=position, applicants = applications)
 
 @bp_routes.route('/studentapply/<researchPos_id>', methods=['GET', 'POST'])
 def studentapply(researchPos_id):
@@ -141,3 +144,16 @@ def edit_profile(): # Loads the EditForm Class and lets the user edit/update the
     return render_template('edit_profile.html', title='Edit Profile', form=eform)
 
 #---------------------------------------------------------------------------------------------------
+
+@bp_routes.route('/researchApply/<currentResearch_id>', methods=['GET', 'POST'])
+def researchApply(currentResearch_id):
+    #used in studentapp.html with (current_user) to maintain student id in their research application
+    research_id = researchPos.query.get(currentResearch_id)
+    newApply = ApplicationForm()
+    if newApply.validate_on_submit():
+      newApplied = application(name = newApply.name.data, description = newApply.description.data, reference = newApply.reference.data, student_id = current_user.id, researchPos_id = research_id.id)
+      db.session.add(newApplied)
+      db.session.commit()
+      flash("You Have Successfully Applied To A New Position!")
+      return redirect (url_for('routes.studentindex'))
+    return render_template('researchapply.html', title="Search App Portal", form = newApply)

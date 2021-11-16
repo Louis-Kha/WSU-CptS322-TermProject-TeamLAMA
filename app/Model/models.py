@@ -108,6 +108,7 @@ class Tag(db.Model):
 
 
 class researchPos(db.Model):
+    __tablename__ = 'researchPosition'
     id = db.Column(db.Integer, primary_key=True)
     title  = db.Column(db.String(150))
     researchDesc = db.Column(db.String(1500))
@@ -116,6 +117,17 @@ class researchPos(db.Model):
     researchFields = db.Column(db.String(150))
     requiredQualifications = db.Column(db.String(500))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+
+class application(db.Model):
+    __tablename__ = 'applicants'
+    student_id = db.Column(db.Integer, default = 0)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    description = db.Column(db.String(2000))
+    reference = db.Column(db.String(200))
+    researchPos_id = db.Column(db.Integer, db.ForeignKey('researchPosition.id'))
+    researchPosition = db.relationship("researchPos")
 
 #------------ Added by Alex -------------------
 class progLang(db.Model):
