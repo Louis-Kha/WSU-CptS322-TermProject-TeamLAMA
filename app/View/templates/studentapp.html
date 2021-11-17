@@ -19,11 +19,11 @@
     <p> Posted at: <b> {{ moment(positions.timestamp).format('LLL') }} </b></p>
     <p> The Position is created by: <b> <span class="useritem">{{current_user.username}} </b></p>
 
-    <!--{% for apps in applicants %}-->
+    {% for apps in applicants %}
 
-    <p> Testing Student ID View: <b> {{applicants.reference}} </b></p>
+    <p> Testing Student ID View: <b> {{apps.name}} </b></p>
 
-    <!--{% endfor %}-->
+    {% endfor %}
 
 
 </div>

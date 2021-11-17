@@ -71,6 +71,7 @@ def facultyindex():
 def studentapply2(researchPos_id):
     position = researchPos.query.get(researchPos_id)
     applications = application.query.filter_by(id = researchPos_id).all()
+    print(applications)
     return render_template('studentapp.html', title="Search App Portal", positions=position, applicants = applications)
 
 @bp_routes.route('/studentapply/<researchPos_id>', methods=['GET', 'POST'])
@@ -148,10 +149,10 @@ def edit_profile(): # Loads the EditForm Class and lets the user edit/update the
 @bp_routes.route('/researchApply/<currentResearch_id>', methods=['GET', 'POST'])
 def researchApply(currentResearch_id):
     #used in studentapp.html with (current_user) to maintain student id in their research application
-    research_id = researchPos.query.get(currentResearch_id)
+    #research_id = researchPos.query.get(currentResearch_id)
     newApply = ApplicationForm()
     if newApply.validate_on_submit():
-      newApplied = application(name = newApply.name.data, description = newApply.description.data, reference = newApply.reference.data, student_id = current_user.id, researchPos_id = research_id.id)
+      newApplied = application(name = newApply.name.data, description = newApply.description.data, reference = newApply.reference.data, student_id = current_user.id, researchPos_id = currentResearch_id)
       db.session.add(newApplied)
       db.session.commit()
       flash("You Have Successfully Applied To A New Position!")

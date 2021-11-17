@@ -128,6 +128,8 @@ class application(db.Model):
     reference = db.Column(db.String(200))
     researchPos_id = db.Column(db.Integer, db.ForeignKey('researchPosition.id'))
     researchPosition = db.relationship("researchPos")
+    def __repr__(self): # Prints the Programming Languages in the database
+        return '{}, '.format(self.name)
 
 #------------ Added by Alex -------------------
 class progLang(db.Model):
