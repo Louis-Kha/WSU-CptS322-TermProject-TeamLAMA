@@ -38,16 +38,31 @@ class User(UserMixin, db.Model):
     isfaculty = db.Column(db.Boolean)
     isnotfaculty = db.Column(db.Boolean)
 
-    #------------- Added by Alex 
     knownLanguages = db.relationship('progLang', # Class Name
                                     secondary = userLanguages, # Table 
                                     primaryjoin = (userLanguages.c.user_id == id),
                                     backref = db.backref('userLanguages', lazy = 'dynamic'),
                                     lazy = 'dynamic')
+
+    #-----ACIT3
+    cumGPA = db.Column(db.Float)
+    techCourseGPA = db.Column(db.Float)
+    experienceDesc = db.Column(db.String(1048))
+    """
+    What Needs to be added
+    Student+Fac
+        ResearchFields
+    Student
+        Relationships
+            Major
+            Technical Courses
+    """
+
+    #----------
+
     def get_lang(self):
         allLang = progLang().query.all()
         return allLang
-    #----------------------------------
     
     def __repr__(self):
         return ' {} - {} '.format(self.username, self.id)
