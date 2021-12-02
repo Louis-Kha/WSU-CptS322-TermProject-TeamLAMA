@@ -110,6 +110,8 @@ class Tag(db.Model):
 class researchPos(db.Model):
     __tablename__ = 'researchPosition'
     id = db.Column(db.Integer, primary_key=True)
+    faculty_id = db.Column(db.Integer, default = 0)
+    facultyName = db.Column(db.String(100))
     title  = db.Column(db.String(150))
     researchDesc = db.Column(db.String(1500))
     startEndDate = db.Column(db.String(150))

@@ -9,6 +9,6 @@
     "\\app\\View\\static\\css",
     "\\app\\View\\templates"
   ],
-  "SelectedNode": "\\smile.py",
+  "SelectedNode": "\\app\\Controller\\auth_forms.py",
   "PreviewInSolutionExplorer": false
 }
