@@ -31,40 +31,23 @@
 <!-- New Form action to link to redirect route towards application page form while sending student_id information -->
 <div>
 
-    {% if applicants %}
+        {% if appBool == 0%}
+              <form action="{{ url_for('routes.researchApply', currentResearch_id = positions.id )}}" method="get">
+                <input type="submit" value="Apply!" />
+              </form>
 
-    {% for appCheck in applicants %}
+        {% else %}
 
-    HOWMANYAPPLICATIONS
+        Status: PENDING
 
-    {% if current_user.id == appCheck.student_id %}
-
-    Status: Pending
-
-    {% else %}
-
-    Statement1
-
-    <form action="{{ url_for('routes.researchApply', currentResearch_id = positions.id )}}" method="get">
-        <input type="submit" value="Apply!" />
-    </form>
-
-    {% endif %}
-    {% endfor %}
-
-    {% else %}
-
-    Statement2
-
-    <form action="{{ url_for('routes.researchApply', currentResearch_id = positions.id )}}" method="get">
-        <input type="submit" value="Apply!" />
-    </form>
-
-    {% endif %}
+        {% endif %}
 
 </div>
 
 
+<!--<form action="{{ url_for('routes.researchApply', currentResearch_id = positions.id )}}" method="get">
+    <input type="submit" value="Apply!" />
+</form>-->
 
 
 {% endblock %}
