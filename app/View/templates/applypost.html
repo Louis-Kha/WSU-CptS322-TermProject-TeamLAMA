@@ -32,16 +32,29 @@
             </div>
 
             <div>
-                The post is created by:  <span class="useritem">{{current_user.username}}
+                The post is created by:  <span class="useritem">{{post.facultyName}}
             </div>
 
             <div>
                 {% if current_user.isnotfaculty %}
+
                     <form action="{{ url_for('routes.studentapply2', researchPos_id = post.id )}}" method="get">
-                        <input type="submit"  value="Apply!" />
+                        <input type="submit"  value="View Position" />
                     </form>
+
                 {% else %}
-                    <!-- Do nothing -->
+
+                {% if current_user.isfaculty %}
+                {% if post.faculty_id == current_user.id %}
+
+                    <form action="{{ url_for('routes.viewPosition', researchPos_id = post.id )}}" method="get">
+                        <input type="submit"  value="View Applicants" />
+                    </form>
+
+
+                {% endif %}
+                {% endif %}
+
                 {% endif %}
             </div>
 
