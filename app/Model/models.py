@@ -110,6 +110,8 @@ class Tag(db.Model):
 class researchPos(db.Model):
     __tablename__ = 'researchPosition'
     id = db.Column(db.Integer, primary_key=True)
+    faculty_id = db.Column(db.Integer, default = 0)
+    facultyName = db.Column(db.String(100))
     title  = db.Column(db.String(150))
     researchDesc = db.Column(db.String(1500))
     startEndDate = db.Column(db.String(150))
@@ -123,11 +125,14 @@ class application(db.Model):
     __tablename__ = 'applicants'
     student_id = db.Column(db.Integer, default = 0)
     id = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.Integer, default = 0) #0 = neutral, 1 = pending, 2 = interview, 3 = hired, -1 = failed
     name = db.Column(db.String(100))
     description = db.Column(db.String(2000))
     reference = db.Column(db.String(200))
     researchPos_id = db.Column(db.Integer, db.ForeignKey('researchPosition.id'))
     researchPosition = db.relationship("researchPos")
+    def __repr__(self): # Prints the Programming Languages in the database
+        return '{}, '.format(self.name)
 
 #------------ Added by Alex -------------------
 class progLang(db.Model):

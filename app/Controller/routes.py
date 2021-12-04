@@ -50,7 +50,7 @@ def createpost():
 def postposition():
     newPost = ResearchForm()
     if newPost.validate_on_submit():
-      newPosted = researchPos(title = newPost.title.data, researchDesc = newPost.researchDesc.data, requiredHours = newPost.requiredHours.data, startEndDate = newPost.startEndDate.data, requiredQualifications = newPost.requiredQualifications.data, researchFields = newPost.researchFields.data)
+      newPosted = researchPos(title = newPost.title.data, researchDesc = newPost.researchDesc.data, requiredHours = newPost.requiredHours.data, startEndDate = newPost.startEndDate.data, requiredQualifications = newPost.requiredQualifications.data, researchFields = newPost.researchFields.data, faculty_id = current_user.id, facultyName = current_user.lastName)
       db.session.add(newPosted)
       db.session.commit()
       flash("New Research Position Has Been Created!")
@@ -73,9 +73,15 @@ def facultyindex():
 
 @bp_routes.route('/studentapply2/<researchPos_id>', methods=['GET', 'POST'])
 def studentapply2(researchPos_id):
+    appBool = 0 #FALSE
     position = researchPos.query.get(researchPos_id)
-    applications = application.query.filter_by(id = researchPos_id).all()
-    return render_template('studentapp.html', title="Search App Portal", positions=position, applicants = applications)
+    applications = application.query.filter_by(researchPos_id = researchPos_id).all()
+    for appChecking in applications:
+        if current_user.id == appChecking.student_id:
+            appBool = 1
+    print(applications)
+    print(appBool)
+    return render_template('studentapp.html', title="Search App Portal", positions=position, applicants = applications, appBool = appBool)
 
 @bp_routes.route('/studentapply/<researchPos_id>', methods=['GET', 'POST'])
 def studentapply(researchPos_id):
@@ -152,12 +158,27 @@ def edit_profile(): # Loads the EditForm Class and lets the user edit/update the
 @bp_routes.route('/researchApply/<currentResearch_id>', methods=['GET', 'POST'])
 def researchApply(currentResearch_id):
     #used in studentapp.html with (current_user) to maintain student id in their research application
-    research_id = researchPos.query.get(currentResearch_id)
+    #research_id = researchPos.query.get(currentResearch_id)
     newApply = ApplicationForm()
     if newApply.validate_on_submit():
-      newApplied = application(name = newApply.name.data, description = newApply.description.data, reference = newApply.reference.data, student_id = current_user.id, researchPos_id = research_id.id)
+      newApplied = application(name = newApply.name.data, description = newApply.description.data, reference = newApply.reference.data, student_id = current_user.id, researchPos_id = currentResearch_id)
       db.session.add(newApplied)
       db.session.commit()
       flash("You Have Successfully Applied To A New Position!")
       return redirect (url_for('routes.studentindex'))
     return render_template('researchapply.html', title="Search App Portal", form = newApply)
+
+
+
+
+
+@bp_routes.route('/viewPosition/<researchPos_id>', methods=['GET', 'POST'])
+def viewPosition(researchPos_id):
+    position = researchPos.query.get(researchPos_id)
+    applications = application.query.filter_by(researchPos_id = researchPos_id).all()
+    return render_template('viewposition.html', title="Search App Portal", positions=position, applicants = applications)
+
+@bp_routes.route('/viewapplication/<application_id>', methods=['GET', 'POST'])
+def viewApplication(application_id):
+    applications = application.query.get(application_id)
+    return render_template('viewapplication.html', title="Search App Portal", application=applications)

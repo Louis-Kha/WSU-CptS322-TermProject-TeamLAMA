@@ -17,25 +17,37 @@
     <p> Required Hours: <b> {{positions.requiredHours}} </b></p>
     <p> Research Fields: <b> {{positions.researchFields}} </b></p>
     <p> Posted at: <b> {{ moment(positions.timestamp).format('LLL') }} </b></p>
-    <p> The Position is created by: <b> <span class="useritem">{{current_user.username}} </b></p>
+    <p> The Position is created by: <b> <span class="useritem">{{positions.facultyName}} </b></p>
 
-    <!--{% for apps in applicants %}-->
+    {% for apps in applicants %}
 
-    <p> Testing Student ID View: <b> {{applicants.reference}} </b></p>
+    <p> Testing Student ID View: <b> {{apps.name}} </b></p>
 
-    <!--{% endfor %}-->
+    {% endfor %}
 
 
 </div>
 
 <!-- New Form action to link to redirect route towards application page form while sending student_id information -->
 <div>
-    <form action="{{ url_for('routes.researchApply', currentResearch_id = positions.id )}}" method="get">
-        <input type="submit" value="Apply!" />
-    </form>
+
+        {% if appBool == 0%}
+              <form action="{{ url_for('routes.researchApply', currentResearch_id = positions.id )}}" method="get">
+                <input type="submit" value="Apply!" />
+              </form>
+
+        {% else %}
+
+        Status: PENDING
+
+        {% endif %}
+
 </div>
 
 
+<!--<form action="{{ url_for('routes.researchApply', currentResearch_id = positions.id )}}" method="get">
+    <input type="submit" value="Apply!" />
+</form>-->
 
 
 {% endblock %}
