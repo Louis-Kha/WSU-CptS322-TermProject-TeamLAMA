@@ -15,6 +15,10 @@ bp_routes = Blueprint('routes', __name__)
 bp_routes.template_folder = Config.TEMPLATE_FOLDER 
 
 @bp_routes.route('/', methods=['GET']) # loads to the index page
+def startingpage():
+    return redirect(url_for('routes.startscreen'))
+
+# @bp_routes.route('/', methods=['GET']) # loads to the index page
 @bp_routes.route('/index', methods=['GET'])
 @login_required
 def index(): # problem here
