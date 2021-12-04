@@ -163,3 +163,13 @@ def researchApply(currentResearch_id):
       flash("You Have Successfully Applied To A New Position!")
       return redirect (url_for('routes.studentindex'))
     return render_template('researchapply.html', title="Search App Portal", form = newApply)
+
+
+
+
+
+@bp_routes.route('/viewPosition/<researchPos_id>', methods=['GET', 'POST'])
+def viewPosition(researchPos_id):
+    position = researchPos.query.get(researchPos_id)
+    applications = application.query.filter_by(researchPos_id = researchPos_id).all()
+    return render_template('viewposition.html', title="Search App Portal", positions=position, applicants = applications)
