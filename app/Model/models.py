@@ -128,7 +128,7 @@ class application(db.Model):
     name = db.Column(db.String(100))
     description = db.Column(db.String(2000))
     reference = db.Column(db.String(200))
-    researchPos_id = db.Column(db.Integer, db.ForeignKey('researchPosition.id'))
+    researchPos_id = db.Column(db.Integer, db.ForeignKey('researchPosition.id')) 
     researchPosition = db.relationship("researchPos")
     def __repr__(self): # Prints the Programming Languages in the database
         return '{}, '.format(self.name)

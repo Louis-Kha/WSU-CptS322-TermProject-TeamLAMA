@@ -39,6 +39,9 @@
         {% else %}
 
         Status: PENDING
+        <form action="{{ url_for('routes.withdrawApply', currentResearch_id = positions.id )}}" method="get">
+          <input type="submit" value="Withdrawl Application" />
+        </form>
 
         {% endif %}
 

@@ -69,12 +69,12 @@ def facultyindex():
 
 @bp_routes.route('/studentapply2/<researchPos_id>', methods=['GET', 'POST'])
 def studentapply2(researchPos_id):
-    appBool = 0 #FALSE
+    appBool = 0 #FALSE 
     position = researchPos.query.get(researchPos_id)
     applications = application.query.filter_by(researchPos_id = researchPos_id).all()
     for appChecking in applications:
-        if current_user.id == appChecking.student_id:
-            appBool = 1
+        if current_user.id == appChecking.student_id: #checks if current user matches 
+            appBool = 1 #check if student already has an application for this current research position
     print(applications)
     print(appBool)
     return render_template('studentapp.html', title="Search App Portal", positions=position, applicants = applications, appBool = appBool)
@@ -163,3 +163,11 @@ def researchApply(currentResearch_id):
       flash("You Have Successfully Applied To A New Position!")
       return redirect (url_for('routes.studentindex'))
     return render_template('researchapply.html', title="Search App Portal", form = newApply)
+
+@bp_routes.route('/withdrawApply/<currentResearch_id>', methods=['GET', 'POST'])
+def withdrawApply(currentResearch_id):
+    research_id = researchPos.query.get(currentResearch_id) #Querys through the list of all research positions until it matches with the students current selected position id. Then it assigns it to research_id
+    #db.session.delete(research_id) #This should delete the research position of the current student user
+    #db.session.commit() #This makes the choice FINAL
+    flash("You Have Successfully Withdrawed Your Application!")
+    return redirect (url_for('routes.studentindex')) #redirects to main student page so they can continue on
