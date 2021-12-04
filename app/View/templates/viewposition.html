@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Research Position Information View</h1>
+
+<div class="postmessage">
+
+    <p> Title: <b> {{positions.title}} </b></p>
+    <p> Research Description: <b> {{positions.researchDesc}} </b></p>
+    <p> Required Hours: <b> {{positions.requiredHours}} </b></p>
+    <p> Research Fields: <b> {{positions.researchFields}} </b></p>
+    <p> Posted at: <b> {{ moment(positions.timestamp).format('LLL') }} </b></p>
+    <p> The Position is created by: <b> <span class="useritem">{{positions.facultyName}} </b></p>
+
+
+    <p>All Student Applicants:</p>
+
+    {% for apps in applicants %}
+
+    <form action="{{ url_for('routes.viewApplication', application_id = apps.id )}}" method="get">
+        <input type="submit" value={{apps.name}} />
+    </form>
+
+    {% endfor %}
+
+
+</div>
+
+
+
+
+
+
+{% endblock %}
