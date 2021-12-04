@@ -95,11 +95,11 @@ def display_profile():
     return render_template('display_profile.html', title="User Profile", user = current_user)
 
 # When the user clicks on a specific user link it will redirect them to the selected profile page
-@bp_routes.route('/display_selected/<user_id>', methods=['GET', 'POST'])
+@bp_routes.route('/view_profile/<user_id>', methods=['GET', 'POST'])
 #@login_required
-def display_selected(user_id):
+def view_profile(user_id):
     viewStudent = User.query.get(int(user_id)) # Gets all of the user's information and sets it to viewStudent class
-    return render_template('display_selected.html', title="{}'s Profile".format(user_id), user = viewStudent)
+    return render_template('view_profile.html', title="{}'s Profile".format(user_id), user = viewStudent)
 
 @bp_routes.route('/edit_profile', methods=['GET','POST'])
 # STILL WIP Waiting on the UserDB
