@@ -51,6 +51,30 @@
             {% endfor %}
             <br>
 
+
+
+            {{ form.cumGPA.label }}<br>
+            {{ form.cumGPA(class="forminput") }}<br>
+            {% for error in form.cumGPA.errors %}
+            <span style="color: red;">{{ "Provide a valid Number" }}</span><br>
+            {% endfor %}
+            <br>
+
+            {{ form.techCourseGPA.label }}<br>
+            {{ form.techCourseGPA(class="forminput") }}<br>
+            {% for error in form.techCourseGPA.errors %}
+            <span style="color: red;">{{ "Provide a valid Number" }}</span><br>
+            {% endfor %}
+            <br>
+
+            {{ form.experienceDesc.label }}<br>
+            {{ form.experienceDesc(class="formbody") }}<br>
+            {% for error in form.experienceDesc.errors %}
+            <span style="color: red;">{{ "Provide a Number" }}</span><br>
+            {% endfor %}
+            <br>
+
+
             {{ form.password.label }}<br>
             {{ form.password(class="forminput") }}<br>
             {% for error in form.password.errors %}
@@ -63,6 +87,9 @@
             <span style="color: red;">[{{"Please Try Again."}}]</span><br>
             {% endfor %}
         </div>
+        <br>
+        {{form.rFieldTags.label}}
+        {{form.rFieldTags(class="CheckBoxInput")}}
         <br>
         {{form.knownLang.label}}
         {{ form.knownLang(class="CheckBoxInput") }}

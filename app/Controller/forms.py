@@ -62,8 +62,6 @@ class ApplicationForm(FlaskForm):
     submit = SubmitField('Post')
 
 # ------------- Added By Alex --------------------------
-#Some obstacles I noticed was maybe creating a separate edit form for the faculty? Still Waiting on the UserModels
-# This is just going to be for the student for now, will change later
 
 class EditForm(FlaskForm): #This is the Flask form for the user to edit their profile
     username = StringField('Username', validators=[DataRequired()]) # WSU Email
@@ -71,12 +69,9 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
 
 # Things that need to be added still
     # major = StringField('Major', validators=[DataRequired()])
-    # cumGPA = StringField('Cumulative GPA', validators=[DataRequired()]) #May want to change this to a float/Double?
     # expectedGradDate = StringField('Expected Graduation Date', validators=[DataRequired()])
     # techCourses = StringField('Technical Courses', validators=[DataRequired()])
-    # techGPA = StringField('Technical Courses GPA', validators=[DataRequired()])
     # researchFields = StringField('Interested Research Fields')
-    # priorResearchExp = TextAreaField('Prior Research Experience', validators=[DataRequired()])
     wsuID = StringField('Enter your WSU ID', validators=[DataRequired()])
     firstName = StringField('First Name', validators = [DataRequired()])
     lastName = StringField('Last Name', validators = [DataRequired()])
@@ -91,5 +86,17 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
                                 get_label = progLang.__repr__, 
                                 widget = ListWidget(prefix_label = False), 
                                 option_widget = CheckboxInput())
+
+
+# ------ ACIT3
+    cumGPA = StringField('Cumulative GPA:')
+    techCourseGPA = StringField('Technical Courses GPA:')
+    experienceDesc = TextAreaField('Experience Description', validators=[Length(min=0, max = 1048)])
+    rFieldTags = QuerySelectMultipleField('Research Fields', 
+                                query_factory = User().get_field, 
+                                get_label = researchFieldTags.__repr__, 
+                                widget = ListWidget(prefix_label = False), 
+                                option_widget = CheckboxInput())
+#-------------
     submit = SubmitField('Submit')
 #-------------------------------------------------------

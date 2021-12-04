@@ -110,7 +110,6 @@ def view_profile(user_id):
 # STILL WIP Waiting on the UserDB
 def edit_profile(): # Loads the EditForm Class and lets the user edit/update their information
     eform = EditForm()
-    cUser = User()
     if request.method == 'POST':
         current_user.username = eform.username.data
         current_user.wsuID = eform.wsuID.data
@@ -120,18 +119,14 @@ def edit_profile(): # Loads the EditForm Class and lets the user edit/update the
         current_user.email = eform.email.data  
         current_user.address = eform.address.data
         current_user.phoneNumber = eform.phoneNumber.data
+        current_user.cumGPA = eform.cumGPA.data
+        current_user.techCourseGPA = eform.techCourseGPA.data
+        current_user.experienceDesc = eform.experienceDesc.data
+        current_user.userResearchFields = eform.rFieldTags.data
+
 
         current_user.set_password(eform.password.data)
-
-        # cUser = cUser(username = eform.username.data, 
-        #                     firstName = eform.firstName.data,
-        #                     lastName = eform.lastName.data,
-        #                     email = eform.email.data,
-        #                     address = eform.address.data,
-        #                     phoneNumber = eform.phoneNumber.data)
-                            # knownLang is the name of knownLanguages in edi()
         db.session.add(current_user)
-        #db.session.add(cUser)
         db.session.commit()
         flash("Changes have been saved.")
         return redirect(url_for('routes.display_profile'))
@@ -145,6 +140,11 @@ def edit_profile(): # Loads the EditForm Class and lets the user edit/update the
         eform.knownLang.data = current_user.knownLanguages
         eform.email.data = current_user.email
         eform.phoneNumber.data = current_user.phoneNumber
+        eform.cumGPA.data = current_user.cumGPA
+        eform.techCourseGPA.data = current_user.techCourseGPA
+        eform.experienceDesc.data = current_user.experienceDesc
+        eform.rFieldTags.data = current_user.userResearchFields
+
     else:
         pass
     return render_template('edit_profile.html', title='Edit Profile', form=eform)

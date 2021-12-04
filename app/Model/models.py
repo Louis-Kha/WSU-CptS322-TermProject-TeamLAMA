@@ -17,6 +17,11 @@ userLanguages = db.Table('userLanguages',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
     db.Column('progLang_id', db.Integer, db.ForeignKey('prog_lang.id'))
 )
+
+interestedFields = db.Table('interestedFields',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('researchFieldTags_id', db.Integer, db.ForeignKey('research_field_tags.id'))
+)
 #---------------------------
 
 
@@ -57,12 +62,21 @@ class User(UserMixin, db.Model):
             Major
             Technical Courses
     """
+    userResearchFields = db.relationship('researchFieldTags', # Class Name
+                                    secondary = interestedFields, # Table 
+                                    primaryjoin = (interestedFields.c.user_id == id),
+                                    backref = db.backref('interestedFields', lazy = 'dynamic'),
+                                    lazy = 'dynamic')
 
     #----------
 
     def get_lang(self):
         allLang = progLang().query.all()
         return allLang
+
+    def get_field(self):
+        allFields = researchFieldTags().query.all()
+        return allFields  
     
     def __repr__(self):
         return ' {} - {} '.format(self.username, self.id)
@@ -155,5 +169,12 @@ class progLang(db.Model):
     name = db.Column(db.String(69))
 
     def __repr__(self): # Prints the Programming Languages in the database
+        return '{}, '.format(self.name)
+
+class researchFieldTags(db.Model): #Research Fields for studends and faculty to add to their profile
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(69))
+
+    def __repr__(self): 
         return '{}, '.format(self.name)
 #----------------------------------------------
