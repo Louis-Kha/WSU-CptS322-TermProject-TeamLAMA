@@ -11,6 +11,30 @@
     <p> References: <b> {{application.reference}} </b></p>
 
 
+    {% if application.status == 0 %}
+
+    <form action="{{ url_for('routes.editStatus', application_id = application.id, statusValue = 1 )}}" method="get">
+        <input type="submit" value="Approve For Interview" />
+    </form>
+
+    {% endif %}
+
+    {% if application.status != -1 %}
+
+    <form action="{{ url_for('routes.editStatus', application_id = application.id, statusValue = -1 )}}" method="get">
+        <input type="submit" value="Reject" />
+    </form>
+
+    {% endif %}
+
+
+    {% if application.status == 1 %}
+
+    <form action="{{ url_for('routes.editStatus', application_id = application.id, statusValue = 2 )}}" method="get">
+        <input type="submit" value="Hire" />
+    </form>
+
+    {% endif %}
 
 </div>
 

@@ -185,3 +185,13 @@ def viewPosition(researchPos_id):
 def viewApplication(application_id):
     applications = application.query.get(application_id)
     return render_template('viewapplication.html', title="Search App Portal", application=applications)
+
+
+@bp_routes.route('/editStatus/<application_id>', methods=['GET', 'POST'])
+def editStatus(application_id, statusValue):
+    applications = application.query.get(application_id)
+    applications.status = statusValue
+    print(statusValue)
+    print(applications)
+    print(1)
+    return render_template('viewapplication.html', title="Search App Portal", application=applications)

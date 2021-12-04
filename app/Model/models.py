@@ -125,7 +125,7 @@ class application(db.Model):
     __tablename__ = 'applicants'
     student_id = db.Column(db.Integer, default = 0)
     id = db.Column(db.Integer, primary_key=True)
-    status = db.Column(db.Integer, default = 0) #0 = neutral, 1 = pending, 2 = interview, 3 = hired, -1 = failed
+    status = db.Column(db.Integer, default = 0) #0 = pending, 1 = interview, 2 = hired, -1 = rejected
     name = db.Column(db.String(100))
     description = db.Column(db.String(2000))
     reference = db.Column(db.String(200))
