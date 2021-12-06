@@ -174,7 +174,6 @@ def withdrawApply(currentResearch_id):
 
 
 
-
 @bp_routes.route('/viewPosition/<researchPos_id>', methods=['GET', 'POST'])
 def viewPosition(researchPos_id):
     position = researchPos.query.get(researchPos_id)
