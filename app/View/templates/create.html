@@ -43,10 +43,24 @@
                 {% endfor %}
 
 
-                {{ form.startEndDate.label }}<br>
-                {{ form.startEndDate(class="formtitle") }}<br>
+                {{ form.startDate.label }}<br>
+                {{ form.startDate(class="formtitle") }}<br>
+
+
+
+                {% for error in form.startDate.errors %}
+                <span style="color: red">[{{ error }}]</span>
+                {% endfor %}
+
+
+                {{ form.endDate.label }}<br>
+                {{ form.endDate(class="formtitle") }}
+
+
+
+
                 <!-- TODO: (milestone 1) Display the error messages of the `body` field validator (if there are any validation errors).   -->
-                {% for error in form.startEndDate.errors %}
+                {% for error in form.endDate.errors %}
                 <span style="color: red">[{{ error }}]</span>
                 {% endfor %}
 

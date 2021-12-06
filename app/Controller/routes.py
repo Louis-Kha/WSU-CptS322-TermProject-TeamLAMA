@@ -46,7 +46,7 @@ def createpost():
 def postposition():
     newPost = ResearchForm()
     if newPost.validate_on_submit():
-      newPosted = researchPos(title = newPost.title.data, researchDesc = newPost.researchDesc.data, requiredHours = newPost.requiredHours.data, startEndDate = newPost.startEndDate.data, requiredQualifications = newPost.requiredQualifications.data, researchFields = newPost.researchFields.data, faculty_id = current_user.id, facultyName = current_user.lastName)
+      newPosted = researchPos(title = newPost.title.data, researchDesc = newPost.researchDesc.data, requiredHours = newPost.requiredHours.data, startDate = newPost.startDate.data, endDate = newPost.endDate.data, requiredQualifications = newPost.requiredQualifications.data, researchFields = newPost.researchFields.data, faculty_id = current_user.id, facultyName = current_user.lastName)
       db.session.add(newPosted)
       db.session.commit()
       flash("New Research Position Has Been Created!")

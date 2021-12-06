@@ -3,6 +3,7 @@ from wtforms import StringField, SubmitField, SelectField
 from wtforms.fields.core import BooleanField
 from wtforms.fields.simple import TextAreaField
 from wtforms import StringField, SubmitField, SelectField, TextAreaField
+from wtforms.fields.html5 import DateField
 from wtforms.validators import  DataRequired, Length, Email, EqualTo
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
@@ -26,7 +27,9 @@ def getTagsbyName(tag):
 
 class ResearchForm(FlaskForm):
     title = StringField('Research Position Title', validators=[DataRequired()])
-    startEndDate = StringField('Start/End Dates (Eg. 11/11/21 - 01/11/22)', validators=[DataRequired()])
+    #startEndDate = StringField('Start/End Dates (Eg. 11/11/21 - 01/11/22)', validators=[DataRequired()])
+    startDate = DateField('Start Date', format='%Y-%m-%d', validators=[DataRequired()])
+    endDate = DateField('End Date', format='%Y-%m-%d', validators=[DataRequired()])
     researchDesc = TextAreaField('Position Description', validators=[Length(min = 1, max = 1500, message = "Invalid Length for Post!")])
     researchFields = TextAreaField('Research fields', validators=[Length(min = 1, max = 1500, message = "Invalid Length for Post!")])
     requiredHours = SelectField('Required Hours Per Week',choices = [(40, '40 Hours'), (30, '30 Hours'), (20, '20 Hours'), (10, '10 Hours')])
