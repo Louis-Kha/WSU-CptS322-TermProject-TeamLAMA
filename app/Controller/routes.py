@@ -187,11 +187,11 @@ def viewApplication(application_id):
     return render_template('viewapplication.html', title="Search App Portal", application=applications)
 
 
-@bp_routes.route('/editStatus/<application_id>', methods=['GET', 'POST'])
+@bp_routes.route('/editStatus/<application_id>/<int:statusValue>', methods=['GET', 'POST'])
 def editStatus(application_id, statusValue):
     applications = application.query.get(application_id)
     applications.status = statusValue
+    db.session.commit()
     print(statusValue)
     print(applications)
-    print(1)
     return render_template('viewapplication.html', title="Search App Portal", application=applications)

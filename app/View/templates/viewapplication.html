@@ -10,6 +10,20 @@
     <p> Brief Description: <b> {{application.description}} </b></p>
     <p> References: <b> {{application.reference}} </b></p>
 
+    {% if application.status == 0 %}
+    <p> Status: <b> Pending </b></p>
+    {% endif %}
+    {% if application.status == 1 %}
+    <p> Status: <b> Approved for Interview </b></p>
+    {% endif %}
+    {% if application.status == 2 %}
+    <p> Status: <b> Hired </b></p>
+    {% endif %}
+    {% if application.status == 3 %}
+    <p> Status: <b> Rejected </b></p>
+    {% endif %}
+
+
 
     {% if application.status == 0 %}
 
@@ -19,9 +33,9 @@
 
     {% endif %}
 
-    {% if application.status != -1 %}
+    {% if application.status != 3 %}
 
-    <form action="{{ url_for('routes.editStatus', application_id = application.id, statusValue = -1 )}}" method="get">
+    <form action="{{ url_for('routes.editStatus', application_id = application.id, statusValue = 3 )}}" method="get">
         <input type="submit" value="Reject" />
     </form>
 

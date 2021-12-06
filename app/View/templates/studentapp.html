@@ -38,32 +38,42 @@
 
         {% else %}
 
-        {% if positions.status == 0 %}
+        {% for appStatus in applicants %}
+
+
+        {% if current_user.id == appStatus.student_id%}
+
+        {% if appStatus.status == 0 %}
 
         Status: PENDING
 
         {% endif %}
 
-        {% if positions.status == 1 %}
+        {% if appStatus.status == 1 %}
 
         Status: APPROVED FOR INTERVIEW
 
         {% endif %}
 
 
-        {% if positions.status == 2 %}
+        {% if appStatus.status == 2 %}
 
         Status: HIRED
 
         {% endif %}
 
 
-        {% if positions.status == -1 %}
+        {% if appStatus.status == 3 %}
 
         Status: REJECTED
 
         {% endif %}
 
+        {% endif %}
+        {% endfor %}
+
+
+        
 
         <form action="{{ url_for('routes.withdrawApply', currentResearch_id = positions.id )}}" method="get">
           <input type="submit" value="Withdrawl Application" />

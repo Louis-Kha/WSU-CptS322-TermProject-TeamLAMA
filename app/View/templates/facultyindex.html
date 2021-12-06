@@ -8,6 +8,11 @@
 
     <!--     TODO: (milestone 2) Format posts -->
 
+
+
+                <div class="postlist">
+
+
        {% for post in posts %} 
                {% if post.faculty_id == current_user.id %}
 
@@ -17,5 +22,8 @@
                {% endif %}
 
        {% endfor %}
+
+
+                </div>
 
 {% endblock %}
