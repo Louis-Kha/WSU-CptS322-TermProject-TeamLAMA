@@ -48,9 +48,16 @@ def FacultyLogin():
 @bp_auth.route('/logout', methods = ['GET'])
 @login_required
 def logout():
+    tmp = ""
+    if current_user.isfaculty:
+        tmp = 'auth.FacultyLogin'
+        # return redirect(url_for('routes.facultyindex'))
+    else:
+        tmp = 'auth.login'
+        # return redirect(url_for('routes.studentindex'))
     logout_user()
     # session.clear()
-    return redirect(url_for('routes.index'))
+    return redirect(url_for(tmp))
 
 # student register
 @bp_auth.route('/register', methods=['GET', 'POST'])

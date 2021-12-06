@@ -1,8 +1,43 @@
 from app import create_app, db
 from app.Model.models import Post, Tag, progLang
 
+# ijk = False
+
+# def change_global():
+#     global ijk
+#     ijk = True
+
+# choice = ""
+# if ijk == False:
+#     print("Test1")
+#     print("1: Student Regisration Automation")
+#     print("2: Faculty Registration Automation")
+#     print("3: Student Login")
+#     print("4: Faculty Login")
+#     choice = input("Please input the choice of the automation you would like to run: ")
+#     change_global()
+# else:
+#    pass
 app = create_app()
-print("----------------------------------Outside")
+# print("test test test")
+# ijk = False
+
+# def change_global():
+#     global ijk
+#     ijk = True
+
+# choice = ""
+# if ijk == False:
+#     print("Test1")
+#     print("1: Student Regisration Automation")
+#     print("2: Faculty Registration Automation")
+#     print("3: Student Login")
+#     print("4: Faculty Login")
+#     choice = input("Please input the choice of the automation you would like to run: ")
+#     change_global()
+# else:
+#     pass
+# print("----------------------------------Outside")
 # done here
 @app.before_first_request
 def initDB(*args, **kwargs):
