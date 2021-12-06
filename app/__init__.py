@@ -14,16 +14,38 @@ login.login_view = 'auth.login'
 moment = Moment()
 
 def create_app(config_class=Config):
+    # print("test test test")
+    # ijk = False
+
+    # def change_global():
+    #     global ijk
+    #     ijk = True
+
+    # choice = ""
+    # if ijk == False:
+    #     print("Test1")
+    #     print("1: Student Regisration Automation")
+    #     print("2: Faculty Registration Automation")
+    #     print("3: Student Login")
+    #     print("4: Faculty Login")
+    #     choice = input("Please input the choice of the automation you would like to run: ")
+    #     change_global()
+    # else:
+    #     pass
+    # print("----------------------------------Outside")
     app = Flask(__name__)
     app.config.from_object(config_class)
     app.static_folder = config_class.STATIC_FOLDER 
     app.template_folder = config_class.TEMPLATE_FOLDER
+   # print("test test test")
 
     db.init_app(app)
     # TODO: (milestone 3) Configure the app object for login using `init_app` function.
     login.init_app(app)
     moment.init_app(app) 
-    # TODO: (milestone 3) Configure the app object for moment using `init_app` function. 
+    # TODO: (milestone 3) Configure the app object for moment using `init_app` function.
+    # 
+    # print("test test test")
 
     # blueprint registration
     from app.Controller.errors import bp_errors as errors

@@ -2,8 +2,7 @@ from app import create_app, db
 from app.Model.models import Post, Tag, progLang
 
 app = create_app()
-print("----------------------------------Outside")
-# done here
+
 @app.before_first_request
 def initDB(*args, **kwargs):
     db.create_all()
