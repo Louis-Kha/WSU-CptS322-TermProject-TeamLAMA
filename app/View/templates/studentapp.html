@@ -16,7 +16,8 @@
     <p> Research Description: <b> {{positions.researchDesc}} </b></p>
     <p> Required Hours: <b> {{positions.requiredHours}} </b></p>
     <p> Research Fields: <b> {{positions.researchFields}} </b></p>
-    <p> Start/End Date: <b> {{positions.startEndDate}} </b></p>
+    <p> Start Date: <b> {{ moment(positions.startDate).format('LL') }} </b></p>
+    <p> End Date: <b> {{ moment(positions.endDate).format('LL') }} </b></p>
     <p> Posted at: <b> {{ moment(positions.timestamp).format('LLL') }} </b></p>
     <p> The Position is created by: <b> <span class="useritem">{{positions.facultyName}} </b></p>
 

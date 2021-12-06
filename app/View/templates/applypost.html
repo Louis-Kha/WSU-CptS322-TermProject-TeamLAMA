@@ -29,7 +29,11 @@
 
 
             <div>
-                Start/End Dates: {{post.startEndDate}}
+                Start Date: {{ moment(post.startDate).format('LL') }}
+            </div>
+
+            <div>
+                End Date: {{ moment(post.endDate).format('LL') }}
             </div>
 
             <div>
@@ -43,18 +47,18 @@
             <div>
                 {% if current_user.isnotfaculty %}
 
-                    <form action="{{ url_for('routes.studentapply2', researchPos_id = post.id )}}" method="get">
-                        <input type="submit"  value="View Position" />
-                    </form>
+                <form action="{{ url_for('routes.studentapply2', researchPos_id = post.id )}}" method="get">
+                    <input type="submit" value="View Position" />
+                </form>
 
                 {% else %}
 
                 {% if current_user.isfaculty %}
                 {% if post.faculty_id == current_user.id %}
 
-                    <form action="{{ url_for('routes.viewPosition', researchPos_id = post.id )}}" method="get">
-                        <input type="submit"  value="View Applicants" />
-                    </form>
+                <form action="{{ url_for('routes.viewPosition', researchPos_id = post.id )}}" method="get">
+                    <input type="submit" value="View Applicants" />
+                </form>
 
 
                 {% endif %}
