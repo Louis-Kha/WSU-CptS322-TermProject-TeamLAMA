@@ -11,6 +11,9 @@ from app import create_app, db
 from app.Model.models import User, Post, Tag
 from config import Config
 
+# to run this test:
+# #1 cd into the tests folder through cmd: cd tests
+# #2 run in the cmd: pytest test_routes.py
 
 class TestConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
@@ -19,13 +22,10 @@ class TestConfig(Config):
     DEBUG = True
     TESTING = True
 
-
-
 @pytest.fixture(scope='module')
 def test_client():
     # create the flask application ; configure the app for tests
     flask_app = create_app(config_class=TestConfig)
-
     db.init_app(flask_app)
     # Flask provides a way to test your application by exposing the Werkzeug test Client
     # and handling the context locals for you.
@@ -44,7 +44,6 @@ def new_user(uname, uemail,passwd):
     user = User(username=uname, email=uemail)
     user.set_password(passwd)
     return user
-
 
 def init_tags():
     # initialize the tags

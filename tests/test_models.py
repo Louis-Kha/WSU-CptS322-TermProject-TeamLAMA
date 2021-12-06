@@ -9,6 +9,9 @@ from app import create_app, db
 from app.Model.models import User, Post, Tag
 from config import Config
 
+# to run this test:
+# #1 cd into the tests folder through cmd: cd tests
+# #2 run in the cmd: pytest test_models.py
 
 class TestConfig(Config):
     TESTING = True
@@ -26,22 +29,26 @@ class TestModels(unittest.TestCase):
         db.session.remove()
         db.drop_all()
         self.app_context.pop()
-
+    
+    # password hashing works
     def test_password_hashing(self):
         u = User(username='john', email='john.yates@wsu.edu')
         u.set_password('covid')
         self.assertFalse(u.get_password('flu'))
         self.assertTrue(u.get_password('covid'))
 
+    # test post 1 not working
     def test_post_1(self):
         u1 = User(username='john', email='john.yates@wsu.com')
+        # change to faculty
         db.session.add(u1)
         db.session.commit()
         self.assertEqual(u1.get_user_posts().all(), [])
         p1 = Post(title='My post', body='This is my test post.', happiness_level=1, user_id=u1.id)
+        # edit the research post data model
         db.session.add(p1)
         db.session.commit()
-        self.assertEqual(u1.get_user_posts().count(), 1)
+        self.assertEqual(u1.get_user_posts().count(),1)
         self.assertEqual(u1.get_user_posts().first().title, 'My post')
         self.assertEqual(u1.get_user_posts().first().body, 'This is my test post.')
         self.assertEqual(u1.get_user_posts().first().happiness_level, 1)
