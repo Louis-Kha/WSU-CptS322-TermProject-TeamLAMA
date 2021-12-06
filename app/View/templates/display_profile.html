@@ -16,7 +16,11 @@
         <p><b>Cumulative GPA: </b> {{user.cumGPA}}</p>
         <p><b>Technical Courses GPA: </b> {{user.techCourseGPA}}</p>
         <p><b>Experience Desc: </b> {{user.experienceDesc}}</p>
-        
+
+        <p><b>Majors: </b>         
+        {%for major in user.userMajor%}
+        {{major}}
+        {%endfor%}</p>
         <p><b>Research Fields: </b>         
         {%for field in user.userResearchFields%}
         {{field}}

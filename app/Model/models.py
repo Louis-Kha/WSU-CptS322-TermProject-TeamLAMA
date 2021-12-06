@@ -22,6 +22,11 @@ interestedFields = db.Table('interestedFields',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
     db.Column('researchFieldTags_id', db.Integer, db.ForeignKey('research_field_tags.id'))
 )
+
+majorTable = db.Table('majorTable',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('majorT_id', db.Integer, db.ForeignKey('majorT.id'))
+)
 #---------------------------
 
 
@@ -54,12 +59,8 @@ class User(UserMixin, db.Model):
     techCourseGPA = db.Column(db.Float)
     experienceDesc = db.Column(db.String(1048))
     """
-    What Needs to be added
-    Student+Fac
-        ResearchFields
     Student
         Relationships
-            Major
             Technical Courses
     """
     userResearchFields = db.relationship('researchFieldTags', # Class Name
@@ -68,7 +69,16 @@ class User(UserMixin, db.Model):
                                     backref = db.backref('interestedFields', lazy = 'dynamic'),
                                     lazy = 'dynamic')
 
+    userMajor = db.relationship('majorT', # Class Name
+                                    secondary = majorTable, # Table 
+                                    primaryjoin = (majorTable.c.user_id == id),
+                                    backref = db.backref('majorTable', lazy = 'dynamic'),
+                                    lazy = 'dynamic')
+
     #----------
+    def get_majors(self):
+        allMajors = majorT().query.all()
+        return allMajors
 
     def get_lang(self):
         allLang = progLang().query.all()
@@ -172,6 +182,13 @@ class progLang(db.Model):
         return '{}, '.format(self.name)
 
 class researchFieldTags(db.Model): #Research Fields for studends and faculty to add to their profile
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(69))
+
+    def __repr__(self): 
+        return '{}, '.format(self.name)
+
+class majorT(db.Model): #Majors for students
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(69))
 

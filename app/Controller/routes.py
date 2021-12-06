@@ -103,26 +103,39 @@ def display_profile():
 @bp_routes.route('/view_profile/<user_id>', methods=['GET', 'POST'])
 #@login_required
 def view_profile(user_id):
-    viewStudent = User.query.get(int(user_id)) # Gets all of the user's information and sets it to viewStudent class
-    return render_template('view_profile.html', title="{}'s Profile".format(user_id), user = viewStudent)
+    viewStudent = User.query.get(user_id) # Gets all of the user's information and sets it to viewStudent class
+    return render_template('view_profile.html', 
+                        title="{}'s Profile".format(user_id), 
+                        user = viewStudent)
 
 @bp_routes.route('/edit_profile', methods=['GET','POST'])
 # STILL WIP Waiting on the UserDB
 def edit_profile(): # Loads the EditForm Class and lets the user edit/update their information
     eform = EditForm()
     if request.method == 'POST':
-        current_user.username = eform.username.data
-        current_user.wsuID = eform.wsuID.data
-        current_user.firstName = eform.firstName.data
-        current_user.lastName =eform.lastName.data
-        current_user.knownLanguages = eform.knownLang.data 
-        current_user.email = eform.email.data  
-        current_user.address = eform.address.data
-        current_user.phoneNumber = eform.phoneNumber.data
-        current_user.cumGPA = eform.cumGPA.data
-        current_user.techCourseGPA = eform.techCourseGPA.data
-        current_user.experienceDesc = eform.experienceDesc.data
-        current_user.userResearchFields = eform.rFieldTags.data
+        if current_user.isfaculty == 0:
+            current_user.username = eform.username.data
+            current_user.wsuID = eform.wsuID.data
+            current_user.firstName = eform.firstName.data
+            current_user.lastName =eform.lastName.data
+            current_user.knownLanguages = eform.knownLang.data 
+            current_user.email = eform.email.data  
+            current_user.address = eform.address.data
+            current_user.phoneNumber = eform.phoneNumber.data
+            current_user.cumGPA = eform.cumGPA.data
+            current_user.techCourseGPA = eform.techCourseGPA.data
+            current_user.experienceDesc = eform.experienceDesc.data
+            current_user.userResearchFields = eform.rFieldTags.data
+            current_user.userMajor = eform.userMajors.data
+        else: #User is faculty
+            current_user.username = eform.username.data
+            current_user.wsuID = eform.wsuID.data
+            current_user.firstName = eform.firstName.data
+            current_user.lastName =eform.lastName.data
+            current_user.knownLanguages = eform.knownLang.data 
+            current_user.email = eform.email.data  
+            current_user.address = eform.address.data
+            current_user.phoneNumber = eform.phoneNumber.data            
 
 
         current_user.set_password(eform.password.data)
@@ -144,10 +157,11 @@ def edit_profile(): # Loads the EditForm Class and lets the user edit/update the
         eform.techCourseGPA.data = current_user.techCourseGPA
         eform.experienceDesc.data = current_user.experienceDesc
         eform.rFieldTags.data = current_user.userResearchFields
+        eform.userMajors.data = current_user.userMajor
 
     else:
         pass
-    return render_template('edit_profile.html', title='Edit Profile', form=eform)
+    return render_template('edit_profile.html', title='Edit Profile', form=eform, user = current_user)
 
 #---------------------------------------------------------------------------------------------------
 
@@ -177,4 +191,5 @@ def viewPosition(researchPos_id):
 @bp_routes.route('/viewapplication/<application_id>', methods=['GET', 'POST'])
 def viewApplication(application_id):
     applications = application.query.get(application_id)
-    return render_template('viewapplication.html', title="Search App Portal", application=applications)
+    viewStudent = User.query.get(applications.student_id)
+    return render_template('viewapplication.html', title="Search App Portal", application=applications, user = viewStudent)

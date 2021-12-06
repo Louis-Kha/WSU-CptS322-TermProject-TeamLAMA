@@ -71,7 +71,6 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
     # major = StringField('Major', validators=[DataRequired()])
     # expectedGradDate = StringField('Expected Graduation Date', validators=[DataRequired()])
     # techCourses = StringField('Technical Courses', validators=[DataRequired()])
-    # researchFields = StringField('Interested Research Fields')
     wsuID = StringField('Enter your WSU ID', validators=[DataRequired()])
     firstName = StringField('First Name', validators = [DataRequired()])
     lastName = StringField('Last Name', validators = [DataRequired()])
@@ -86,9 +85,6 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
                                 get_label = progLang.__repr__, 
                                 widget = ListWidget(prefix_label = False), 
                                 option_widget = CheckboxInput())
-
-
-# ------ ACIT3
     cumGPA = StringField('Cumulative GPA:')
     techCourseGPA = StringField('Technical Courses GPA:')
     experienceDesc = TextAreaField('Experience Description', validators=[Length(min=0, max = 1048)])
@@ -97,6 +93,11 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
                                 get_label = researchFieldTags.__repr__, 
                                 widget = ListWidget(prefix_label = False), 
                                 option_widget = CheckboxInput())
-#-------------
+    userMajors = QuerySelectMultipleField('Majors', 
+                                query_factory = User().get_majors, 
+                                get_label = majorT.__repr__, 
+                                widget = ListWidget(prefix_label = False), 
+                                option_widget = CheckboxInput())
+
     submit = SubmitField('Submit')
 #-------------------------------------------------------

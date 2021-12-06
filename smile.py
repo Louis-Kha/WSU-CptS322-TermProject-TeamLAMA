@@ -1,5 +1,5 @@
 from app import create_app, db
-from app.Model.models import Post, Tag, progLang, researchFieldTags 
+from app.Model.models import progLang, researchFieldTags, majorT  
 
 app = create_app()
 print("----------------------------------Outside")
@@ -21,6 +21,15 @@ def initDB(*args, **kwargs):
         for researchField in researchFields:
             db.session.add(researchFieldTags(name = researchField))
         db.session.commit()
+
+    if majorT.query.count() == 0: 
+        majors = ['Computer Science', 'Electrical Engineering']
+        for major in majors:
+            db.session.add(majorT(name = major))
+        db.session.commit()
+
+
+    
 # ----------------------------------
 
 if __name__ == "__main__":
