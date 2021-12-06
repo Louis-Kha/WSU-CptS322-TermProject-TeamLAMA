@@ -172,7 +172,7 @@ def withdrawApply(currentResearch_id):
     flash("You Have Successfully Withdrawed Your Application!")
     return redirect (url_for('routes.studentindex')) #redirects to main student page so they can continue on
 
-
+#test comment
 
 @bp_routes.route('/viewPosition/<researchPos_id>', methods=['GET', 'POST'])
 def viewPosition(researchPos_id):
