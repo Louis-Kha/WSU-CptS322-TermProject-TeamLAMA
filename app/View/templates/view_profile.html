@@ -2,7 +2,7 @@
 
 {% block content %}
     {%if user.isfaculty == False%}
-        <h1>Display Student Profile</h1>
+        <h1>View Student Profile</h1>
         <h2 class = "nospace">Username: {{user.username}} - {{user.id}}</h2>
         <b><p class = "nospace">Expected Graduation Date: </b>{{user.gradDate}}</p>
         <br>
@@ -13,10 +13,15 @@
         <p><b>Email: </b> {{user.email}}</p>
         <p><b>Address: </b> {{user.address}}</p>
         
-        <p><b>Tehnical Courses: </b> WIP</p>
         <p><b>Cumulative GPA: </b> {{user.cumGPA}}</p>
         <p><b>Technical Courses GPA: </b> {{user.techCourseGPA}}</p>
         <p><b>Experience Desc: </b> </p><p class = "nospace">{{user.experienceDesc}}</p>
+        <br class = "olbreak">
+
+        <p class = "olbreak"><b>Technical Courses: </b>         
+        {%for course in user.userTechnicalCourses%}
+        <li class = list>{{course}}</li>
+        {%endfor%}
         <br class = "olbreak">
         <p class = "olbreak"><b>Research Fields: </b>         
         {%for field in user.userResearchFields%}
@@ -34,7 +39,7 @@
         <p><b>Faculty: </b>{{user.isfaculty}}</p>
 
     {%else%}
-        <h1>Display Faculty Profile</h1>
+        <h1>View Faculty Profile</h1>
         <h2>Username: {{user.username}} - {{user.id}}</h2>
 
         <p><b>WSU ID: </b> {{user.wsuID}}</p>

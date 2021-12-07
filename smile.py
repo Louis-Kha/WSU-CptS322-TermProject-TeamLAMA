@@ -1,5 +1,5 @@
 from app import create_app, db
-from app.Model.models import progLang, researchFieldTags, majorT, researchPostFieldTags
+from app.Model.models import progLang, researchFieldTags, majorT, researchPostFieldTags, technicalCourses
 
 app = create_app()
 print("----------------------------------Outside")
@@ -29,6 +29,11 @@ def initDB(*args, **kwargs):
             db.session.add(majorT(name = major))
         db.session.commit()
 
+    if technicalCourses.query.count() == 0: 
+        tCourses = ['CptS 111', 'CptS 121', 'CptS 122', 'CptS 302']
+        for course in tCourses:
+            db.session.add(technicalCourses(name = course))
+        db.session.commit()
 
     
 # ----------------------------------

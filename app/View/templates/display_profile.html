@@ -18,6 +18,11 @@
         <p><b>Technical Courses GPA: </b> {{user.techCourseGPA}}</p>
         <p><b>Experience Desc: </b> </p><p class = "nospace">{{user.experienceDesc}}</p>
         <br class = "olbreak">
+        <p class = "olbreak"><b>Technical Courses: </b>         
+        {%for course in user.userTechnicalCourses%}
+        <li class = list>{{course}}</li>
+        {%endfor%}
+        <br class = "olbreak">
         <p class = "olbreak"><b>Majors: </b>         
         {%for major in user.userMajor%}
         <li class = list>{{major}}</li>
@@ -33,7 +38,12 @@
         <li class = list>{{lang}}</li>
         {%endfor%}</p>
 
+        <p><b>Applications Applied To: </b> 
+        Add Research Titles Here
+        </p>
         <p><b>Faculty: </b>{{user.isfaculty}}</p>
+
+
 
     {%else%}
     <!-- FACULTY -->

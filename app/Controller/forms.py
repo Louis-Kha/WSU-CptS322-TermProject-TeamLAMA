@@ -93,6 +93,12 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
                                 option_widget = CheckboxInput())
     cumGPA = StringField('Cumulative GPA:')
     techCourseGPA = StringField('Technical Courses GPA:')
+    userTechnicalCourses = QuerySelectMultipleField('Technical Courses', 
+                                query_factory = User().get_courses, 
+                                get_label = technicalCourses.__repr__, 
+                                widget = ListWidget(prefix_label = False), 
+                                option_widget = CheckboxInput())
+
     experienceDesc = TextAreaField('Experience Description', validators=[Length(min=0, max = 1048)])
     rFieldTags = QuerySelectMultipleField('Research Fields', 
                                 query_factory = User().get_field, 
