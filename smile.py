@@ -1,5 +1,5 @@
 from app import create_app, db
-from app.Model.models import progLang, researchFieldTags, majorT  
+from app.Model.models import progLang, researchFieldTags, majorT, researchPostFieldTags
 
 app = create_app()
 print("----------------------------------Outside")
@@ -16,10 +16,11 @@ def initDB(*args, **kwargs):
             db.session.add(progLang(name = language))
         db.session.commit()
 
-    if researchFieldTags.query.count() == 0:
+    if researchFieldTags.query.count() == 0 or researchPostFieldTags.query.count == 0:
         researchFields = ['DataBases ', 'AI', 'System Security']
         for researchField in researchFields:
             db.session.add(researchFieldTags(name = researchField))
+            db.session.add(researchPostFieldTags(name = researchField))
         db.session.commit()
 
     if majorT.query.count() == 0: 

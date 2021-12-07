@@ -25,13 +25,9 @@
 
 
 
+                {{form.researchFields.label}}
+                {{form.researchFields(class="CheckBoxInput")}}
 
-                {{ form.researchFields.label }}<br>
-                {{ form.researchFields(class="formbody") }}<br>
-                <!-- TODO: (milestone 1) Display the error messages of the `body` field validator (if there are any validation errors).   -->
-                {% for error in form.researchFields.errors %}
-                <span style="color: red">[{{ error }}]</span>
-                {% endfor %}
 
 
 

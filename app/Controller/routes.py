@@ -27,26 +27,33 @@ def index(): # problem here
         return redirect(url_for('routes.studentindex'))
     # return render_template('index.html', title="Search App Portal", posts=posts.all(), eform=eform, sortform = sortform)
 
-@bp_routes.route('/createpost/', methods=['GET','POST'])
-@login_required
-def createpost():
-    cform = PostForm()
-    if cform.validate_on_submit():
-        newPost = Post(title = cform.title.data, happiness_level = cform.happiness_level.data, body = cform.body.data,user_id = current_user.id)
-        for t in cform.tag.data:
-            newPost.tags.append(t)
-        db.session.add(newPost)
-        db.session.commit()
-        flash('Post is created')
-        return redirect(url_for('routes.index'))
-    return render_template('create.html', form = cform)
+# @bp_routes.route('/createpost/', methods=['GET','POST'])
+# @login_required
+# def createpost():
+#     cform = PostForm()
+#     if cform.validate_on_submit():
+#         newPost = Post(title = cform.title.data, happiness_level = cform.happiness_level.data, body = cform.body.data,user_id = current_user.id)
+#         for t in cform.tag.data:
+#             newPost.tags.append(t)
+#         db.session.add(newPost)
+#         db.session.commit()
+#         flash('Post is created')
+#         return redirect(url_for('routes.index'))
+#     return render_template('create.html', form = cform)
 
 
 @bp_routes.route('/postposition', methods=['GET','POST'])
 def postposition():
     newPost = ResearchForm()
     if newPost.validate_on_submit():
-      newPosted = researchPos(title = newPost.title.data, researchDesc = newPost.researchDesc.data, requiredHours = newPost.requiredHours.data, startEndDate = newPost.startEndDate.data, requiredQualifications = newPost.requiredQualifications.data, researchFields = newPost.researchFields.data, faculty_id = current_user.id, facultyName = current_user.lastName)
+      newPosted = researchPos(title = newPost.title.data, 
+                            researchDesc = newPost.researchDesc.data, 
+                            requiredHours = newPost.requiredHours.data, 
+                            startEndDate = newPost.startEndDate.data, 
+                            requiredQualifications = newPost.requiredQualifications.data, 
+                            researchFields = newPost.researchFields.data, 
+                            faculty_id = current_user.id, 
+                            facultyName = current_user.lastName)
       db.session.add(newPosted)
       db.session.commit()
       flash("New Research Position Has Been Created!")

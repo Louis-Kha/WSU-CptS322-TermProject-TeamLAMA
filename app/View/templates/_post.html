@@ -23,7 +23,9 @@
                </div>
 
                 <div>
-                    {{post.researchFields}}
+                    {%for fields in post.researchFields%}
+                    {{fields}}
+                    {%endfor%}
                 </div> 
 
                 <div>

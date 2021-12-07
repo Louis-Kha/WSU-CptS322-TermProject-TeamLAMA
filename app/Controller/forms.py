@@ -28,7 +28,13 @@ class ResearchForm(FlaskForm):
     title = StringField('Research Position Title', validators=[DataRequired()])
     startEndDate = StringField('Start/End Dates (Eg. 11/11/21 - 01/11/22)', validators=[DataRequired()])
     researchDesc = TextAreaField('Position Description', validators=[Length(min = 1, max = 1500, message = "Invalid Length for Post!")])
-    researchFields = TextAreaField('Research fields', validators=[Length(min = 1, max = 1500, message = "Invalid Length for Post!")])
+
+    researchFields = QuerySelectMultipleField('Research Fields', 
+                                query_factory = researchPos().get_posFields, 
+                                get_label = researchPostFieldTags.__repr__, 
+                                widget = ListWidget(prefix_label = False), 
+                                option_widget = CheckboxInput())
+
     requiredHours = SelectField('Required Hours Per Week',choices = [(40, '40 Hours'), (30, '30 Hours'), (20, '20 Hours'), (10, '10 Hours')])
     requiredQualifications = TextAreaField('Required Qualifications', validators=[Length(min = 1, max = 1500, message = "Invalid Length for Post!")])
     submit = SubmitField('Post')

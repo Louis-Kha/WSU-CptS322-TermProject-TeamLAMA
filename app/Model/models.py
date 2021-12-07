@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from sqlalchemy.orm import backref
 from app import db, login
 from flask_login import UserMixin, LoginManager
 from werkzeug.security import generate_password_hash, generate_password_hash, check_password_hash
@@ -21,6 +23,11 @@ userLanguages = db.Table('userLanguages',
 interestedFields = db.Table('interestedFields',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
     db.Column('researchFieldTags_id', db.Integer, db.ForeignKey('research_field_tags.id'))
+)
+
+researchPosFieldTable = db.Table('researchPosFieldTable', # for research positions
+    db.Column('researchPosition_id', db.Integer, db.ForeignKey('researchPosition.id')),
+    db.Column('researchPostFieldTags_id', db.Integer, db.ForeignKey('research_post_field_tags.id')),
 )
 
 majorTable = db.Table('majorTable',
@@ -155,9 +162,25 @@ class researchPos(db.Model):
     researchDesc = db.Column(db.String(1500))
     startEndDate = db.Column(db.String(150))
     requiredHours = db.Column(db.Integer, default = 0)
-    researchFields = db.Column(db.String(150))
+
+    # researchFields = db.relationship('researchPostFieldTags',
+    #                                 secondary = researchPosFieldTable,
+    #                                 primaryjoin = (researchPosFieldTable.c.researchPosition_id == id),
+    #                                 backref = db.backref('researchPosFieldTable', lazy = 'dynamic'),
+    #                                 lazy = 'dynamic')
+
+    researchFields = db.relationship('researchPostFieldTags',
+                                    secondary = researchPosFieldTable,
+                                    primaryjoin = (researchPosFieldTable.c.researchPosition_id == id),
+                                    backref = db.backref('researchPosFieldTable', lazy = 'dynamic'),
+                                    lazy = 'dynamic')
+
     requiredQualifications = db.Column(db.String(500))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def get_posFields(self):
+        allFields = researchPostFieldTags().query.all()
+        return allFields
 
 
 class application(db.Model):
@@ -183,6 +206,13 @@ class progLang(db.Model):
 
 class researchFieldTags(db.Model): #Research Fields for studends and faculty to add to their profile
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(69))
+
+    def __repr__(self): 
+        return '{}, '.format(self.name)
+
+class researchPostFieldTags(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(69))
 
     def __repr__(self): 

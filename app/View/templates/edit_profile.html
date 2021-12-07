@@ -6,7 +6,7 @@
     {% if form %}
     <form action = "" method="POST">
         {{ form.hidden_tag() }}
-        {%if user.isFaculty == False%}
+        {%if user.isfaculty == False%}
         <div>
             {{ form.username.label }}<br>
             {{ form.username(class="forminput") }}<br>
@@ -50,8 +50,6 @@
             <span style="color: red;">{{ "Provide a valid Phone Number" }}</span><br>
             {% endfor %}
             <br>
-
-
 
             {{ form.cumGPA.label }}<br>
             {{ form.cumGPA(class="forminput") }}<br>

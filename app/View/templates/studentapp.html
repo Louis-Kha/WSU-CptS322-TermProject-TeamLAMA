@@ -15,7 +15,10 @@
     <p> Title: <b> {{positions.title}} </b></p>
     <p> Research Description: <b> {{positions.researchDesc}} </b></p>
     <p> Required Hours: <b> {{positions.requiredHours}} </b></p>
-    <p> Research Fields: <b> {{positions.researchFields}} </b></p>
+    <p> Research Fields: <b>
+      {%for fields in positions.researchFields%}
+      {{fields}}
+      {%endfor%} </b></p>
     <p> Posted at: <b> {{ moment(positions.timestamp).format('LLL') }} </b></p>
     <p> The Position is created by: <b> <span class="useritem">{{positions.facultyName}} </b></p>
 
