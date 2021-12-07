@@ -14,6 +14,12 @@
             <span style="color: red;">[{{ "Please limit Username to 64 Chars" }}]</span><br>
             {% endfor %}
             <br>
+            {{ form.gradDate.label }}<br>
+            {{ form.gradDate(class="datebox") }}<br>
+            {% for error in form.gradDate.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+            <br>
             {{ form.wsuID.label }}<br>
             {{ form.wsuID(class="forminput") }}<br>
             {% for error in form.wsuID.errors %}

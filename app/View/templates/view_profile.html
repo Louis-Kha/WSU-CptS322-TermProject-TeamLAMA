@@ -3,26 +3,31 @@
 {% block content %}
     {%if user.isfaculty == False%}
         <h1>Display Student Profile</h1>
-        <h2>Username: {{user.username}} - {{user.id}}</h2>
+        <h2 class = "nospace">Username: {{user.username}} - {{user.id}}</h2>
+        <b><p class = "nospace">Expected Graduation Date: </b>{{user.gradDate}}</p>
+        <br>
 
-        <p><b>WSU ID: </b> {{user.wsuID}}</p>
+        <b>WSU ID: </b> {{user.wsuID}}
         <p><b>Name: </b> {{user.firstName}} {{user.lastName}}</p>
         <p><b>Phone #: </b> {{user.phoneNumber}}</p>
         <p><b>Email: </b> {{user.email}}</p>
         <p><b>Address: </b> {{user.address}}</p>
         
         <p><b>Tehnical Courses: </b> WIP</p>
-        <p><b>Cumulative GPA: </b> WIP</p>
-        <p><b>TC GPA: </b> WIP</p>
-        
-        <p><b>Research Fields: </b> WIP</p>
-
-        <p><b>Programming Languages: </b> 
+        <p><b>Cumulative GPA: </b> {{user.cumGPA}}</p>
+        <p><b>Technical Courses GPA: </b> {{user.techCourseGPA}}</p>
+        <p><b>Experience Desc: </b> </p><p class = "nospace">{{user.experienceDesc}}</p>
+        <br class = "olbreak">
+        <p class = "olbreak"><b>Research Fields: </b>         
+        {%for field in user.userResearchFields%}
+        <li class = list>{{field}}</li>
+        {%endfor%}
+        <br class = "olbreak">
+        <p class = "olbreak"><b>Programming Languages: </b> 
         {%for lang in user.knownLanguages%}
-        {{lang}}
+        <li class = list>{{lang}}</li>
         {%endfor%}</p>
 
-        <p><b>Experience Desc: </b> WIP</p>
         <p><b>Applications Applied To: </b> 
         Add Research Titles Here
         </p>

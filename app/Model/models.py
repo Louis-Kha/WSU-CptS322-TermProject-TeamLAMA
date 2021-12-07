@@ -48,10 +48,12 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique = True)
     address = db.Column(db.String(256))
     phoneNumber = db.Column(db.String(32))
+    startDate = db.Column(db.DateTime)
 
     password_hash = db.Column(db.String(128))
     post = db.relationship('Post', backref = 'writer', lazy = 'dynamic')
     # remember = db.Column(db.Boolean)
+    gradDate = db.Column(db.DateTime)
     isfaculty = db.Column(db.Boolean)
     isnotfaculty = db.Column(db.Boolean)
 
@@ -202,26 +204,26 @@ class progLang(db.Model):
     name = db.Column(db.String(69))
 
     def __repr__(self): # Prints the Programming Languages in the database
-        return '{}, '.format(self.name)
+        return '{} '.format(self.name)
 
 class researchFieldTags(db.Model): #Research Fields for studends and faculty to add to their profile
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(69))
 
     def __repr__(self): 
-        return '{}, '.format(self.name)
+        return '{} '.format(self.name)
 
 class researchPostFieldTags(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(69))
 
     def __repr__(self): 
-        return '{}, '.format(self.name)
+        return '{} '.format(self.name)
 
 class majorT(db.Model): #Majors for students
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(69))
 
     def __repr__(self): 
-        return '{}, '.format(self.name)
+        return '{} '.format(self.name)
 #----------------------------------------------

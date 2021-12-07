@@ -7,6 +7,7 @@ from wtforms.validators import  DataRequired, Length, Email, EqualTo
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms import validators, PasswordField
+from wtforms.fields.html5 import DateField
 
 from app.Model.models import *
 
@@ -74,8 +75,6 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
     email = StringField('Email', validators=[DataRequired(), Email()])
 
 # Things that need to be added still
-    # major = StringField('Major', validators=[DataRequired()])
-    # expectedGradDate = StringField('Expected Graduation Date', validators=[DataRequired()])
     # techCourses = StringField('Technical Courses', validators=[DataRequired()])
     wsuID = StringField('Enter your WSU ID', validators=[DataRequired()])
     firstName = StringField('First Name', validators = [DataRequired()])
@@ -83,6 +82,7 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
     email = StringField('email', validators=[DataRequired(),Email()]) # will be wsu email
     address = StringField('Address', validators=[DataRequired(), Length(min=10, max=256)])
     phoneNumber = StringField('Phone Number', validators=[DataRequired()])
+    gradDate = DateField('Expected Graduation', format='%Y-%m-%d', validators=[DataRequired()])
 
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Password Repeated', validators=[DataRequired(), EqualTo('password')])

@@ -4,9 +4,10 @@
     <!-- STUDENT -->
     {%if user.isfaculty == False%}
         <h1>Display Student Profile</h1>
-        <h2>Username: {{user.username}} - {{user.id}}</h2>
-
-        <p><b>WSU ID: </b> {{user.wsuID}}</p>
+        <h2 class = "nospace">Username: {{user.username}} - {{user.id}}</h2>
+        <b><p class = "nospace">Expected Graduation Date: </b>{{user.gradDate}}</p>
+        <br>
+        <b>WSU ID: </b> {{user.wsuID}}
         <p><b>Name: </b> {{user.firstName}} {{user.lastName}}</p>
         <p><b>Phone #: </b> {{user.phoneNumber}}</p>
         <p><b>Email: </b> {{user.email}}</p>
@@ -15,19 +16,21 @@
         <p><b>Tehnical Courses: </b> WIP</p>
         <p><b>Cumulative GPA: </b> {{user.cumGPA}}</p>
         <p><b>Technical Courses GPA: </b> {{user.techCourseGPA}}</p>
-        <p><b>Experience Desc: </b> {{user.experienceDesc}}</p>
-
-        <p><b>Majors: </b>         
+        <p><b>Experience Desc: </b> </p><p class = "nospace">{{user.experienceDesc}}</p>
+        <br class = "olbreak">
+        <p class = "olbreak"><b>Majors: </b>         
         {%for major in user.userMajor%}
-        {{major}}
+        <li class = list>{{major}}</li>
         {%endfor%}</p>
-        <p><b>Research Fields: </b>         
+        <br class = "olbreak">
+        <p class = "olbreak"><b>Research Fields: </b>         
         {%for field in user.userResearchFields%}
-        {{field}}
+        <li class = list>{{field}}</li>
         {%endfor%}</p>
-        <p><b>Programming Languages: </b> 
+        <br class = "olbreak">
+        <p class = "olbreak"><b>Programming Languages: </b> 
         {%for lang in user.knownLanguages%}
-        {{lang}}
+        <li class = list>{{lang}}</li>
         {%endfor%}</p>
 
         <p><b>Faculty: </b>{{user.isfaculty}}</p>
@@ -45,10 +48,9 @@
 
         <p><b>Programming Languages: </b> 
             {%for lang in user.knownLanguages%}
-            {{lang}}
+            <li class = list>{{lang}}</li>
             {%endfor%}</p>
         
-        <p><b>Research Fields: </b> WIP</p>
 
         <p><b>Faculty: </b>{{user.isfaculty}}</p>
     {%endif%}

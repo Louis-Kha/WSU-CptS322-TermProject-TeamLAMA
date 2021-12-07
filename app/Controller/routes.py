@@ -134,6 +134,7 @@ def edit_profile(): # Loads the EditForm Class and lets the user edit/update the
             current_user.experienceDesc = eform.experienceDesc.data
             current_user.userResearchFields = eform.rFieldTags.data
             current_user.userMajor = eform.userMajors.data
+            current_user.gradDate = eform.gradDate.data
         else: #User is faculty
             current_user.username = eform.username.data
             current_user.wsuID = eform.wsuID.data
@@ -165,6 +166,7 @@ def edit_profile(): # Loads the EditForm Class and lets the user edit/update the
         eform.experienceDesc.data = current_user.experienceDesc
         eform.rFieldTags.data = current_user.userResearchFields
         eform.userMajors.data = current_user.userMajor
+        eform.gradDate.data = current_user.gradDate
 
     else:
         pass
