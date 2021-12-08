@@ -41,7 +41,6 @@ technicalCoursesTable = db.Table('technicalCoursesTable',
 )
 #---------------------------
 
-
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(64), unique = True)
@@ -127,16 +126,13 @@ class User(UserMixin, db.Model):
         allUserPosts = User.query.all()
         return allUserPosts
     
+    
     # def get_remember(self):
     #     return self.remember 
 
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
-
-#class Posttag(db.Model):
-#    postid = db.Column(db.Integer, db.ForeignKey('post.id'), primary_key = True)
-#    tagid =  db.Column(db.Integer, db.ForeignKey('tag.id'), primary_key = True)
 
 class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -163,8 +159,6 @@ class Tag(db.Model):
     def __repr__(self):
         return '<Id: {} Name: {}>'.format(self.id,self.name)
 
-
-
 class researchPos(db.Model):
     __tablename__ = 'researchPosition'
     id = db.Column(db.Integer, primary_key=True)
@@ -185,6 +179,7 @@ class researchPos(db.Model):
     requiredQualifications = db.Column(db.String(500))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
+<<<<<<< HEAD
     def __repr__(self):
         return '<Id: {} Name: {}>'.format(self.id,self.title)
     
@@ -193,6 +188,8 @@ class researchPos(db.Model):
         return allFields
 
 
+=======
+>>>>>>> Aliteration3
 class application(db.Model):
     __tablename__ = 'applicants'
     student_id = db.Column(db.Integer, default = 0)
@@ -212,6 +209,7 @@ class progLang(db.Model):
     name = db.Column(db.String(69))
 
     def __repr__(self): # Prints the Programming Languages in the database
+<<<<<<< HEAD
         return '{} '.format(self.name)
 
 class researchFieldTags(db.Model): #Research Fields for studends and faculty to add to their profile
@@ -241,4 +239,9 @@ class technicalCourses(db.Model): #Technical Courses Students took
 
     def __repr__(self): 
         return '{} '.format(self.name)
+=======
+        return '{}, '.format(self.name)
+
+    
+>>>>>>> Aliteration3
 #----------------------------------------------

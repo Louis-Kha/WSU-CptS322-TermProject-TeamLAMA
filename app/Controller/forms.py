@@ -4,7 +4,7 @@ from wtforms import StringField, SubmitField, SelectField
 from wtforms import BooleanField
 from wtforms.fields.simple import TextAreaField
 from wtforms import StringField, SubmitField, SelectField, TextAreaField
-from wtforms.fields.html5 import DateField
+from wtforms.fields import DateField
 from wtforms.validators import  DataRequired, Length, Email, EqualTo
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
@@ -43,7 +43,6 @@ class ResearchForm(FlaskForm):
     requiredHours = SelectField('Required Hours Per Week',choices = [(40, '40 Hours'), (30, '30 Hours'), (20, '20 Hours'), (10, '10 Hours')])
     requiredQualifications = TextAreaField('Required Qualifications', validators=[Length(min = 1, max = 1500, message = "Invalid Length for Post!")])
     submit = SubmitField('Post')
-
 
 class PostForm(FlaskForm):
     title = StringField('Research Position Title', validators=[DataRequired()])
