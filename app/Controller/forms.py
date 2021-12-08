@@ -59,10 +59,6 @@ class PostForm(FlaskForm):
 class EmptyForm(FlaskForm):
     submit = SubmitField('Submit')
 
-class SortForm(SelectField):
-    sortform = SelectField('Sort options',choices = [(4, 'Date'),(3, 'Title'), (2, '# of likes'), (1,'Happiness level')])
-    refresh = SubmitField('Refresh')
-   # myposts = BooleanField('myposts')
 
 
 class ApplicationForm(FlaskForm):
@@ -74,7 +70,7 @@ class ApplicationForm(FlaskForm):
 # ------------- Added By Alex --------------------------
 
 class EditForm(FlaskForm): #This is the Flask form for the user to edit their profile
-    username = StringField('Username', validators=[DataRequired()]) # WSU Email
+    username = StringField('Username', validators=[DataRequired(), Email()]) # WSU Email
     email = StringField('Email', validators=[DataRequired(), Email()])
 
     wsuID = StringField('Enter your WSU ID', validators=[DataRequired()])
