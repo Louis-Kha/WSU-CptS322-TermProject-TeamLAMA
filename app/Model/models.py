@@ -179,7 +179,7 @@ class researchPos(db.Model):
     requiredQualifications = db.Column(db.String(500))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
-<<<<<<< HEAD
+
     def __repr__(self):
         return '<Id: {} Name: {}>'.format(self.id,self.title)
     
@@ -188,8 +188,7 @@ class researchPos(db.Model):
         return allFields
 
 
-=======
->>>>>>> Aliteration3
+
 class application(db.Model):
     __tablename__ = 'applicants'
     student_id = db.Column(db.Integer, default = 0)
@@ -209,7 +208,6 @@ class progLang(db.Model):
     name = db.Column(db.String(69))
 
     def __repr__(self): # Prints the Programming Languages in the database
-<<<<<<< HEAD
         return '{} '.format(self.name)
 
 class researchFieldTags(db.Model): #Research Fields for studends and faculty to add to their profile
@@ -239,9 +237,7 @@ class technicalCourses(db.Model): #Technical Courses Students took
 
     def __repr__(self): 
         return '{} '.format(self.name)
-=======
         return '{}, '.format(self.name)
 
     
->>>>>>> Aliteration3
 #----------------------------------------------

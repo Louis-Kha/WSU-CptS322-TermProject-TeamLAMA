@@ -7,8 +7,9 @@
     "\\app\\View",
     "\\app\\View\\static",
     "\\app\\View\\static\\css",
-    "\\app\\View\\templates"
+    "\\app\\View\\templates",
+    "\\tests"
   ],
-  "SelectedNode": "\\app\\View\\static\\css\\main.css",
+  "SelectedNode": "\\app\\View\\templates\\base.html",
   "PreviewInSolutionExplorer": false
 }

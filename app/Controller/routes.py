@@ -219,7 +219,6 @@ def withdrawApply(currentResearch_id):
     flash("You Have Successfully Withdrawed Your Application!")
     return redirect (url_for('routes.studentindex')) #redirects to main student page so they can continue on
 
-<<<<<<< HEAD
 @bp_routes.route('/deletePos/<currentResearch_id>', methods=['GET', 'POST'])
 def deletePos(currentResearch_id):
     research_id = researchPos.query.get(currentResearch_id) #Querys through the list of all research positions until it matches with the students current selected position id. Then it assigns it to research_id
@@ -233,8 +232,6 @@ def deletePos(currentResearch_id):
     return redirect (url_for('routes.facultyindex')) #redirects to main student page so they can continue on
 # ----------
 
-=======
->>>>>>> Aliteration3
 @bp_routes.route('/viewPosition/<researchPos_id>', methods=['GET', 'POST'])
 def viewPosition(researchPos_id):
     position = researchPos.query.get(researchPos_id)
