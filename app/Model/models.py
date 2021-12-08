@@ -184,6 +184,9 @@ class researchPos(db.Model):
     requiredQualifications = db.Column(db.String(500))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
+    def __repr__(self):
+        return '<Id: {} Name: {}>'.format(self.id,self.title)
+    
     def get_posFields(self):
         allFields = researchPostFieldTags().query.all()
         return allFields

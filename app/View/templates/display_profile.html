@@ -13,7 +13,6 @@
         <p><b>Email: </b> {{user.email}}</p>
         <p><b>Address: </b> {{user.address}}</p>
         
-        <p><b>Tehnical Courses: </b> WIP</p>
         <p><b>Cumulative GPA: </b> {{user.cumGPA}}</p>
         <p><b>Technical Courses GPA: </b> {{user.techCourseGPA}}</p>
         <p><b>Experience Desc: </b> </p><p class = "nospace">{{user.experienceDesc}}</p>
@@ -39,7 +38,16 @@
         {%endfor%}</p>
 
         <p><b>Applications Applied To: </b> 
-        Add Research Titles Here
+        {%for app in apps%}
+        <!-- checks to see if user id matches applicants id-->
+        {%if user.id == app.student_id%} 
+            {%for position in researchPosition%}
+                {%if app.researchPos_id == position.id%}
+                    <li class = list>{{position.title}}</li>
+                {%endif%}
+            {%endfor%}
+        {%endif%}
+        {%endfor%}
         </p>
         <p><b>Faculty: </b>{{user.isfaculty}}</p>
 

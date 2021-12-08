@@ -62,8 +62,6 @@ def studentindex():
                             title = "Student Index",   
                             posts= posts.all(), 
                             sortform = sform)
-    # posts = researchPos.query.order_by(researchPos.timestamp.desc())
-    # return render_template('studentindex.html', title="Student Main Page", posts=posts.all())
 
 # created by Al
 @bp_routes.route('/facultyindex', methods=['GET'])
@@ -102,16 +100,29 @@ def studentapply(researchPos_id):
 @bp_routes.route('/display_profile', methods=['GET'])
 #@login_required
 def display_profile():
-    return render_template('display_profile.html', title="User Profile", user = current_user)
+
+    applied = application.query.filter_by(student_id = current_user.id) 
+    research_pos = researchPos.query.all()
+
+    return render_template('display_profile.html', 
+                            title="User Profile", 
+                            user = current_user, 
+                            apps = applied, 
+                            researchPosition = research_pos)
 
 # When the user clicks on a specific user link it will redirect them to the selected profile page
 @bp_routes.route('/view_profile/<user_id>', methods=['GET', 'POST'])
 #@login_required
 def view_profile(user_id):
     viewStudent = User.query.get(user_id) # Gets all of the user's information and sets it to viewStudent class
+    applied = application.query.filter_by(student_id = user_id) 
+    research_pos = researchPos.query.all()
+
     return render_template('view_profile.html', 
                         title="{}'s Profile".format(user_id), 
-                        user = viewStudent)
+                        user = viewStudent,
+                        apps = applied,
+                        researchPosition = research_pos)
 
 @bp_routes.route('/edit_profile', methods=['GET','POST'])
 # STILL WIP Waiting on the UserDB
