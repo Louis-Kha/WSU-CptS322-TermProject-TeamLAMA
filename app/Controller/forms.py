@@ -74,8 +74,6 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
     username = StringField('Username', validators=[DataRequired()]) # WSU Email
     email = StringField('Email', validators=[DataRequired(), Email()])
 
-# Things that need to be added still
-    # techCourses = StringField('Technical Courses', validators=[DataRequired()])
     wsuID = StringField('Enter your WSU ID', validators=[DataRequired()])
     firstName = StringField('First Name', validators = [DataRequired()])
     lastName = StringField('Last Name', validators = [DataRequired()])
@@ -91,6 +89,7 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
                                 get_label = progLang.__repr__, 
                                 widget = ListWidget(prefix_label = False), 
                                 option_widget = CheckboxInput())
+                                
     cumGPA = StringField('Cumulative GPA:')
     techCourseGPA = StringField('Technical Courses GPA:')
     userTechnicalCourses = QuerySelectMultipleField('Technical Courses', 
@@ -112,4 +111,8 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
                                 option_widget = CheckboxInput())
 
     submit = SubmitField('Submit')
+
+class SortForm(FlaskForm):
+    sort = SelectField(choices=['AI', 'DataBases', 'System Security'])
+    submit = SubmitField('Refresh')
 #-------------------------------------------------------

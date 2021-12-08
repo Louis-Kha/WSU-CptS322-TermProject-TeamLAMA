@@ -72,11 +72,6 @@ class User(UserMixin, db.Model):
                                     backref = db.backref('userLanguages', lazy = 'dynamic'),
                                     lazy = 'dynamic')
 
-    """
-    Student
-        Relationships
-            Technical Courses
-    """
     userResearchFields = db.relationship('researchFieldTags', # Class Name
                                     secondary = interestedFields, # Table 
                                     primaryjoin = (interestedFields.c.user_id == id),
@@ -222,7 +217,7 @@ class researchFieldTags(db.Model): #Research Fields for studends and faculty to 
     def __repr__(self): 
         return '{} '.format(self.name)
 
-class researchPostFieldTags(db.Model):
+class researchPostFieldTags(db.Model): # This is for the researchPosition Posts
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(69))
 

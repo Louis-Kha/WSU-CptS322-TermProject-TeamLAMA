@@ -6,7 +6,16 @@
     <h1>Welcome to Faculty SearchApp Portal!</h1>
     <h2>Number of Available Positions:</h2>
 
-    <!--     TODO: (milestone 2) Format posts -->
+    <form action = "" method = "POST">
+        {{sortform.sort.label}}
+        <div>
+        {{sortform.sort(class="formselect")}}
+
+        {{sortform.submit(class="button")}}
+        </div>
+    </form>
+    <br> 
+
 
        {% for post in posts %} 
             <div class = "post-box">

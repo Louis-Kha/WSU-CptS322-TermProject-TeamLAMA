@@ -17,29 +17,12 @@ bp_routes.template_folder = Config.TEMPLATE_FOLDER
 @bp_routes.route('/', methods=['GET']) # loads to the index page
 @bp_routes.route('/index', methods=['GET'])
 @login_required
-def index(): # problem here
-    eform = EmptyForm()
-    sortform = SortForm()
-    posts = researchPos.query.order_by(researchPos.timestamp.desc())
+def index():
     if current_user.isfaculty:
         return redirect(url_for('routes.facultyindex'))
     else:
         return redirect(url_for('routes.studentindex'))
-    # return render_template('index.html', title="Search App Portal", posts=posts.all(), eform=eform, sortform = sortform)
 
-# @bp_routes.route('/createpost/', methods=['GET','POST'])
-# @login_required
-# def createpost():
-#     cform = PostForm()
-#     if cform.validate_on_submit():
-#         newPost = Post(title = cform.title.data, happiness_level = cform.happiness_level.data, body = cform.body.data,user_id = current_user.id)
-#         for t in cform.tag.data:
-#             newPost.tags.append(t)
-#         db.session.add(newPost)
-#         db.session.commit()
-#         flash('Post is created')
-#         return redirect(url_for('routes.index'))
-#     return render_template('create.html', form = cform)
 
 
 @bp_routes.route('/postposition', methods=['GET','POST'])
@@ -61,11 +44,26 @@ def postposition():
     return render_template('create.html', title="New Research Position", form = newPost)
 
 # created by Al
-@bp_routes.route('/studentindex', methods=['GET'])
+@bp_routes.route('/studentindex', methods=['GET', 'POST'])
 @login_required
 def studentindex():
+    sform = SortForm()
     posts = researchPos.query.order_by(researchPos.timestamp.desc())
-    return render_template('studentindex.html', title="Student Main Page", posts=posts.all())
+    if request.method == 'POST':
+        sform = SortForm(sort = sform.sort.choices)
+
+        if sform.sort.data == 'DataBases':
+            posts = researchPos.query.join(researchPostFieldTags, researchPos.researchFields).order_by(researchPostFieldTags.id)
+        elif sform.sort.data == 'AI':
+            posts = researchPos.query.join(researchPostFieldTags, researchPos.researchFields).order_by(researchPostFieldTags.name)
+        elif sform.sort.data == 'System Security':
+            posts = researchPos.query.join(researchPostFieldTags, researchPos.researchFields).order_by(researchPostFieldTags.id.desc())
+    return render_template('studentindex.html', 
+                            title = "Student Index",   
+                            posts= posts.all(), 
+                            sortform = sform)
+    # posts = researchPos.query.order_by(researchPos.timestamp.desc())
+    # return render_template('studentindex.html', title="Student Main Page", posts=posts.all())
 
 # created by Al
 @bp_routes.route('/facultyindex', methods=['GET'])
