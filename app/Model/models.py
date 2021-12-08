@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from sqlalchemy.orm import backref
 from app import db, login
 from flask_login import UserMixin, LoginManager
 from werkzeug.security import generate_password_hash, generate_password_hash, check_password_hash
@@ -17,6 +19,26 @@ userLanguages = db.Table('userLanguages',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
     db.Column('progLang_id', db.Integer, db.ForeignKey('prog_lang.id'))
 )
+
+interestedFields = db.Table('interestedFields',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('researchFieldTags_id', db.Integer, db.ForeignKey('research_field_tags.id'))
+)
+
+researchPosFieldTable = db.Table('researchPosFieldTable', # for research positions
+    db.Column('researchPosition_id', db.Integer, db.ForeignKey('researchPosition.id')),
+    db.Column('researchPostFieldTags_id', db.Integer, db.ForeignKey('research_post_field_tags.id')),
+)
+
+majorTable = db.Table('majorTable',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('majorT_id', db.Integer, db.ForeignKey('majorT.id'))
+)
+
+technicalCoursesTable = db.Table('technicalCoursesTable',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('technicalCourses_id', db.Integer, db.ForeignKey('technical_courses.id'))
+)
 #---------------------------
 
 
@@ -31,25 +53,61 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique = True)
     address = db.Column(db.String(256))
     phoneNumber = db.Column(db.String(32))
+    startDate = db.Column(db.DateTime)
 
     password_hash = db.Column(db.String(128))
     post = db.relationship('Post', backref = 'writer', lazy = 'dynamic')
     # remember = db.Column(db.Boolean)
+    gradDate = db.Column(db.DateTime)
     isfaculty = db.Column(db.Boolean)
     isnotfaculty = db.Column(db.Boolean)
 
-    #------------- Added by Alex 
+    cumGPA = db.Column(db.Float)
+    techCourseGPA = db.Column(db.Float)
+    experienceDesc = db.Column(db.String(1048))
+
     knownLanguages = db.relationship('progLang', # Class Name
                                     secondary = userLanguages, # Table 
                                     primaryjoin = (userLanguages.c.user_id == id),
                                     backref = db.backref('userLanguages', lazy = 'dynamic'),
                                     lazy = 'dynamic')
-    def get_lang(self):
+
+    userResearchFields = db.relationship('researchFieldTags', # Class Name
+                                    secondary = interestedFields, # Table 
+                                    primaryjoin = (interestedFields.c.user_id == id),
+                                    backref = db.backref('interestedFields', lazy = 'dynamic'),
+                                    lazy = 'dynamic')
+
+    userMajor = db.relationship('majorT', # Class Name
+                                    secondary = majorTable, # Table 
+                                    primaryjoin = (majorTable.c.user_id == id),
+                                    backref = db.backref('majorTable', lazy = 'dynamic'),
+                                    lazy = 'dynamic')
+
+    userTechnicalCourses = db.relationship('technicalCourses', # Class Name
+                                    secondary = technicalCoursesTable, # Table 
+                                    primaryjoin = (technicalCoursesTable.c.user_id == id),
+                                    backref = db.backref('technicalCoursesTable', lazy = 'dynamic'),
+                                    lazy = 'dynamic')
+
+    #----------
+    def get_courses(self): #Returns all of the user technical courses
+        allCourses = technicalCourses().query.all()
+        return allCourses
+
+    def get_majors(self): # Returns all of the user's majors
+        allMajors = majorT().query.all()
+        return allMajors
+
+    def get_lang(self): # returns all of the user's known languages
         allLang = progLang().query.all()
         return allLang
-    #----------------------------------
+
+    def get_field(self): # returns the user's interested research fields
+        allFields = researchFieldTags().query.all()
+        return allFields  
     
-    def __repr__(self):
+    def __repr__(self): # returns the user's WSU email
         return ' {} - {} '.format(self.username, self.id)
 
     def set_password(self, password):
@@ -117,9 +175,22 @@ class researchPos(db.Model):
     startDate = db.Column(db.DateTime)
     endDate = db.Column(db.DateTime)
     requiredHours = db.Column(db.Integer, default = 0)
-    researchFields = db.Column(db.String(150))
+
+    researchFields = db.relationship('researchPostFieldTags',
+                                    secondary = researchPosFieldTable,
+                                    primaryjoin = (researchPosFieldTable.c.researchPosition_id == id),
+                                    backref = db.backref('researchPosFieldTable', lazy = 'dynamic'),
+                                    lazy = 'dynamic')
+
     requiredQualifications = db.Column(db.String(500))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<Id: {} Name: {}>'.format(self.id,self.title)
+    
+    def get_posFields(self):
+        allFields = researchPostFieldTags().query.all()
+        return allFields
 
 
 class application(db.Model):
@@ -141,5 +212,33 @@ class progLang(db.Model):
     name = db.Column(db.String(69))
 
     def __repr__(self): # Prints the Programming Languages in the database
-        return '{}, '.format(self.name)
+        return '{} '.format(self.name)
+
+class researchFieldTags(db.Model): #Research Fields for studends and faculty to add to their profile
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(69))
+
+    def __repr__(self): 
+        return '{} '.format(self.name)
+
+class researchPostFieldTags(db.Model): # This is for the researchPosition Posts
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(69))
+
+    def __repr__(self): 
+        return '{} '.format(self.name)
+
+class majorT(db.Model): #Majors for students
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(69))
+
+    def __repr__(self): 
+        return '{} '.format(self.name)
+
+class technicalCourses(db.Model): #Technical Courses Students took
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(69))
+
+    def __repr__(self): 
+        return '{} '.format(self.name)
 #----------------------------------------------

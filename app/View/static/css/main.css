@@ -78,7 +78,7 @@ a:hover {
     width: 800px;
     padding: 6px;
     font-size: 20px;
-    margin: 8px 6px 8px 6px;
+    margin: 8px 6px 8px 0px;
     color: black;
 }
 
@@ -110,6 +110,28 @@ a:hover {
     width: 99%;
     margin: 4px 3px 4px 3px;
     padding: 6px;
+}
+
+.nospace{
+    line-height: 25%;
+}
+.olbreak{
+
+    line-height: 10%;
+
+}
+.datebox{
+    width: 400px;
+    padding: 1px;
+    font-size: 20px;
+    margin: 2px 6px 8px 0px;
+    color: black;
+}
+
+.list{
+    list-style-type: disc;
+    margin: 0;
+    padding: 0;
 }
 
 @media screen and (min-width: 1201px) {

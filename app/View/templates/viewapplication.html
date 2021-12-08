@@ -9,6 +9,9 @@
     <p> Name: <b> {{application.name}} </b></p>
     <p> Brief Description: <b> {{application.description}} </b></p>
     <p> References: <b> {{application.reference}} </b></p>
+    <form action="{{ url_for('routes.view_profile', user_id = user.id )}}" method="post">
+        <input type="submit" value="View {{application.name}}">
+    </form>
 
     {% if application.status == 0 %}
     <p> Status: <b> Pending </b></p>

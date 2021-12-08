@@ -9,6 +9,7 @@ from wtforms.validators import  DataRequired, Length, Email, EqualTo
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms import validators, PasswordField
+from wtforms.fields.html5 import DateField
 
 from app.Model.models import *
 
@@ -32,7 +33,13 @@ class ResearchForm(FlaskForm):
     startDate = DateField('Start Date', format='%Y-%m-%d', validators=[DataRequired()])
     endDate = DateField('End Date', format='%Y-%m-%d', validators=[DataRequired()])
     researchDesc = TextAreaField('Position Description', validators=[Length(min = 1, max = 1500, message = "Invalid Length for Post!")])
-    researchFields = TextAreaField('Research fields', validators=[Length(min = 1, max = 1500, message = "Invalid Length for Post!")])
+
+    researchFields = QuerySelectMultipleField('Research Fields', 
+                                query_factory = researchPos().get_posFields, 
+                                get_label = researchPostFieldTags.__repr__, 
+                                widget = ListWidget(prefix_label = False), 
+                                option_widget = CheckboxInput())
+
     requiredHours = SelectField('Required Hours Per Week',choices = [(40, '40 Hours'), (30, '30 Hours'), (20, '20 Hours'), (10, '10 Hours')])
     requiredQualifications = TextAreaField('Required Qualifications', validators=[Length(min = 1, max = 1500, message = "Invalid Length for Post!")])
     submit = SubmitField('Post')
@@ -66,27 +73,18 @@ class ApplicationForm(FlaskForm):
     submit = SubmitField('Post')
 
 # ------------- Added By Alex --------------------------
-#Some obstacles I noticed was maybe creating a separate edit form for the faculty? Still Waiting on the UserModels
-# This is just going to be for the student for now, will change later
 
 class EditForm(FlaskForm): #This is the Flask form for the user to edit their profile
     username = StringField('Username', validators=[DataRequired()]) # WSU Email
     email = StringField('Email', validators=[DataRequired(), Email()])
 
-# Things that need to be added still
-    # major = StringField('Major', validators=[DataRequired()])
-    # cumGPA = StringField('Cumulative GPA', validators=[DataRequired()]) #May want to change this to a float/Double?
-    # expectedGradDate = StringField('Expected Graduation Date', validators=[DataRequired()])
-    # techCourses = StringField('Technical Courses', validators=[DataRequired()])
-    # techGPA = StringField('Technical Courses GPA', validators=[DataRequired()])
-    # researchFields = StringField('Interested Research Fields')
-    # priorResearchExp = TextAreaField('Prior Research Experience', validators=[DataRequired()])
     wsuID = StringField('Enter your WSU ID', validators=[DataRequired()])
     firstName = StringField('First Name', validators = [DataRequired()])
     lastName = StringField('Last Name', validators = [DataRequired()])
     email = StringField('email', validators=[DataRequired(),Email()]) # will be wsu email
     address = StringField('Address', validators=[DataRequired(), Length(min=10, max=256)])
     phoneNumber = StringField('Phone Number', validators=[DataRequired()])
+    gradDate = DateField('Expected Graduation', format='%Y-%m-%d', validators=[DataRequired()])
 
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Password Repeated', validators=[DataRequired(), EqualTo('password')])
@@ -95,5 +93,30 @@ class EditForm(FlaskForm): #This is the Flask form for the user to edit their pr
                                 get_label = progLang.__repr__, 
                                 widget = ListWidget(prefix_label = False), 
                                 option_widget = CheckboxInput())
+                                
+    cumGPA = StringField('Cumulative GPA:')
+    techCourseGPA = StringField('Technical Courses GPA:')
+    userTechnicalCourses = QuerySelectMultipleField('Technical Courses', 
+                                query_factory = User().get_courses, 
+                                get_label = technicalCourses.__repr__, 
+                                widget = ListWidget(prefix_label = False), 
+                                option_widget = CheckboxInput())
+
+    experienceDesc = TextAreaField('Experience Description', validators=[Length(min=0, max = 1048)])
+    rFieldTags = QuerySelectMultipleField('Research Fields', 
+                                query_factory = User().get_field, 
+                                get_label = researchFieldTags.__repr__, 
+                                widget = ListWidget(prefix_label = False), 
+                                option_widget = CheckboxInput())
+    userMajors = QuerySelectMultipleField('Majors', 
+                                query_factory = User().get_majors, 
+                                get_label = majorT.__repr__, 
+                                widget = ListWidget(prefix_label = False), 
+                                option_widget = CheckboxInput())
+
     submit = SubmitField('Submit')
+
+class SortForm(FlaskForm):
+    sort = SelectField(choices=['AI', 'DataBases', 'System Security'])
+    submit = SubmitField('Refresh')
 #-------------------------------------------------------

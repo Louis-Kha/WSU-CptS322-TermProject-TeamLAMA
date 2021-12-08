@@ -24,36 +24,27 @@ def startingpage():
 # @bp_routes.route('/', methods=['GET']) # loads to the index page
 @bp_routes.route('/index', methods=['GET'])
 @login_required
-def index(): # problem here
-    eform = EmptyForm()
-    sortform = SortForm()
-    posts = researchPos.query.order_by(researchPos.timestamp.desc())
+def index():
     if current_user.isfaculty:
         return redirect(url_for('routes.facultyindex'))
     else:
         return redirect(url_for('routes.studentindex'))
-    # return render_template('index.html', title="Search App Portal", posts=posts.all(), eform=eform, sortform = sortform)
 
-@bp_routes.route('/createpost/', methods=['GET','POST'])
-@login_required
-def createpost():
-    cform = PostForm()
-    if cform.validate_on_submit():
-        newPost = Post(title = cform.title.data, happiness_level = cform.happiness_level.data, body = cform.body.data,user_id = current_user.id)
-        for t in cform.tag.data:
-            newPost.tags.append(t)
-        db.session.add(newPost)
-        db.session.commit()
-        flash('Post is created')
-        return redirect(url_for('routes.index'))
-    return render_template('create.html', form = cform)
 
 
 @bp_routes.route('/postposition', methods=['GET','POST'])
 def postposition():
     newPost = ResearchForm()
     if newPost.validate_on_submit():
-      newPosted = researchPos(title = newPost.title.data, researchDesc = newPost.researchDesc.data, requiredHours = newPost.requiredHours.data, startDate = newPost.startDate.data, endDate = newPost.endDate.data, requiredQualifications = newPost.requiredQualifications.data, researchFields = newPost.researchFields.data, faculty_id = current_user.id, facultyName = current_user.lastName)
+      newPosted = researchPos(title = newPost.title.data, 
+                            researchDesc = newPost.researchDesc.data, 
+                            requiredHours = newPost.requiredHours.data, 
+                            startDate = newPost.startDate.data, 
+                            endDate = newPost.endDate.data, 
+                            requiredQualifications = newPost.requiredQualifications.data, 
+                            researchFields = newPost.researchFields.data, 
+                            faculty_id = current_user.id, 
+                            facultyName = current_user.lastName)
       db.session.add(newPosted)
       db.session.commit()
       flash("New Research Position Has Been Created!")
@@ -61,11 +52,24 @@ def postposition():
     return render_template('create.html', title="New Research Position", form = newPost)
 
 # created by Al
-@bp_routes.route('/studentindex', methods=['GET'])
+@bp_routes.route('/studentindex', methods=['GET', 'POST'])
 @login_required
 def studentindex():
+    sform = SortForm()
     posts = researchPos.query.order_by(researchPos.timestamp.desc())
-    return render_template('studentindex.html', title="Student Main Page", posts=posts.all())
+    if request.method == 'POST':
+        sform = SortForm(sort = sform.sort.choices)
+
+        if sform.sort.data == 'DataBases':
+            posts = researchPos.query.join(researchPostFieldTags, researchPos.researchFields).order_by(researchPostFieldTags.id)
+        elif sform.sort.data == 'AI':
+            posts = researchPos.query.join(researchPostFieldTags, researchPos.researchFields).order_by(researchPostFieldTags.name)
+        elif sform.sort.data == 'System Security':
+            posts = researchPos.query.join(researchPostFieldTags, researchPos.researchFields).order_by(researchPostFieldTags.id.desc())
+    return render_template('studentindex.html', 
+                            title = "Student Index",   
+                            posts= posts.all(), 
+                            sortform = sform)
 
 # created by Al
 @bp_routes.route('/facultyindex', methods=['GET'])
@@ -104,41 +108,65 @@ def studentapply(researchPos_id):
 @bp_routes.route('/display_profile', methods=['GET'])
 #@login_required
 def display_profile():
-    return render_template('display_profile.html', title="User Profile", user = current_user)
+
+    applied = application.query.filter_by(student_id = current_user.id) 
+    research_pos = researchPos.query.all()
+
+    return render_template('display_profile.html', 
+                            title="User Profile", 
+                            user = current_user, 
+                            apps = applied, 
+                            researchPosition = research_pos)
 
 # When the user clicks on a specific user link it will redirect them to the selected profile page
-@bp_routes.route('/display_selected/<user_id>', methods=['GET', 'POST'])
+@bp_routes.route('/view_profile/<user_id>', methods=['GET', 'POST'])
 #@login_required
-def display_selected(user_id):
-    viewStudent = User.query.get(int(user_id)) # Gets all of the user's information and sets it to viewStudent class
-    return render_template('display_selected.html', title="{}'s Profile".format(user_id), user = viewStudent)
+def view_profile(user_id):
+    viewStudent = User.query.get(user_id) # Gets all of the user's information and sets it to viewStudent class
+    applied = application.query.filter_by(student_id = user_id) 
+    research_pos = researchPos.query.all()
+
+    return render_template('view_profile.html', 
+                        title="{}'s Profile".format(user_id), 
+                        user = viewStudent,
+                        apps = applied,
+                        researchPosition = research_pos)
 
 @bp_routes.route('/edit_profile', methods=['GET','POST'])
 # STILL WIP Waiting on the UserDB
 def edit_profile(): # Loads the EditForm Class and lets the user edit/update their information
     eform = EditForm()
-    cUser = User()
     if request.method == 'POST':
-        current_user.username = eform.username.data
-        current_user.wsuID = eform.wsuID.data
-        current_user.firstName = eform.firstName.data
-        current_user.lastName =eform.lastName.data
-        current_user.knownLanguages = eform.knownLang.data 
-        current_user.email = eform.email.data  
-        current_user.address = eform.address.data
-        current_user.phoneNumber = eform.phoneNumber.data
+        if current_user.isfaculty == 0:
+            current_user.username = eform.username.data
+            current_user.wsuID = eform.wsuID.data
+            current_user.firstName = eform.firstName.data
+            current_user.lastName =eform.lastName.data
+            current_user.knownLanguages = eform.knownLang.data 
+            current_user.email = eform.email.data  
+            current_user.address = eform.address.data
+            current_user.phoneNumber = eform.phoneNumber.data
+            current_user.cumGPA = eform.cumGPA.data
+            current_user.techCourseGPA = eform.techCourseGPA.data
+            current_user.experienceDesc = eform.experienceDesc.data
+            current_user.userResearchFields = eform.rFieldTags.data
+            current_user.userMajor = eform.userMajors.data
+            current_user.gradDate = eform.gradDate.data
+            current_user.userTechnicalCourses = eform.userTechnicalCourses.data
+                
+        else: #User is faculty
+            current_user.username = eform.username.data
+            current_user.wsuID = eform.wsuID.data
+            current_user.firstName = eform.firstName.data
+            current_user.lastName =eform.lastName.data
+            current_user.knownLanguages = eform.knownLang.data 
+            current_user.email = eform.email.data  
+            current_user.address = eform.address.data
+            current_user.phoneNumber = eform.phoneNumber.data            
+
 
         current_user.set_password(eform.password.data)
-
-        # cUser = cUser(username = eform.username.data, 
-        #                     firstName = eform.firstName.data,
-        #                     lastName = eform.lastName.data,
-        #                     email = eform.email.data,
-        #                     address = eform.address.data,
-        #                     phoneNumber = eform.phoneNumber.data)
-                            # knownLang is the name of knownLanguages in edi()
         db.session.add(current_user)
-        #db.session.add(cUser)
         db.session.commit()
         flash("Changes have been saved.")
         return redirect(url_for('routes.display_profile'))
@@ -152,9 +180,17 @@ def edit_profile(): # Loads the EditForm Class and lets the user edit/update the
         eform.knownLang.data = current_user.knownLanguages
         eform.email.data = current_user.email
         eform.phoneNumber.data = current_user.phoneNumber
+        eform.cumGPA.data = current_user.cumGPA
+        eform.techCourseGPA.data = current_user.techCourseGPA
+        eform.experienceDesc.data = current_user.experienceDesc
+        eform.rFieldTags.data = current_user.userResearchFields
+        eform.userMajors.data = current_user.userMajor
+        eform.gradDate.data = current_user.gradDate
+        eform.userTechnicalCourses.data = current_user.userTechnicalCourses
+
     else:
         pass
-    return render_template('edit_profile.html', title='Edit Profile', form=eform)
+    return render_template('edit_profile.html', title='Edit Profile', form=eform, user = current_user)
 
 #---------------------------------------------------------------------------------------------------
 

@@ -6,8 +6,110 @@
     {% if form %}
     <form action = "" method="POST">
         {{ form.hidden_tag() }}
+        {%if user.isfaculty == False%}
         <div>
-            <!--WAITING ON THE USERDB Models In order to fill out the rest--> 
+            {{ form.username.label }}<br>
+            {{ form.username(class="forminput") }}<br>
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ "Please limit Username to 64 Chars" }}]</span><br>
+            {% endfor %}
+            <br>
+            {{ form.gradDate.label }}<br>
+            {{ form.gradDate(class="datebox") }}<br>
+            {% for error in form.gradDate.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+            <br>
+            {{ form.wsuID.label }}<br>
+            {{ form.wsuID(class="forminput") }}<br>
+            {% for error in form.wsuID.errors %}
+            <span style="color: red;">{{ "Provide a WSU ID" }}</span><br>
+            {% endfor %}
+            <br>
+            {{ form.firstName.label }}<br>
+            {{ form.firstName(class="forminput") }}<br>
+            {% for error in form.firstName.errors %}
+            <span style="color: red;">{{ "Please enter a valid name" }}</span><br>
+            {% endfor %}
+            <br>
+            {{ form.lastName.label }}<br>
+            {{ form.lastName(class="forminput") }}<br>
+            {% for error in form.lastName.errors %}
+            <span style="color: red;">{{ "Provide a valid name" }}</span><br>
+            {% endfor %}
+            <br>
+            {{ form.email.label }}<br>
+            {{ form.email(class="forminput") }}<br>
+            {% for error in form.email.errors %}
+            <span style="color: red;">[{{ "Please enter a valid Email" }}]</span><br>
+            {% endfor %}
+            <br>
+            {{ form.address.label }}<br>
+            {{ form.address(class="forminput") }}<br>
+            {% for error in form.address.errors %}
+            <span style="color: red;">{{ "Provide a valid address" }}</span><br>
+            {% endfor %}
+            <br>
+            {{ form.phoneNumber.label }}<br>
+            {{ form.phoneNumber(class="forminput") }}<br>
+            {% for error in form.address.errors %}
+            <span style="color: red;">{{ "Provide a valid Phone Number" }}</span><br>
+            {% endfor %}
+            <br>
+
+            {{ form.cumGPA.label }}<br>
+            {{ form.cumGPA(class="forminput") }}<br>
+            {% for error in form.cumGPA.errors %}
+            <span style="color: red;">{{ "Provide a valid Number" }}</span><br>
+            {% endfor %}
+            <br>
+
+            {{ form.techCourseGPA.label }}<br>
+            {{ form.techCourseGPA(class="forminput") }}<br>
+            {% for error in form.techCourseGPA.errors %}
+            <span style="color: red;">{{ "Provide a valid Number" }}</span><br>
+            {% endfor %}
+            <br>
+
+            {{ form.experienceDesc.label }}<br>
+            {{ form.experienceDesc(class="formbody") }}<br>
+            {% for error in form.experienceDesc.errors %}
+            <span style="color: red;">{{ "Provide a Number" }}</span><br>
+            {% endfor %}
+            <br>
+
+
+            {{ form.password.label }}<br>
+            {{ form.password(class="forminput") }}<br>
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ "Passwords don't match!" }}]</span><br>
+            {% endfor %}
+            <br>
+            {{ form.password2.label }}<br>
+            {{ form.password2(class="forminput") }}<br>
+            {% for error in form.password2.errors %}
+            <span style="color: red;">[{{"Please Try Again."}}]</span><br>
+            {% endfor %}
+        </div>
+        <br>
+        {{form.userMajors.label}}
+        {{form.userMajors(class="CheckBoxInput")}}
+        
+        <br>
+        {{form.userTechnicalCourses.label}}
+        {{form.userTechnicalCourses(class="CheckBoxInput")}}
+        <br class = "olbreak">
+        <br>
+        {{form.rFieldTags.label}}
+        {{form.rFieldTags(class="CheckBoxInput")}}
+        <br>
+        {{form.knownLang.label}}
+        {{ form.knownLang(class="CheckBoxInput") }}
+        <br>
+    <br>
+    {{form.submit(class="button") }}
+    {%else%} <!--Faculty-->
+        <div>
             {{ form.username.label }}<br>
             {{ form.username(class="forminput") }}<br>
             {% for error in form.username.errors %}
@@ -70,6 +172,6 @@
     <br>
     {{form.submit(class="button") }}
     </form>
-    <!-- TODO: (milestone 3) Include the template for "user registration" form here..  -->
+    {% endif %}
     {% endif %}
 {% endblock %}
