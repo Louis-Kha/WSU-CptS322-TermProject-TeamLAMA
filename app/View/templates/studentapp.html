@@ -14,15 +14,20 @@
 
     <p> Title: <b> {{positions.title}} </b></p>
     <p> Research Description: <b> {{positions.researchDesc}} </b></p>
+    <p> Research Qualifications: <b> {{positions.requiredQualifications}} </b></p>
     <p> Required Hours: <b> {{positions.requiredHours}} </b></p>
     <p> Start Date: <b> {{ moment(positions.startDate).format('LL') }} </b></p>
     <p> End Date: <b> {{ moment(positions.endDate).format('LL') }} </b></p>
-    <p> Research Fields: <b>
-      {%for fields in positions.researchFields%}
-      {{fields}}
-      {%endfor%} </b></p>
+    <p>
+        Research Fields: <b>
+            {%for fields in positions.researchFields%}
+            {{fields}}
+            {%endfor%}
+        </b>
+    </p>
     <p> Posted at: <b> {{ moment(positions.timestamp).format('LLL') }} </b></p>
     <p> The Position is created by: <b> <span class="useritem">{{positions.facultyName}} </b></p>
+    <p> The Faculty Member Contact: <b> <span class="useritem">{{positions.facultyEmail}} </b></p>
 
     {% for apps in applicants %}
 
@@ -30,7 +35,7 @@
 
     {% endfor %}
 
-  
+
 </div>
 
 <!-- New Form action to link to redirect route towards application page form while sending student_id information -->

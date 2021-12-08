@@ -44,7 +44,8 @@ def postposition():
                             requiredQualifications = newPost.requiredQualifications.data, 
                             researchFields = newPost.researchFields.data, 
                             faculty_id = current_user.id, 
-                            facultyName = current_user.lastName)
+                            facultyName = current_user.lastName,
+                            facultyEmail = current_user.email)
       db.session.add(newPosted)
       db.session.commit()
       flash("New Research Position Has Been Created!")
