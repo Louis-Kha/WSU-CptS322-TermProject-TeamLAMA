@@ -171,16 +171,30 @@ def researchApply(currentResearch_id):
       return redirect (url_for('routes.studentindex'))
     return render_template('researchapply.html', title="Search App Portal", form = newApply)
 
+# ------ mk --------
 @bp_routes.route('/withdrawApply/<currentResearch_id>', methods=['GET', 'POST'])
 def withdrawApply(currentResearch_id):
     research_id = researchPos.query.get(currentResearch_id) #Querys through the list of all research positions until it matches with the students current selected position id. Then it assigns it to research_id
-    #db.session.delete(research_id) #This should delete the research position of the current student user
-    #db.session.commit() #This makes the choice FINAL
+    applications = application.query.filter_by(researchPos_id = currentResearch_id).all()
+    for currentStuApp in applications: #filters through all the applications of this research post
+        if current_user.id == currentStuApp.student_id: #checks if the current user matches the usere attached to the reesearch position application
+            db.session.delete(currentStuApp) #This should delete the research position of the current student user
+            db.session.commit() #This makes the choice FINAL
     flash("You Have Successfully Withdrawed Your Application!")
     return redirect (url_for('routes.studentindex')) #redirects to main student page so they can continue on
 
+@bp_routes.route('/deletePos/<currentResearch_id>', methods=['GET', 'POST'])
+def deletePos(currentResearch_id):
+    research_id = researchPos.query.get(currentResearch_id) #Querys through the list of all research positions until it matches with the students current selected position id. Then it assigns it to research_id
+    applications = application.query.filter_by(researchPos_id = currentResearch_id).all() #Querys through all the applications and matches the one that has the correct research id so we are only dealing with the applications posted 
+    for currentStuApp in applications: #filters through all the applications of this research post
+        db.session.delete(currentStuApp) #This should delete all the research position applications
 
-
+    db.session.delete(research_id) #This deletes the research position, I need to do it at the end once all student applicants are deleted
+    db.session.commit() #This makes the choice FINAL
+    flash("You Have Successfully Deleted Your Research Position!")
+    return redirect (url_for('routes.facultyindex')) #redirects to main student page so they can continue on
+# ----------
 
 @bp_routes.route('/viewPosition/<researchPos_id>', methods=['GET', 'POST'])
 def viewPosition(researchPos_id):

@@ -15,6 +15,10 @@
     <p> Posted at: <b> {{ moment(positions.timestamp).format('LLL') }} </b></p>
     <p> The Position is created by: <b> <span class="useritem">{{positions.facultyName}} </b></p>
 
+    <form action="{{ url_for('routes.deletePos', currentResearch_id = positions.id )}}" method="get">
+        <input type="submit" value="Delete Application"/>
+    </form>
+    
 
     <p>All Student Applicants:</p>
 
