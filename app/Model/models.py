@@ -19,7 +19,6 @@ userLanguages = db.Table('userLanguages',
 )
 #---------------------------
 
-
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(64), unique = True)
@@ -69,16 +68,13 @@ class User(UserMixin, db.Model):
         allUserPosts = User.query.all()
         return allUserPosts
     
+    
     # def get_remember(self):
     #     return self.remember 
 
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
-
-#class Posttag(db.Model):
-#    postid = db.Column(db.Integer, db.ForeignKey('post.id'), primary_key = True)
-#    tagid =  db.Column(db.Integer, db.ForeignKey('tag.id'), primary_key = True)
 
 class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -105,8 +101,6 @@ class Tag(db.Model):
     def __repr__(self):
         return '<Id: {} Name: {}>'.format(self.id,self.name)
 
-
-
 class researchPos(db.Model):
     __tablename__ = 'researchPosition'
     id = db.Column(db.Integer, primary_key=True)
@@ -120,7 +114,6 @@ class researchPos(db.Model):
     researchFields = db.Column(db.String(150))
     requiredQualifications = db.Column(db.String(500))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-
 
 class application(db.Model):
     __tablename__ = 'applicants'
@@ -142,4 +135,6 @@ class progLang(db.Model):
 
     def __repr__(self): # Prints the Programming Languages in the database
         return '{}, '.format(self.name)
+
+    
 #----------------------------------------------

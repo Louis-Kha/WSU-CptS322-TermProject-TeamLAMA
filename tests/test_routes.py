@@ -30,14 +30,11 @@ def test_client():
     # Flask provides a way to test your application by exposing the Werkzeug test Client
     # and handling the context locals for you.
     testing_client = flask_app.test_client()
- 
     # Establish an application context before running the tests.
     ctx = flask_app.app_context()
     ctx.push()
- 
     yield  testing_client 
     # this is where the testing happens!
- 
     ctx.pop()
 
 def new_user(uname, uemail,passwd):
@@ -120,7 +117,7 @@ def test_login_logout(request,test_client,init_database):
     THEN check that the response is valid and login is succesfull 
     """
     response = test_client.post('/login', 
-                          data=dict(username='sakire', password='1234',remember_me=False),
+                          data=dict(username='sakire', password='1234'),
                           follow_redirects = True)
     assert response.status_code == 200
     assert b"Welcome to Smile Portal!" in response.data
@@ -235,8 +232,6 @@ def test_likeSmile(test_client,init_database):
     assert c3.first().likes == 0 
     c4 = db.session.query(Post).filter(Post.id ==c2.first().id)
     assert c4.first().likes == 1     
-
-    
 
 # def test_enroll(request,test_client,init_database):
 #     """
