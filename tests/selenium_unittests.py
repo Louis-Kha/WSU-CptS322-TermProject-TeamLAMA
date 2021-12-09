@@ -15,7 +15,7 @@ from time import sleep
 # User fixure
 @pytest.fixture
 def user1():
-    return  {'username':'faculty1', 
+    return  {'username':'faculty1@wsu.edu', 
              'wsuID':'1234567890',
              'firstname':'f',
              'lastname':'l',
@@ -29,14 +29,14 @@ def user1():
 # Faculty
 @pytest.fixture
 def user2():
-    return  {'username':'fclt', 
+    return  {'username':'fclt@wsu.edu', 
              'email':'fclt@wsu.edu', 
              'password':'a'}
 
 # User fixures
 @pytest.fixture
 def user3():
-    return  {'username':'student1', 
+    return  {'username':'student1@wsu.edu', 
              'wsuID':'0123456789',
              'firstname':'s',
              'lastname':'l',
@@ -49,7 +49,7 @@ def user3():
 # User fixures
 @pytest.fixture
 def user4():
-    return  {'username':'studentappr', 
+    return  {'username':'studentappr@wsu.edu', 
              'wsuID':'012345678900',
              'firstname':'ss',
              'lastname':'ll',
@@ -61,7 +61,7 @@ def user4():
 
 @pytest.fixture
 def user5():
-    return  {'username':'studentapplyw', 
+    return  {'username':'studentapplyw@wsu.edu', 
              'wsuID':'01234567890011',
              'firstname':'sss',
              'lastname':'lll',
@@ -114,7 +114,7 @@ def test_student_failed_register_form(browser,user2):
     content = browser.page_source
     assert 'Register' in content
 
-### Successful Registrations
+# ### Successful Registrations
 def test_faculty_success_register_form(browser,user1): # works!!!!
     # should succeed
     browser.get('http://127.0.0.1:5000/Facultyregister')
@@ -261,7 +261,7 @@ def test_faculty_fail_login_2(browser,user1): # wrong password provided
     content = browser.page_source
     assert 'Invalid Username or Password' in content
 
-# ### Successfull logins/logouts --works all above--
+### Successfull logins/logouts --works all above--
 def test_student_success_loginlogout(browser,user3): 
     browser.get('http://127.0.0.1:5000/login')
     browser.find_element_by_name("username").send_keys(user3['username'])
@@ -270,7 +270,7 @@ def test_student_success_loginlogout(browser,user3):
     sleep(1)
     browser.find_element_by_name("submit").click()
     sleep(5)
-    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[2]/a").click()
+    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[3]/a").click()
     content = browser.page_source
     assert 'Student Sign In' in content
 
@@ -282,12 +282,12 @@ def test_faculty_success_loginlogout(browser,user1):
     sleep(1)
     browser.find_element_by_name("submit").click()
     sleep(5)
-    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[3]/a").click()
+    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[4]/a").click()
     content = browser.page_source
     assert 'Faculty Sign In' in content
 
-# ### Main page redirect testing
-def test_student_mainpage(browser,user3): 
+### Main page redirect testing
+def test_student_mainpage(browser,user3):  # error
     browser.get('http://127.0.0.1:5000/login')
     browser.find_element_by_name("username").send_keys(user3['username'])
     sleep(1)
@@ -297,7 +297,7 @@ def test_student_mainpage(browser,user3):
     sleep(5)
     browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[1]/a").click()
     content = browser.page_source
-    assert 'Student Main Page - ResearchApp' in content
+    assert 'Student Index - ResearchApp' in content
 
 def test_faculty_mainpage(browser,user1): 
     browser.get('http://127.0.0.1:5000/FacultyLogin')
@@ -311,7 +311,7 @@ def test_faculty_mainpage(browser,user1):
     content = browser.page_source
     assert 'Faculty Main Page - ResearchApp' in content
 
-### Display Profile testing --works--
+## Display Profile testing --works--
 def test_student_dprofile(browser,user3): 
     browser.get('http://127.0.0.1:5000/login')
     browser.find_element_by_name("username").send_keys(user3['username'])
@@ -320,7 +320,7 @@ def test_student_dprofile(browser,user3):
     sleep(1)
     browser.find_element_by_name("submit").click()
     sleep(3)
-    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[3]/a").click()
+    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[2]/a").click()
     content = browser.page_source
     assert 'User Profile - ResearchApp' in content
 
@@ -334,12 +334,12 @@ def test_faculty_dprofile(browser,user1):
     sleep(1)
     browser.find_element_by_name("submit").click()
     sleep(3)
-    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[4]/a").click()
+    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[3]/a").click()
     content = browser.page_source
     assert 'User Profile - ResearchApp' in content
 
-### Edit profile information 
-# # Changes have been saved.
+## Edit profile information 
+# Changes have been saved.
 def test_student_eprofile_fail(browser,user3): # no password provided
     browser.get('http://127.0.0.1:5000/login')
     browser.find_element_by_name("username").send_keys(user3['username'])
@@ -348,14 +348,13 @@ def test_student_eprofile_fail(browser,user3): # no password provided
     sleep(1)
     browser.find_element_by_name("submit").click()
     sleep(3)
-    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[3]/a").click()
+    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[2]/a").click()
     sleep(1)
-    browser.find_element_by_xpath("/html/body/div[2]/p[13]/a").click()
+    browser.find_element_by_xpath("/html/body/div[2]/p[16]/a").click()
     sleep(1)
     browser.find_element_by_name("submit").click()
     content = browser.page_source
     assert 'Edit Profile - ResearchApp' in content
-
 
 def test_student_eprofile_success(browser,user3): 
     browser.get('http://127.0.0.1:5000/login')
@@ -365,13 +364,29 @@ def test_student_eprofile_success(browser,user3):
     sleep(1)
     browser.find_element_by_name("submit").click()
     sleep(3)
-    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[3]/a").click()
+    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[2]/a").click()
     sleep(1)
-    browser.find_element_by_xpath("/html/body/div[2]/p[13]/a").click()
+    browser.find_element_by_xpath("/html/body/div[2]/p[16]/a").click()
+    sleep(1)
+    browser.find_element_by_name("gradDate").send_keys("11111111")
+    sleep(1)
+    browser.find_element_by_name("cumGPA").send_keys("4.0")
+    sleep(1)
+    browser.find_element_by_name("techCourseGPA").send_keys("4.0")
+    sleep(1)
+    browser.find_element_by_name("experienceDesc").send_keys("Testing desc")
     sleep(1)
     browser.find_element_by_name("password").send_keys(user3['password'])
     sleep(1)
     browser.find_element_by_name("password2").send_keys(user3['password'])
+    sleep(1)
+    browser.find_element_by_name("userMajors").click()
+    sleep(1)
+    browser.find_element_by_name("userTechnicalCourses").click()
+    sleep(1)
+    browser.find_element_by_name("rFieldTags").click()
+    sleep(1)
+    browser.find_element_by_name("knownLang").click()
     sleep(1)
     browser.find_element_by_name("submit").click()
     content = browser.page_source
@@ -386,9 +401,9 @@ def test_faculty_eprofile_fail(browser,user1): # no password provided
     sleep(1)
     browser.find_element_by_name("submit").click()
     sleep(3)
-    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[4]/a").click()
+    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[3]/a").click()
     sleep(1)
-    browser.find_element_by_xpath("/html/body/div[2]/p[9]/a").click()
+    browser.find_element_by_xpath("/html/body/div[2]/p[8]/a").click()
     sleep(1)
     browser.find_element_by_name("submit").click()
     content = browser.page_source
@@ -402,9 +417,9 @@ def test_faculty_eprofile_success(browser,user1):
     sleep(1)
     browser.find_element_by_name("submit").click()
     sleep(3)
-    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[4]/a").click()
+    browser.find_element_by_xpath("/html/body/div[1]/table/tbody/tr/td[3]/a").click()
     sleep(1)
-    browser.find_element_by_xpath("/html/body/div[2]/p[9]/a").click()
+    browser.find_element_by_xpath("/html/body/div[2]/p[8]/a").click()
     sleep(1)
     browser.find_element_by_name("password").send_keys(user1['password'])
     sleep(1)
@@ -414,7 +429,7 @@ def test_faculty_eprofile_success(browser,user1):
     content = browser.page_source
     assert 'Changes have been saved.' in content
 
-## Faculty create a research position
+# Faculty create a research position
 def test_newposition_fail(browser,user1): # one of the inputs is missing
     browser.get('http://127.0.0.1:5000/FacultyLogin')
     browser.find_element_by_name("username").send_keys(user1['username'])
@@ -430,7 +445,6 @@ def test_newposition_fail(browser,user1): # one of the inputs is missing
     browser.find_element_by_name("submit").click()
     content = browser.page_source
     assert 'New Research Position - ResearchApp' in content
-    # /html/body/div[1]/table/tbody/tr/td[1]/a
 
 def test_newposition_success(browser,user1): # New Research Position Has Been Created!
     browser.get('http://127.0.0.1:5000/FacultyLogin')
@@ -463,7 +477,7 @@ def test_newposition_success(browser,user1): # New Research Position Has Been Cr
     content = browser.page_source
     assert 'New Research Position Has Been Created!' in content
 
-### Student position application
+## Student position application
 def test_applyposition_fail(browser,user3): # one of the inputs is missing
     # Apply To Research Position Page
     browser.get('http://127.0.0.1:5000/login')
@@ -583,10 +597,10 @@ def test_applyposition_interview_approve(browser,user1): # New Research Position
     sleep(3)
     browser.find_element_by_xpath("/html/body/div[2]/div/div/table/tbody/tr[2]/td[2]/div[8]/form/input").click()
     sleep(1)
-    browser.find_element_by_xpath("/html/body/div[2]/div/form[1]/input").click()
+    browser.find_element_by_xpath("/html/body/div[2]/div/form[3]/input").click()
     sleep(1)
     # approve for interview
-    browser.find_element_by_xpath("/html/body/div[2]/div/form[1]/input").click()
+    browser.find_element_by_xpath("/html/body/div[2]/div/form[2]/input").click()
     sleep(1)
     content = browser.page_source
     assert 'Approved for Interview' in content
@@ -601,10 +615,10 @@ def test_applyposition_interview_hire(browser,user1): # New Research Position Ha
     sleep(3)
     browser.find_element_by_xpath("/html/body/div[2]/div/div/table/tbody/tr[2]/td[2]/div[8]/form/input").click()
     sleep(1)
-    browser.find_element_by_xpath("/html/body/div[2]/div/form[1]/input").click()
+    browser.find_element_by_xpath("/html/body/div[2]/div/form[3]/input").click()
     sleep(1)
-    # /html/body/div[2]/div/form[2]/input
-    browser.find_element_by_xpath("/html/body/div[2]/div/form[2]/input").click()
+    # hire
+    browser.find_element_by_xpath("/html/body/div[2]/div/form[3]/input").click()
     sleep(1)
     content = browser.page_source
     assert 'Hired' in content
@@ -624,10 +638,8 @@ def test_applyposition_interview_reject(browser,user1): # New Research Position 
     sleep(1)
     browser.find_element_by_xpath("/html/body/div[2]/div/form[2]/input").click()
     sleep(1)
-    browser.find_element_by_xpath("/html/body/div[2]/div/form[2]/input").click()
+    browser.find_element_by_xpath("/html/body/div[2]/div/form[3]/input").click()
     sleep(1)
-    # middle one gets rejected
-    # /html/body/div[2]/div/form[2]/input
     # reject for interview
     content = browser.page_source
     assert 'Rejected' in content

@@ -9,7 +9,7 @@ from wtforms.validators import  DataRequired, Length, Email, EqualTo
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms import validators, PasswordField
-from wtforms.fields.html5 import DateField
+from wtforms.fields import DateField
 
 from app.Model.models import *
 

@@ -170,7 +170,6 @@ class researchPos(db.Model):
     startDate = db.Column(db.DateTime)
     endDate = db.Column(db.DateTime)
     requiredHours = db.Column(db.Integer, default = 0)
-
     researchFields = db.relationship('researchPostFieldTags',
                                     secondary = researchPosFieldTable,
                                     primaryjoin = (researchPosFieldTable.c.researchPosition_id == id),
@@ -238,7 +237,6 @@ class technicalCourses(db.Model): #Technical Courses Students took
 
     def __repr__(self): 
         return '{} '.format(self.name)
-        return '{}, '.format(self.name)
 
     
 #----------------------------------------------
